@@ -52,7 +52,9 @@
                     <td><?= $key + 1 ?></td>
                     <td><?= $size ?></td>
                     <td><?= $color ?></td>
-                    <td><img src="" alt="..image"></td>
+                    <td>
+                      <img src="../uploads/<?= $image ?>" alt="..image" width="100px" height="100px">
+                    </td>
                     <td><?= $sold ?></td>
                     <td><?= $quantity ?></td>
                     <td><?= $price ?></td>
@@ -123,4 +125,27 @@
     var link = `?act=deleteProductAttribute&idProductAttribute=${id}&idProduct=${idPro}`
     document.getElementById("btn-delete").setAttribute("href", link)
   });
+</script>
+
+
+<!-- Show notification -->
+<script>
+  function showToast(success) {
+    var title = "Product Attribute";
+    var message = `${success} product attribute success`;
+    var type = "success";
+
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
+    });
+  }
+
+  function clearToast() {
+    toastr.clear();
+  }
 </script>

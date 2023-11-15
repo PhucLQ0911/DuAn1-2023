@@ -50,7 +50,6 @@
         "validation-category-name": {
           required: true,
         },
-
         "validation-category-file": {
           extension: "jpg|jpeg|png"
         }

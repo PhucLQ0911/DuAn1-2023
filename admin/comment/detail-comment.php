@@ -111,8 +111,8 @@
 <!-- Show notification -->
 <script>
   function showToast(success) {
-    var title = "Category";
-    var message = `${success} category success`;
+    var title = "Comment";
+    var message = `${success} comment success`;
     var type = "success";
 
     toastr[type](message, title, {

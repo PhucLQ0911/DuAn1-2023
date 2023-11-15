@@ -38,85 +38,44 @@
               </thead>
 
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>name</td>
-                  <td>address</td>
-                  <td>phone</td>
-                  <td>email</td>
-                  <td>payment</td>
-                  <td>date</td>
-                  <td>Total amount</td>
-                  <td><span class="badge badge-danger">Cancelled</span></td>
-                  <td>
-                    <div class="text-center">
-                      <a href="?act=detailOrder" class="btn btn-primary">
-                        Detail
-                      </a>
+                <?php foreach ($orders as $key => $order) : ?>
+                  <?php extract($order) ?>
+                  <tr>
+                    <td><?= $key + 1 ?></td>
+                    <td><?= $fullname ?></td>
+                    <td><?= $address ?></td>
+                    <td><?= $phone ?></td>
+                    <td><?= $email ?></td>
+                    <td><?= $method ?></td>
+                    <td><?= $added_on ?></td>
+                    <td><?= $total_payment ?></td>
+                    <td>
+                      <?php if ($order_status == 0) : ?>
+                        <span class="badge badge-warning">In progress</span>
+                      <?php elseif ($order_status == 1) : ?>
+                        <span class="badge badge-danger">Cancelled</span>
+                      <?php elseif ($order_status == 2) : ?>
+                        <span class="badge badge-success">Done</span>
+                      <?php endif; ?>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center">
+                        <a href="?act=detailOrder&idOrder=<?= $id ?>" class="btn btn-primary">
+                          Detail
+                        </a>
+                        <?php if ($order_status == 0) : ?>
+                          <button type="button" class="btn btn-success confirmOrder ml-2" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="<?= $id ?>">
+                            Confirm
+                          </button>
 
-                      <button type="button" class="btn btn-success confirmOrder" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="1">
-                        Confirm
-                      </button>
-
-                      <button type="button" class="btn btn-danger refuseOrder" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="1">
-                        Refuse
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>T-Shirt</td>
-                  <td><img src="" alt="...image cate"></td>
-                  <td>Total amount</td>
-                  <td><span class="badge badge-warning">In progress</span></td>
-                  <td>
-                    <div class="text-center">
-                      <a href="?act=detailOrder" class="btn btn-primary">
-                        Detail
-                      </a>
-
-                      <button type="button" class="btn btn-success confirmOrder" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="2">
-                        Confirm
-                      </button>
-
-                      <button type="button" class="btn btn-danger refuseOrder" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="2">
-                        Refuse
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>Dress</td>
-                  <td><img src="" alt="...image cate"></td>
-                  <td>Total amount</td>
-                  <td><span class="badge badge-success">Done</span></td>
-                  <td>
-                    <div class="text-center">
-                      <a href="?act=detailOrder" class="btn btn-primary">
-                        Detail
-                      </a>
-
-                      <button type="button" class="btn btn-success confirmOrder" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="3">
-                        Confirm
-                      </button>
-
-                      <button type="button" class="btn btn-danger refuseOrder" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="3">
-                        Refuse
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                          <button type="button" class="btn btn-danger refuseOrder ml-2" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="<?= $id ?>">
+                            Refuse
+                          </button>
+                        <?php endif; ?>
+                      </div>
+                    </td>
+                  </tr>
+                <?php endforeach;  ?>
               </tbody>
             </table>
           </div>
@@ -205,4 +164,27 @@
     var link = `?act=refuseOrder&idOrder=${id}`
     document.getElementById("btn-delete").setAttribute("href", link)
   });
+</script>
+
+
+<!-- Show notification -->
+<script>
+  function showToast(success) {
+    var title = "Order";
+    var message = `${success} order success`;
+    var type = "success";
+
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
+    });
+  }
+
+  function clearToast() {
+    toastr.clear();
+  }
 </script>

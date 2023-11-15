@@ -116,9 +116,9 @@
             </button>
           </div>
         </div>
-        <button class="btn btn-primary px-3">
+        <a href="?act=addToCart" class="btn btn-primary px-3">
           <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
-        </button>
+        </a>
       </div>
       <div class="d-flex pt-2">
         <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>

@@ -28,20 +28,13 @@ function productSelectLast()
 
 function productUpdate($id, $name, $price, $image, $description, $category)
 {
-    if ($image != '')
-        $sql = "UPDATE product SET id_cate ='" . $category . "', name ='" . $name . "', price ='" . $price . "', image ='" . $image . "', description ='" . $description . "' WHERE id=" . $id;
-    else
-        $sql = "UPDATE product SET id_cate ='" . $category . "', name ='" . $name . "', price ='" . $price . "', description ='" . $description . "' WHERE id=" . $id;
+    $sql = "UPDATE product SET id_cate ='" . $category . "', name ='" . $name . "', price ='" . $price . "', image ='" . $image . "', description ='" . $description . "' WHERE id=" . $id;
     pdo_execute($sql);
 }
 
 function productDelete($id, $status)
 {
-    if ($status == 0) {
-        $sql = "UPDATE product SET status = '1' where id=?";
-    } else {
-        $sql = "UPDATE product SET status = '0' where id=?";
-    }
+    $sql = "UPDATE product SET status = '$status' where id=?";
     pdo_execute($sql, $id);
 }
 

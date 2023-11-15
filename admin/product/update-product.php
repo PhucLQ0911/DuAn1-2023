@@ -8,43 +8,44 @@
             <h5 class="card-title mb-0">Product</h5>
           </div>
           <div class="card-body">
-            <form id="validation-form">
+            <form id="validation-form" method="post" enctype="multipart/form-data">
+              <input type="hidden" value="<?= $product['id'] ?>" name="idProduct">
               <div class="form-group">
                 <label class="form-label">Name product</label>
-                <input type="text" class="form-control" name="validation-product-name" placeholder="Name product">
+                <input type="text" class="form-control" name="validation-product-name" placeholder="Name product" value="<?= $product['name'] ?>">
               </div>
 
               <div class="form-group">
                 <label class="form-label">Category</label>
                 <select class="form-control" name="validation-product-select">
-                  <option value="pitons">Pitons</option>
-                  <option value="cams">Cams</option>
-                  <option value="nuts">Nuts</option>
-                  <option value="bolts">Bolts</option>
-                  <option value="stoppers">Stoppers</option>
-                  <option value="sling">Sling</option>
+                  <?php foreach ($categories as $category) : ?>
+                    <?php extract($category) ?>
+                    <option value="<?= $id ?>" <?= $product['id_cate'] == $id ? 'selected' : '' ?>><?= $name ?></option>
+                  <?php endforeach ?>
+
                 </select>
               </div>
 
               <div class="form-group">
                 <label class="form-label">Image</label>
                 <div>
+                  <input type="hidden" value="<?= $product['image'] ?>">
                   <input type="file" class="validation-file" name="validation-product-file">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label">Price</label>
-                <input type="number" class="price form-control" name="validation-product-price" placeholder="Price">
+                <input type="number" class="price form-control" name="validation-product-price" placeholder="Price" value="<?= $product['price'] ?>">
               </div>
 
               <div class="form-group">
                 <label class="form-label">Description</label>
-                <textarea class="form-control" name="validation-product-description"></textarea>
+                <textarea class="form-control" name="validation-product-description"><?= $product['description'] ?></textarea>
               </div>
 
               <div class="d-flex mt-5 justify-content-center align-item-center">
-                <button type="submit" class="btn btn-lg btn-primary" id="toastr-show">
+                <button type="submit" class="btn btn-lg btn-primary" id="toastr-show" name="updateProduct">
                   Update Product
                 </button>
               </div>
@@ -74,6 +75,9 @@
         "validation-product-price": {
           required: true
         },
+        "validation-category-file": {
+          extension: "jpg|jpeg|png"
+        },
         "validation-product-description": {
           required: true
         }
@@ -87,6 +91,9 @@
         },
         "validation-product-description": {
           required: "Do not leave the description blank."
+        },
+        "validation-category-file": {
+          extension: "Please upload file in these format only (jpg, jpeg, png)."
         }
       },
       // Errors

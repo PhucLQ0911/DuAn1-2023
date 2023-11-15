@@ -59,16 +59,16 @@
                       echo date('d/m/Y', $date);
                       ?>
                     </td>
-                    <td><?= $status ?></td>
+                    <td><?= $status == 0 ? 'Show' : 'Hidden' ?></td>
                     <td>
                       <div class="text-center d-flex flex-row">
                         <a href="?act=attributeProduct&idProduct=<?= $pro_id ?>" class="btn btn-secondary ml-2">
                           Attributes
                         </a>
-                        <a href="?act=updateProduct" class="btn btn-warning ml-2">
+                        <a href="?act=updateProduct&idProduct=<?= $pro_id ?>" class="btn btn-warning ml-2">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="1">
+                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $pro_id ?>">
                           Delete
                         </button>
                       </div>
@@ -136,9 +136,9 @@
 
 <!-- Show notification -->
 <script>
-  function showToast(title) {
-    var message = "Category";
-    var title = `${title} category success`;
+  function showToast(success) {
+    var title = "Product";
+    var message = `${success} product success`;
     var type = "success";
 
     toastr[type](message, title, {

@@ -3,43 +3,15 @@
   <div class="row px-xl-5">
     <!-- Shop Sidebar Start -->
     <div class="col-lg-3 col-md-12">
-      <!-- Price Start -->
-      <div class="border-bottom mb-4 pb-4">
+      <!-- Filter by category Start -->
+      <div class="border-bottom mb-4">
         <h5 class="font-weight-semi-bold mb-4">Filter by category</h5>
-        <form>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" checked id="price-all" />
-            <label class="custom-control-label" for="price-all">All Price</label>
-            <span class="badge border font-weight-normal">1000</span>
-          </div>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-1" />
-            <label class="custom-control-label" for="price-1">$0 - $100</label>
-            <span class="badge border font-weight-normal">150</span>
-          </div>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-2" />
-            <label class="custom-control-label" for="price-2">$100 - $200</label>
-            <span class="badge border font-weight-normal">295</span>
-          </div>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-3" />
-            <label class="custom-control-label" for="price-3">$200 - $300</label>
-            <span class="badge border font-weight-normal">246</span>
-          </div>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-4" />
-            <label class="custom-control-label" for="price-4">$300 - $400</label>
-            <span class="badge border font-weight-normal">145</span>
-          </div>
-          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-            <input type="checkbox" class="custom-control-input" id="price-5" />
-            <label class="custom-control-label" for="price-5">$400 - $500</label>
-            <span class="badge border font-weight-normal">168</span>
-          </div>
-        </form>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <a href="?act=filterCategory" class="btn p-0">Category name</a>
+          <span class="badge border font-weight-normal">150</span>
+        </div>
       </div>
-      <!-- Price End -->
+      <!-- Filter by category End -->
 
       <!-- Color Start -->
       <div class="border-bottom mb-4 pb-4">
@@ -164,8 +136,8 @@
               </div>
             </div>
             <div class="card-footer d-flex justify-content-between bg-light border">
-              <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-              <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To
+              <a href="?act=detail" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+              <a href="?act=addToCart" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To
                 Cart</a>
             </div>
           </div>

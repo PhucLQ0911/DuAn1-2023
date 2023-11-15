@@ -25,10 +25,10 @@
         <i class="fas fa-shopping-cart text-primary"></i>
         <span class="badge">0</span>
       </a>
-      <a href="login.html" class="btn border">
+      <a href="../login/signIn.html" class="btn border">
         <i class="far fa-user text-primary"></i>
       </a>
-      <a href="" class="btn border">
+      <a href="?act=orderDetail" class="btn border">
         <i class="fas fa-calendar-week text-primary"></i>
       </a>
 

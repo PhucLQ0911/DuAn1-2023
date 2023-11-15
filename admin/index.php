@@ -6,6 +6,8 @@ include_once "../dao/productAttribute/productAttributeColor.php";
 include_once "../dao/productAttribute/productAttributeSize.php";
 include_once "../dao/user/user.php";
 include_once "../dao/comment/comment.php";
+include_once "../dao/order/order.php";
+include_once "../dao/orderDetail/orderDetail.php";
 ob_start();
 ?>
 
@@ -47,6 +49,7 @@ ob_start();
             break;
 
             // Category
+            // List category
           case 'listCategory':
             $categories = categoryGetAll();
             include("category/list-category.php");
@@ -65,6 +68,8 @@ ob_start();
               }
             }
             break;
+
+            // Add category
           case 'addCategory':
             $success = 0;
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -85,6 +90,8 @@ ob_start();
               $success = 0;
             }
             break;
+
+            // Update category
           case 'updateCategory':
             if (isset($_GET['idCategory']) & $_GET['idCategory'] > 0) {
               $idCate = $_GET['idCategory'];
@@ -97,17 +104,19 @@ ob_start();
               $idCate = $_POST['idCategory'];
 
               if ($newImage != "") {
-                // Save image
-                $target_dir = "../uploads/";
-                $target_file = $target_dir . basename($image);
-                move_uploaded_file($_FILES["validation-category-file"]["tmp_name"], $target_file);
                 $image = $newImage;
               }
+              // Save image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image);
+              move_uploaded_file($_FILES["validation-category-file"]["tmp_name"], $target_file);
               categoryUpdate($name, $image, $idCate);
               header("location: ?act=listCategory&isSuccessUpdate=1");
             }
             include("category/update-category.php");
             break;
+
+            // Delete cate
           case 'deleteCategory':
             if (isset($_GET['idCategory'])) {
               $idCate = $_GET['idCategory'];
@@ -126,6 +135,20 @@ ob_start();
           case 'listProduct':
             $products = productGetAll();
             include("product/list-product.php");
+            // Update success
+            if (isset($_GET['isSuccessUpdate'])) {
+              $isSuccessUpdate = $_GET['isSuccessUpdate'];
+              if ($isSuccessUpdate == 1) {
+                echo "<script>showToast('Update')</script>";
+              }
+            }
+            // Delete success
+            if (isset($_GET['isSuccessDelete'])) {
+              $isSuccessUpdate = $_GET['isSuccessDelete'];
+              if ($isSuccessUpdate == 1) {
+                echo "<script>showToast('Delete')</script>";
+              }
+            }
             break;
 
           case 'addProduct':
@@ -133,11 +156,19 @@ ob_start();
             if (isset($_POST['addPro'])) {
               // Product
               $name = $_POST['validation-product-name'];
-              $image = $_FILES["validation-product-file"]['name'];
+              $image = $_FILES["validation-product-file"];
               $price = $_POST['validation-product-price'];
               $description = $_POST['validation-product-description'];
               $category = $_POST['validation-product-select'];
-              productInsert($name, $image, $description, $price, $category);
+
+              // Save image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image['name']);
+              move_uploaded_file($image["tmp_name"], $target_file);
+
+              // Insert
+              productInsert($name, $image['name'], $description, $price, $category);
+
               // Lay ra id cua san pham vua them vao
               $idCurrent = productSelectLast();
               $idPro = $idCurrent[0]['id'];
@@ -147,10 +178,16 @@ ob_start();
               $quantityAtt = $_POST['validation-product-att-qty'];
               $colorAtt = $_POST['validation-product-att-color-id'];
               $sizeAtt = $_POST['validation-product-att-size-id'];
-              $imgAtt = $_FILES['validation-product-att-image']['name'];
+              $imgAtt = $_FILES['validation-product-att-image'];
 
               for ($i = 0; $i < sizeof($priceAtt); $i++) {
-                productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
+                // Save image
+                $target_dir = "../uploads/";
+                $target_file = $target_dir . basename($imgAtt['name'][$i]);
+                move_uploaded_file($imgAtt["tmp_name"][$i], $target_file);
+
+                // Insert
+                productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
               }
               $isSuccess = 1;
             }
@@ -165,8 +202,44 @@ ob_start();
             break;
 
           case 'updateProduct':
+            if (isset($_GET['idProduct'])) {
+              $id = $_GET['idProduct'];
+              $product = productSelectOne($id);
+            }
+            if (isset($_POST['updateProduct'])) {
+              $id = $_POST['idProduct'];
+              $name = $_POST['validation-product-name'];
+              $image = $_FILES["validation-product-file"];
+              $price = $_POST['validation-product-price'];
+              $description = $_POST['validation-product-description'];
+              $category = $_POST['validation-product-select'];
+
+              // Save image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image['name']);
+              move_uploaded_file($image["tmp_name"], $target_file);
+
+              // Update
+              productUpdate($id, $name, $price, $image['name'], $description, $category);
+              header("location: ?act=listProduct&isSuccessUpdate=1");
+            }
             $categories = categoryGetAll();
             include("product/update-product.php");
+            break;
+
+            // Delete product
+          case 'deleteProduct':
+            if (isset($_GET['idProduct'])) {
+              $id = $_GET['idProduct'];
+              $status = productSelectOne($id)['status'];
+              if ($status == 0) {
+                $status = 1;
+              } else {
+                $status = 0;
+              }
+              productDelete($id, $status);
+              header("location: ?act=listProduct&isSuccessDelete=1");
+            }
             break;
 
             // Product Attributes
@@ -174,8 +247,25 @@ ob_start();
             $idProduct = $_GET['idProduct'];
             $productAttributes = productAttGetByIdProduct($idProduct);
             include("productAttribute/list-attribute.php");
+            // Update success
+            if (isset($_GET['isSuccessUpdate'])) {
+              $isSuccessUpdate = $_GET['isSuccessUpdate'];
+              if ($isSuccessUpdate == 1) {
+                echo "<script>showToast('Update')</script>";
+              }
+            }
+            // Delete success
+            if (isset($_GET['isSuccessDelete'])) {
+              $isSuccessUpdate = $_GET['isSuccessDelete'];
+              if ($isSuccessUpdate == 1) {
+                echo "<script>showToast('Delete')</script>";
+              }
+            }
             break;
+
+            // Add product att
           case 'addProductAttribute':
+            $isSuccess = 0;
             if (isset($_POST['addProAtt'])) {
               // Product att
               $idPro = $_GET['idProduct'];
@@ -187,12 +277,19 @@ ob_start();
               for ($i = 0; $i < sizeof($priceAtt); $i++) {
                 productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
               }
+              $isSuccess = 1;
             }
             $categories = categoryGetAll();
             $productSizes = productAttGetAllSize();
             $productColors = productAttGetAllColor();
             include("productAttribute/add-attribute.php");
+            if ($isSuccess == 1) {
+              echo "<script>showToast()</script>";
+              $isSuccess = 0;
+            }
             break;
+
+            // Update product att
           case 'updateProductAttribute':
             if (isset($_GET['idProductAttribute'])) {
               $proAtt = productAttGetOne($_GET['idProductAttribute']);
@@ -204,12 +301,14 @@ ob_start();
               $quantity = $_POST['validation-product-att-qty'];
               $image = $_FILES['validation-product-att-image']['name'];
               productAttUpdate($idAtt, $price, $quantity, $image);
-              header("location: ?act=attributeProduct&idProduct=$idPro");
+              header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessUpdate=1");
             }
             $productSizes = productAttGetAllSize();
             $productColors = productAttGetAllColor();
             include("productAttribute/update-attribute.php");
             break;
+
+            // Delete product att
           case 'deleteProductAttribute':
             if (isset($_GET['idProductAttribute']) && $_GET['idProductAttribute'] > 0) {
               $idPro = $_GET['idProduct'];
@@ -220,7 +319,7 @@ ob_start();
                 $status = 1;
               }
               productAttDelete($idProAtt, $status);
-              header("location: ?act=attributeProduct&idProduct=$idPro");
+              header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessDelete=1");
             }
             break;
 
@@ -237,10 +336,10 @@ ob_start();
             }
             break;
           case 'addUser':
-            include("user/add-user.php");
+            include("../admin/pages-404.php");
             break;
           case 'updateUser':
-            include("user/update-user.php");
+            include("../admin/pages-404.php");
             break;
           case 'deleteUser':
             $isSuccess = 0;
@@ -257,6 +356,7 @@ ob_start();
               header("location: ?act=listUser&isSuccessDelete=$isSuccess");
             }
             break;
+
             // Comment
           case 'comment':
             $comments = commentGetAll();
@@ -287,10 +387,55 @@ ob_start();
             break;
             // Order
           case 'order':
+            $orders =  orderGetAll();
             include("order/list-order.php");
+            // Confirm success
+            if (isset($_GET['isSuccessConfirm'])) {
+              $isSuccessConfirm = $_GET['isSuccessConfirm'];
+              if ($isSuccessConfirm == 1) {
+                echo "<script>showToast('Confirm')</script>";
+              }
+            }
+
+            // Refuse success
+            if (isset($_GET['isSuccessRefuse'])) {
+              $isSuccessRefuse = $_GET['isSuccessRefuse'];
+              if ($isSuccessRefuse == 1) {
+                echo "<script>showToast('Refuse')</script>";
+              }
+            }
             break;
           case 'detailOrder':
+            if (isset($_GET['idOrder'])) {
+              $id = $_GET['idOrder'];
+              $orderDetails = orderDetailGetAllById($id);
+            }
             include("order/detail-order.php");
+            break;
+          case 'confirmOrder':
+            if (isset($_GET['idOrder'])) {
+              $id = $_GET['idOrder'];
+              orderSetStatusOrder($id, 2);
+              header("location: ?act=order&isSuccessConfirm=1");
+            }
+            break;
+          case 'refuseOrder':
+            if (isset($_GET['idOrder'])) {
+              $id = $_GET['idOrder'];
+              orderSetStatusOrder($id, 1);
+              header("location: ?act=order&isSuccessRefuse=1");
+            }
+            break;
+
+            // Profile
+          case 'profile':
+            include "profile/profile.php";
+            break;
+
+
+            // Help
+          case 'help':
+            include("../admin/pages-404.php");
             break;
 
             // Default
