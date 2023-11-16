@@ -32,7 +32,7 @@
         break;
 
       case 'orderDetail':
-        include_once("../admin/profile/profile.php");
+        include_once("./profile/profile.php");
         break;
     }
   } else {
