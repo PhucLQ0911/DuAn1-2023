@@ -23,6 +23,7 @@
 
   <!-- Customized Bootstrap Stylesheet -->
   <link href="css/style.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="../admin/css/classic.css"> -->
 </head>
 
 <body>

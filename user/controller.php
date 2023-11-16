@@ -30,6 +30,10 @@
       case 'checkout':
         include_once("./checkout.php");
         break;
+
+      case 'orderDetail':
+        include_once("../admin/profile/profile.php");
+        break;
     }
   } else {
     include_once("./home/index.php");
