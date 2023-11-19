@@ -14,36 +14,16 @@
         <tbody class="align-middle">
           <tr>
             <td class="align-middle">
-              <img src="img/product-1.jpg" alt="" style="width: 50px" />
-              Colorful Stylish Shirt
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-              <div class="input-group quantity mx-auto" style="width: 100px">
-                <div class="input-group-btn">
-                  <button class="btn btn-sm btn-primary btn-minus">
-                    <i class="fa fa-minus"></i>
-                  </button>
+              <div class="d-flex flex-column">
+                <div>
+                  <img src="img/product-2.jpg" alt="" style="width: 50px" />
+                  Colorful Stylish Shirt
                 </div>
-                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1" />
-                <div class="input-group-btn">
-                  <button class="btn btn-sm btn-primary btn-plus">
-                    <i class="fa fa-plus"></i>
-                  </button>
+                <div>
+                  <small>Size : s - </small>
+                  <small>Color : </small>
                 </div>
               </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-              <button class="btn btn-sm btn-primary">
-                <i class="fa fa-times"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="align-middle">
-              <img src="img/product-2.jpg" alt="" style="width: 50px" />
-              Colorful Stylish Shirt
             </td>
             <td class="align-middle">$150</td>
             <td class="align-middle">
@@ -191,3 +171,32 @@
     </div>
   </div>
 </div>
+
+<script>
+  function showItemProductCart() {
+    let cartProductList;
+    if (localStorage.getItem("cartProductList") == null) {
+      cartProductList = [];
+    } else {
+      cartProductList = JSON.parse(localStorage.getItem("cartProductList"));
+    }
+    return JSON.stringify(cartProductList);
+  }
+
+  // Use Ajax to send data to PHP
+  let carts = showItemProductCart();
+  console.log("Cart data:", carts);
+  $.ajax({
+    url: "?act=cart",
+    type: "post",
+    data: {
+      carts: carts
+    },
+    success: function(data) {
+      console.log(data);
+    },
+    error: function() {
+      console.error('Error sending data');
+    }
+  });
+</script>

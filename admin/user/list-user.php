@@ -21,10 +21,9 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>User name</th>
+                  <th>Email</th>
                   <th>Full name</th>
                   <th>Phone</th>
-                  <th>Email</th>
                   <th>Image</th>
                   <th>Address</th>
                   <th>Role</th>
@@ -38,10 +37,9 @@
                   <?php extract($user) ?>
                   <tr>
                     <td><?= $key + 1 ?></td>
-                    <td><?= $user_name ?></td>
+                    <td><?= $email ?></td>
                     <td><?= $fullname ?></td>
                     <td><?= $phone ?></td>
-                    <td><?= $email ?></td>
                     <td><img src="../uploads/<?= $image ?>" alt="...image cate"></td>
                     <td><?= $address ?></td>
                     <td><?= $role == 0 ? 'User' : 'Admin' ?></td>

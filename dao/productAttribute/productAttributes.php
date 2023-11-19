@@ -43,3 +43,16 @@ function productAttDelete($id, $num)
           WHERE `id`=$id";
   pdo_execute($sql);
 }
+
+function productAttGetAllImageByIdPro($id)
+{
+  $sql = "SELECT `image` FROM `product_attributes` WHERE `id_pro`=$id";
+  return pdo_query($sql);
+}
+
+function productAttGetPrice($idColor, $idSize, $idPro)
+{
+  $sql = "SELECT `price` FROM `product_attributes` 
+        WHERE id_color =$idColor AND `id_size`=$idSize AND `id_pro` = $idPro";
+  return pdo_query_value($sql);
+}

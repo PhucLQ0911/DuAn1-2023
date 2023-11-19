@@ -1,3 +1,12 @@
+<?php
+include_once("../dao/category/category.php");
+include_once("../dao/product/product.php");
+include_once("../dao/productAttribute/productAttributeColor.php");
+include_once("../dao/productAttribute/productAttributeSize.php");
+include_once("../dao/productAttribute/productAttributes.php");
+include_once("../dao/comment/comment.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +32,7 @@
 
   <!-- Customized Bootstrap Stylesheet -->
   <link href="css/style.css" rel="stylesheet" />
-  <!-- <link rel="stylesheet" href="../admin/css/classic.css"> -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -44,6 +53,7 @@
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
+
 </body>
 
 </html>

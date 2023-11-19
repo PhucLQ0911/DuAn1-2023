@@ -186,8 +186,14 @@ ob_start();
                 $target_file = $target_dir . basename($imgAtt['name'][$i]);
                 move_uploaded_file($imgAtt["tmp_name"][$i], $target_file);
 
+                // Check trung 
+                //
+                // Neu khong turng
                 // Insert
                 productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
+
+                // Eles trung thi update
+                // Update 
               }
               $isSuccess = 1;
             }

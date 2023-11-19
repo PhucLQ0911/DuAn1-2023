@@ -55,3 +55,30 @@ function productGetAll()
     ORDER BY `product`.id DESC";
     return  pdo_query($sql);
 }
+
+
+function productCountByCategory($id)
+{
+    $sql = "SELECT COUNT(`id_cate`) FROM `product` WHERE `id_cate`=$id";
+    return pdo_query_value($sql);
+}
+
+
+function productFilterByIdCate($id)
+{
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id";
+    return pdo_query($sql);
+}
+
+function productSearchByName($name)
+{
+    $sql = "SELECT * FROM `product` WHERE `name` LIKE '$name%'";
+    return pdo_query($sql);
+}
+
+
+function productSortByPrice($status)
+{
+    $sql = "SELECT * FROM `product` ORDER BY `price` $status";
+    return pdo_query($sql);
+}

@@ -29,3 +29,22 @@ function commentDelete($id)
   $sql = "DELETE FROM `comment` WHERE `id`=$id";
   pdo_execute($sql);
 }
+
+
+function commentGetCountForProduct($id)
+{
+  $sql = "SELECT COUNT(`id`) FROM `comment` WHERE `id_pro`=$id";
+  return pdo_query_value($sql);
+}
+
+function commentGetAllForProduct($id)
+{
+  $sql = "SELECT `comment`.id, `comment`.content, `comment`.id_pro, `comment`.added_on,
+  `user`.fullname, `user`.`image` 
+  FROM `comment`
+  LEFT JOIN `user` 
+    ON `user`.id =`comment`.id_user 
+  WHERE `id_pro`=$id 
+  ORDER BY `comment`.id DESC";
+  return pdo_query($sql);
+}

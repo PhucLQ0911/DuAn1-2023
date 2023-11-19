@@ -1,125 +1,112 @@
 <!-- Shop Detail Start -->
 <div class="container-fluid py-5">
-  <div class="row px-xl-5">
-    <div class="col-lg-5 pb-5">
+  <div class="row px-xl-5 px-5">
+    <div class="col-lg-4 pb-5">
       <!-- List img -->
       <div id="product-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner border">
-          <div class="carousel-item active">
-            <img class="w-100 h-100" src="img/product-1.jpg" alt="Image" />
-          </div>
-          <div class="carousel-item">
-            <img class="w-100 h-100" src="img/product-2.jpg" alt="Image" />
-          </div>
-          <div class="carousel-item">
-            <img class="w-100 h-100" src="img/product-3.jpg" alt="Image" />
-          </div>
-          <div class="carousel-item">
-            <img class="w-100 h-100" src="img/product-4.jpg" alt="Image" />
-          </div>
+          <?php foreach ($imageProducts as $key => $imageProduct) : ?>
+            <?php extract($imageProduct) ?>
+            <?php if ($key == 0) : ?>
+              <div id="imageActive" class="carousel-item active">
+                <img class="w-100 h-100" src="../uploads/<?= $image ?>" alt="Image" id="imageColor" />
+              </div>
+            <?php else : ?>
+              <div class="carousel-item">
+                <img class="w-100 h-100" src="../uploads/<?= $image ?>" alt="Image" />
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </div>
-        <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+        <a id="carousel-prev" class="carousel-control-prev" href="#product-carousel" data-slide="prev">
           <i class="fa fa-2x fa-angle-left text-dark"></i>
         </a>
-        <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+        <a id="carousel-next" class="carousel-control-next" href="#product-carousel" data-slide="next">
           <i class="fa fa-2x fa-angle-right text-dark"></i>
         </a>
       </div>
     </div>
 
     <!-- Product information -->
-    <div class="col-lg-7 pb-5">
-      <h3 class="font-weight-semi-bold">Colorful Stylish Shirt</h3>
-      <div class="d-flex mb-3">
-        <div class="text-primary mr-2">
-          <small class="fas fa-star"></small>
-          <small class="fas fa-star"></small>
-          <small class="fas fa-star"></small>
-          <small class="fas fa-star-half-alt"></small>
-          <small class="far fa-star"></small>
+    <?php extract($product) ?>
+    <div class="col-lg-8 pb-5">
+      <form action="?act=buy" method="post">
+        <?php if (isset($_GET['idProduct'])) : ?>
+          <input id="idProduct" name="idProduct" type="hidden" value="<?= $_GET['idProduct'] ?>">
+        <?php endif ?>
+        <h3 class="font-weight-semi-bold"><?= $name ?></h3>
+        <div class="d-flex mb-3">
+          <div class="text-primary mr-2">
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star-half-alt"></small>
+            <small class="far fa-star"></small>
+          </div>
+          <small class="pt-1">(<?= commentGetCountForProduct($id) ?> Reviews)</small>
         </div>
-        <small class="pt-1">(50 Reviews)</small>
-      </div>
-      <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-      <p class="mb-4">
-        Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam
-        stet sit clita ea. Sanc invidunt ipsum et, labore clita lorem magna
-        lorem ut. Erat lorem duo dolor no sea nonumy. Accus labore stet, est
-        lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum
-        kasd rebum.
-      </p>
+        <h3 id="priceSize" class="font-weight-semi-bold mb-4">$<?= $price ?></h3>
 
-      <!-- Size -->
-      <div class="d-flex mb-3">
-        <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-        <form>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="size-1" name="size" />
-            <label class="custom-control-label" for="size-1">XS</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="size-2" name="size" />
-            <label class="custom-control-label" for="size-2">S</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="size-3" name="size" />
-            <label class="custom-control-label" for="size-3">M</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="size-4" name="size" />
-            <label class="custom-control-label" for="size-4">L</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="size-5" name="size" />
-            <label class="custom-control-label" for="size-5">XL</label>
-          </div>
-        </form>
-      </div>
+        <!-- Size -->
+        <div class="d-flex mb-3">
+          <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+          <?php foreach ($sizes as $key => $size) : ?>
+            <?php extract($size) ?>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="size-<?= $key + 1 ?>" name="idProductSize" onclick="changePrice(<?= $price ?>)" value="<?= $id_size ?>" <?= $key == 0 ? 'checked' : '' ?> />
+              <label class="custom-control-label" for="size-<?= $key + 1 ?>"><?= $name_size ?></label>
+            </div>
+          <?php endforeach; ?>
 
-      <!-- Color -->
-      <div class="d-flex mb-4">
-        <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-        <form>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="color-1" name="color" />
-            <label class="custom-control-label" for="color-1">Black</label>
+        </div>
+
+        <!-- Color -->
+        <div class="d-flex mb-4">
+          <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+
+          <?php foreach ($colors as $key => $color) : ?>
+            <?php extract($color) ?>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input onclick="changeImage('<?= $image ?>')" type="radio" class="custom-control-input" id="color-<?= $key + 1 ?>" name="idProductColor" value="<?= $id_color ?>" <?= $key == 0 ? 'checked' : '' ?> />
+              <label class="custom-control-label" for="color-<?= $key + 1 ?>"><?= $name_color ?></label>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Add to cart -->
+        <div class="d-flex align-items-center mb-4 pt-2">
+          <!-- Quantity -->
+          <div class="input-group quantity mr-3" style="width: 130px">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary btn-minus">
+                <i class="fa fa-minus"></i>
+              </button>
+            </div>
+            <input type="text" id="quantityPro" class="form-control bg-secondary text-center" value="1" />
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary btn-plus">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="color-2" name="color" />
-            <label class="custom-control-label" for="color-2">White</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="color-3" name="color" />
-            <label class="custom-control-label" for="color-3">Red</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="color-4" name="color" />
-            <label class="custom-control-label" for="color-4">Blue</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" id="color-5" name="color" />
-            <label class="custom-control-label" for="color-5">Green</label>
-          </div>
-        </form>
-      </div>
-      <div class="d-flex align-items-center mb-4 pt-2">
-        <div class="input-group quantity mr-3" style="width: 130px">
-          <div class="input-group-btn">
-            <button class="btn btn-primary btn-minus">
-              <i class="fa fa-minus"></i>
+
+          <!-- Buy -->
+          <div class="mr-3">
+            <button type="submit" name="buyNow" class="btn btn-primary px-3">
+              <i class="fa fa-shopping-bag mr-1"></i> Buy now
             </button>
           </div>
-          <input type="text" class="form-control bg-secondary text-center" value="1" />
-          <div class="input-group-btn">
-            <button class="btn btn-primary btn-plus">
-              <i class="fa fa-plus"></i>
-            </button>
+
+          <!-- Add -->
+          <div>
+            <a id="addToCart" class="btn btn-primary px-3" onclick="addToCart()">
+              <i class="fa fa-shopping-cart mr-1"></i>Add to cart
+            </a>
           </div>
         </div>
-        <a href="?act=addToCart" class="btn btn-primary px-3">
-          <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
-        </a>
-      </div>
+      </form>
+
+      <!-- Share -->
       <div class="d-flex pt-2">
         <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
         <div class="d-inline-flex">
@@ -145,7 +132,7 @@
     <div class="col">
       <div class="nav nav-tabs justify-content-center border-secondary mb-4">
         <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-        <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+        <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (<?= commentGetCountForProduct($id) ?>)</a>
       </div>
       <div class="tab-content">
 
@@ -153,53 +140,41 @@
         <div class="tab-pane fade show active" id="tab-pane-1">
           <h4 class="mb-3">Product Description</h4>
           <p>
-            Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea.
-            Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam
-            ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed
-            sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam.
-            Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum
-            accusam sadipscing, eos dolores sit no ut diam consetetur duo justo
-            est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor
-            accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt
-            tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea
-            invidunt.
-          </p>
-          <p>
-            Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum.
-            Amet dolore tempor consetetur sed lorem dolor sit lorem tempor.
-            Gubergren amet amet labore sadipscing clita clita diam clita. Sea
-            amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum.
-            Ea erat sed et diam takimata sed justo. Magna takimata justo et amet
-            magna et.
+            <?= $description ?>
           </p>
         </div>
 
         <!-- Review -->
         <div class="tab-pane fade" id="tab-pane-3">
           <div class="row">
+            <!-- List comment -->
             <div class="col-md-6">
-              <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-              <div class="media mb-4">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px" />
-                <div class="media-body">
-                  <h6>
-                    John Doe<small> - <i>01 Jan 2045</i></small>
-                  </h6>
-                  <div class="text-primary mb-2">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <i class="far fa-star"></i>
+              <h4 class="mb-4"><?= commentGetCountForProduct($id) ?> review for "<?= $name ?>"</h4>
+              <?php foreach ($comments as $comment) : ?>
+                <?php extract($comment) ?>
+                <div class="media mb-4">
+                  <img src="../uploads/<?= $image ?>" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px" />
+                  <div class="media-body">
+                    <h6>
+                      <?= $fullname ?><small> - <i><?php $date = strtotime($added_on);
+                                                    echo date('d-m-Y H:i:s', $date); ?></i></small>
+                    </h6>
+                    <div class="text-primary mb-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <i class="far fa-star"></i>
+                    </div>
+                    <p>
+                      <?= $content ?>
+                    </p>
                   </div>
-                  <p>
-                    Diam amet duo labore stet elitr ea clita ipsum, tempor
-                    labore accusam ipsum et no at. Kasd diam tempor rebum magna
-                    dolores sed sed eirmod ipsum.
-                  </p>
                 </div>
-              </div>
+              <?php endforeach; ?>
             </div>
+
+            <!-- Comment -->
             <div class="col-md-6">
               <h4 class="mb-4">Leave a review</h4>
               <small>Your email address will not be published. Required fields are
@@ -341,3 +316,68 @@
   </div>
 </div>
 <!-- Products End -->
+
+
+<script>
+  $(document).ready(function() {
+    $("#carousel-prev").on('click', function() {
+      $('#product-carousel').carousel('cycle');
+    });
+
+    $("#carousel-next").on('click', function() {
+      $('#product-carousel').carousel('cycle');
+    });
+  })
+
+  function changePrice(price) {
+    $("#priceSize").text(`$${price}`);
+  }
+
+  function changeImage(image) {
+    $('#product-carousel').carousel('pause');
+    $('#product-carousel').find('.carousel-item.active img').attr('src', `../uploads/${image}`);
+  }
+
+
+  function addToCart() {
+    let idPro = $("#idProduct").val();
+    let idSize = $('input[name="idProductSize"]:checked').val();
+    let idColor = $('input[name="idProductColor"]:checked').val();
+    let quantityPro = $("#quantityPro").val();
+    console.log(idPro, idSize, idColor, quantityPro);
+
+    let cartList;
+    if (localStorage.getItem("cartProductList") == null) {
+      cartList = [];
+    } else {
+      cartList = JSON.parse(localStorage.getItem("cartProductList"));
+    }
+
+    // Check if the item already exists in the cart
+    let existingItem = cartList.find(item => item.idPro === idPro && item.idSize === idSize && item.idColor === idColor);
+
+    if (existingItem) {
+      // Check if updating would exceed the quantity limit
+      let newQuantity = parseInt(existingItem.quantityPro) + parseInt(quantityPro);
+      if (newQuantity > 5) {
+        // Show a message or alert that quantity can't exceed 5
+        alert("Quantity cannot exceed 5!");
+        return; // Don't update or add to the cart
+      }
+
+      // If the item exists and quantity limit is not exceeded, update the quantity
+      existingItem.quantityPro = newQuantity;
+    } else {
+      // If the item doesn't exist, add it to the cart
+      cartList.push({
+        idPro: idPro,
+        idSize: idSize,
+        idColor: idColor,
+        quantityPro: quantityPro
+      });
+    }
+
+    localStorage.setItem("cartProductList", JSON.stringify(cartList));
+    showTotalProductCart();
+  }
+</script>

@@ -21,13 +21,16 @@
 
     <!-- Cart -->
     <div class="col-lg-4 col-6 text-right">
+      <!-- Total product -->
       <a href="?act=cart" class="btn border">
         <i class="fas fa-shopping-cart text-primary"></i>
-        <span class="badge">0</span>
+        <span class="badge" id="totalProduct"></span>
       </a>
+      <!-- Login -->
       <a href="../login/signIn.html" class="btn border">
         <i class="far fa-user text-primary"></i>
       </a>
+      <!-- Check order -->
       <a href="?act=orderDetail" class="btn border">
         <i class="fas fa-calendar-week text-primary"></i>
       </a>
@@ -35,3 +38,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    showTotalProductCart();
+  })
+
+  function showTotalProductCart() {
+    let total = localStorage.getItem("cartProductList");
+    let totalCart = 0;
+    if (total) {
+      // Parse the cartList from JSON to an array
+      total = JSON.parse(total);
+      // Return the length of the cartList array
+      totalCart = total.length;
+    }
+    $("#totalProduct").text(totalCart);
+  }
+</script>
