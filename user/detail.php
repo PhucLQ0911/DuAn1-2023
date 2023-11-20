@@ -376,7 +376,6 @@
         quantityPro: quantityPro
       });
     }
-
     localStorage.setItem("cartProductList", JSON.stringify(cartList));
     showTotalProductCart();
   }

@@ -53,29 +53,6 @@ if (isset($_GET['act'])) {
       // Cart
     case 'cart':
       include("./cart.php");
-      if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['carts'])) {
-        // Giải mã dữ liệu JSON
-        $cartData = json_decode($_POST['carts'], true);
-        // Hiển thị và xử lý dữ liệu nếu cần
-        foreach ($cartData as $product) {
-          $idPro = $product['idPro'];
-          $quantity = $product['quantityPro'];
-          $idColor = $product['idColor'];
-          $idSize = $product['idSize'];
-          // Hiển thị thông tin sản phẩm hoặc thực hiện các hành động khác cần thiết
-
-          $namePro =  productSelectOne($idPro)['name'];
-          $pricePro = productAttGetPrice($idColor, $idSize, $idPro);
-          $nameSize = productAttSizeGetNameById($idSize)['size'];
-          $nameColor = productAttColorGetNameById($idPro)['color'];
-          var_dump($nameColor);
-          echo "<br/>";
-          echo "Product ID: $idPro - Name Pro: $namePro - Price : $pricePro - Quantity: $quantity - ID size:$idSize - Name Size : $nameSize - ID Color: $idColor - Name color : $nameColor <br/> ";
-        }
-      } else {
-        // Hiển thị thông báo hoặc thực hiện các hành động khác nếu không có dữ liệu
-        echo "No data received from local storage.";
-      }
       break;
       // Checkout
     case 'checkout':

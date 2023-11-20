@@ -54,5 +54,5 @@ function productAttGetPrice($idColor, $idSize, $idPro)
 {
   $sql = "SELECT `price` FROM `product_attributes` 
         WHERE id_color =$idColor AND `id_size`=$idSize AND `id_pro` = $idPro";
-  return pdo_query_value($sql);
+  return pdo_query_one($sql);
 }
