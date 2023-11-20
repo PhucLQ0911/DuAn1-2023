@@ -27,9 +27,31 @@
         <span class="badge" id="totalProduct"></span>
       </a>
       <!-- Login -->
-      <a href="../login/signIn.html" class="btn border">
-        <i class="far fa-user text-primary"></i>
-      </a>
+      <?php if (isset($_SESSION['user'])) : ?>
+        <?php extract($_SESSION['user']) ?>
+        <div class="dropdown show ml-2">
+          <a class="btn border dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img height="30px" max-width="100%" class="rounded-circle mr-1" src="../uploads/<?= $image ?>" alt="123">
+            <?= $fullname ?>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">
+              Profile
+            </a>
+            <?php if ($role == 1) : ?>
+              <a class="dropdown-item" href="../admin/?act=home">
+                Admin
+              </a>
+            <?php endif; ?>
+            <a class="dropdown-item" href="#">Sign out</a>
+          </div>
+        </div>
+      <?php else : ?>
+        <a href="../login/signIn.php" class="btn border ml-2">
+          <i class="far fa-user text-primary">
+          </i>
+        </a>
+      <?php endif; ?>
       <!-- Check order -->
       <a href="?act=orderDetail" class="btn border">
         <i class="fas fa-calendar-week text-primary"></i>
