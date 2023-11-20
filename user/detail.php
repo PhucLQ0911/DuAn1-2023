@@ -57,7 +57,6 @@
               <label class="custom-control-label" for="size-<?= $key + 1 ?>"><?= $name_size ?></label>
             </div>
           <?php endforeach; ?>
-
         </div>
 
         <!-- Color -->
@@ -357,18 +356,13 @@
     let existingItem = cartList.find(item => item.idPro === idPro && item.idSize === idSize && item.idColor === idColor);
 
     if (existingItem) {
-      // Check if updating would exceed the quantity limit
       let newQuantity = parseInt(existingItem.quantityPro) + parseInt(quantityPro);
       if (newQuantity > 5) {
-        // Show a message or alert that quantity can't exceed 5
         alert("Quantity cannot exceed 5!");
-        return; // Don't update or add to the cart
+        return;
       }
-
-      // If the item exists and quantity limit is not exceeded, update the quantity
       existingItem.quantityPro = newQuantity;
     } else {
-      // If the item doesn't exist, add it to the cart
       cartList.push({
         idPro: idPro,
         idSize: idSize,

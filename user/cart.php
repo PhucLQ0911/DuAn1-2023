@@ -215,10 +215,12 @@
 
   function plusQuantity(index, price) {
     let quantity = $(`#quantityPro-${index}`).val();
-    quantity = $(`#quantityPro-${index}`).val(Number(quantity) + 1);
-    changePrice(index, price);
-    totalAmount();
-    updateLocalDate(index);
+    if (quantity < 5) {
+      quantity = $(`#quantityPro-${index}`).val(Number(quantity) + 1);
+      changePrice(index, price);
+      totalAmount();
+      updateLocalDate(index);
+    }
   }
 
   function changePrice(index, price) {
@@ -236,7 +238,7 @@
     localStorage.setItem('cartProductList', updatedJsonData);
     $(`#item-${index}`).remove();
     showTotalProductCart();
-    totalAmount()
+    totalAmount();
   }
 
   function totalAmount() {
@@ -246,6 +248,7 @@
       let total = $(`#totalAmount-${i+1}`).text();
       totals += Number(total.replace('$', ''));
     }
+    totals = Math.round(100 * totals) / 100;
     $("#subTotal").text("$" + totals);
     $("#totalSummary").text("$" + totals);
   }
