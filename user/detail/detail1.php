@@ -53,7 +53,7 @@
           <?php foreach ($sizes as $key => $size) : ?>
             <?php extract($size) ?>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-<?= $key + 1 ?>" name="idProductSize" onclick="changeColor()" value="<?= $id_size ?>" />
+              <input type="radio" class="custom-control-input" id="size-<?= $key + 1 ?>" name="idProductSize" onclick="changePrice(<?= productAttGetPriceOne($id_pro, $id_size)['price'] ?>)" value="<?= $id_size ?>" <?= $key == 0 ? 'checked' : '' ?> />
               <label class="custom-control-label" for="size-<?= $key + 1 ?>"><?= $name_size ?></label>
             </div>
           <?php endforeach; ?>
@@ -62,15 +62,14 @@
         <!-- Color -->
         <div class="d-flex mb-4">
           <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-          <div id="itemColors">
-            <?php foreach ($colors as $key => $color) : ?>
-              <?php extract($color) ?>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input onclick="changeImage('<?= productAttGetImage($id_pro, $id_color)['image'] ?>')" type="radio" class="custom-control-input" id="color-<?= $key + 1 ?>" name="idProductColor" value="<?= $id_color ?>" />
-                <label class="custom-control-label" for="color-<?= $key + 1 ?>"><?= $name_color ?></label>
-              </div>
-            <?php endforeach; ?>
-          </div>
+
+          <?php foreach ($colors as $key => $color) : ?>
+            <?php extract($color) ?>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input onclick="changeImage('<?= productAttGetImage($id_pro, $id_color)['image'] ?>')" type="radio" class="custom-control-input" id="color-<?= $key + 1 ?>" name="idProductColor" value="<?= $id_color ?>" <?= $key == 0 ? 'checked' : '' ?> />
+              <label class="custom-control-label" for="color-<?= $key + 1 ?>"><?= $name_color ?></label>
+            </div>
+          <?php endforeach; ?>
         </div>
 
         <!-- Add to cart -->
@@ -330,74 +329,20 @@
   })
 
   function changeColor() {
-    let idPro = $("#idProduct").val();
     let idSize = $('input[name="idProductSize"]:checked').val();
     let idColor = $('input[name="idProductColor"]:checked').val();
-    // Check color exits
-    $.ajax({
-      type: "post",
-      url: "detailCall.php",
-      dataType: 'json',
-      data: {
-        functionname: 'getAllColorBySize',
-        arguments: [idPro, idSize]
-      },
-      success: function(obj, textStatus) {
-        if (!('error' in obj)) {
-          let colors = obj.result;
-          $("#itemColors").empty();
-          for (let i = 0; i < colors['color'].length; i++) {
-            let html = `<div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" class="custom-control-input" id="color-${i}" name="idProductColor" value="${colors['id'][i]}" onclick="changePriceAndImage()" />
-                          <label class="custom-control-label" for="color-${i}">${colors['color'][i]}</label>
-                        </div>`
-            $("#itemColors").append(html);
-          }
-        } else {
-          console.log(obj.errol);
-        }
-      },
-      error: function(error) {
-        console.error(error);
-        console.error('Error sending data');
-      }
-    });
   }
 
-  function changePriceAndImage() {
-    let idPro = $("#idProduct").val();
-    let idSize = $('input[name="idProductSize"]:checked').val();
-    let idColor = $('input[name="idProductColor"]:checked').val();
+  function changeSize() {
 
-    console.log(idPro, idColor, idSize);
-    if (idSize, idColor) {
-      $.ajax({
-        type: "post",
-        url: "detailCall.php",
-        dataType: 'json',
-        data: {
-          functionname: 'getAllPriceAndImageByIdPro',
-          arguments: [idPro, idSize, idColor]
-        },
-        success: function(obj, textStatus) {
-          if (!('error' in obj)) {
-            let price = obj['result']['price'];
-            let image = obj['result']['image'];
-            changePrice(price);
-            changeImage(image);
-          } else {
-            console.log("Arrays is undefined :  " + obj.errol);
-          }
-        },
-        error: function(error) {
-          console.error('Error sending data');
-        }
-      });
-    }
   }
+
+
+
+
 
   function changePrice(price) {
-    // console.log($('input[name="idProductColor"]:checked').val());
+    console.log($('input[name="idProductColor"]:checked').val());
     $("#priceSize").text(`$${price}`);
   }
 

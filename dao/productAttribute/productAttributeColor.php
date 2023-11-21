@@ -13,7 +13,6 @@ function productAttGetAllColorByIdPro($id)
             id_pro,
             id_color,
             `product_color`.color AS `name_color`,
-            `image`,
             MIN(product_attributes.id) AS id_attribute
           FROM
             product_attributes
@@ -21,7 +20,7 @@ function productAttGetAllColorByIdPro($id)
             `product_color` ON product_attributes.id_color = `product_color`.id
           WHERE
             id_pro =$id
-          GROUP BY id_color, image";
+          GROUP BY id_color";
   return pdo_query($sql);
 }
 

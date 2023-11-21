@@ -56,3 +56,40 @@ function productAttGetPrice($idColor, $idSize, $idPro)
         WHERE id_color =$idColor AND `id_size`=$idSize AND `id_pro` = $idPro";
   return pdo_query_one($sql);
 }
+
+function productAttGetPriceOne($idPro, $idSize)
+{
+  $sql = "SELECT `price` FROM `product_attributes` 
+        WHERE `id_size`=$idSize AND `id_pro` = $idPro LIMIT 1";
+  return pdo_query_one($sql);
+}
+
+function productAttGetImage($idPro, $idColor)
+{
+  $sql = "SELECT `image` FROM `product_attributes` 
+        WHERE `id_color`=$idColor AND `id_pro` = $idPro LIMIT 1";
+  return pdo_query_one($sql);
+}
+
+function productAttGetColorBySize($idPro, $idSize)
+{
+  $sql = "SELECT 
+            `id_color`,
+            `product_color`.color AS `color`
+          FROM
+            product_attributes
+                LEFT JOIN `product_color` 
+            ON `product_attributes`.`id_color` = `product_color`.id
+          WHERE
+            id_pro =$idPro AND id_size= $idSize
+          GROUP BY id_color";
+  return pdo_query($sql);
+}
+
+function productAttGetPriceAndImage($idPro, $idSize, $idColor)
+{
+  $sql = "SELECT `image`,`price` 
+          FROM `product_attributes` 
+          WHERE id_pro=$idPro AND id_size=$idSize AND id_color=$idColor";
+  return pdo_query_one($sql);
+}
