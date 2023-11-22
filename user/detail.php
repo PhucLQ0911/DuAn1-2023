@@ -30,81 +30,82 @@
     <!-- Product information -->
     <?php extract($product) ?>
     <div class="col-lg-8 pb-5">
-      <form action="?act=buy" method="post">
-        <?php if (isset($_GET['idProduct'])) : ?>
-          <input id="idProduct" name="idProduct" type="hidden" value="<?= $_GET['idProduct'] ?>">
-        <?php endif ?>
-        <h3 class="font-weight-semi-bold"><?= $name ?></h3>
-        <div class="d-flex mb-3">
-          <div class="text-primary mr-2">
-            <small class="fas fa-star"></small>
-            <small class="fas fa-star"></small>
-            <small class="fas fa-star"></small>
-            <small class="fas fa-star-half-alt"></small>
-            <small class="far fa-star"></small>
-          </div>
-          <small class="pt-1">(<?= commentGetCountForProduct($id) ?> Reviews)</small>
+      <?php if (isset($_GET['idProduct'])) : ?>
+        <input id="idProduct" name="idProduct" type="hidden" value="<?= $_GET['idProduct'] ?>">
+      <?php endif ?>
+      <h3 class="font-weight-semi-bold"><?= $name ?></h3>
+      <div class="d-flex mb-3">
+        <div class="text-primary mr-2">
+          <small class="fas fa-star"></small>
+          <small class="fas fa-star"></small>
+          <small class="fas fa-star"></small>
+          <small class="fas fa-star-half-alt"></small>
+          <small class="far fa-star"></small>
         </div>
-        <h3 id="priceSize" class="font-weight-semi-bold mb-4">$<?= $price ?></h3>
+        <small class="pt-1">(<?= commentGetCountForProduct($id) ?> Reviews)</small>
+      </div>
+      <h3 id="priceSize" class="font-weight-semi-bold mb-4">$<?= $price ?></h3>
 
-        <!-- Size -->
-        <div class="d-flex mb-3">
-          <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-          <?php foreach ($sizes as $key => $size) : ?>
-            <?php extract($size) ?>
+      <!-- Size -->
+      <div class="d-flex mb-3 form-group">
+        <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+        <?php foreach ($sizes as $key => $size) : ?>
+          <?php extract($size) ?>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="size-<?= $key + 1 ?>" name="idProductSize" onclick="changeColor()" value="<?= $id_size ?>" required />
+            <label class="custom-control-label" for="size-<?= $key + 1 ?>"><?= $name_size ?></label>
+          </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Color -->
+      <div class="d-flex mb-4">
+        <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+        <div id="itemColors">
+          <?php foreach ($colors as $key => $color) : ?>
+            <?php extract($color) ?>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-<?= $key + 1 ?>" name="idProductSize" onclick="changeColor()" value="<?= $id_size ?>" />
-              <label class="custom-control-label" for="size-<?= $key + 1 ?>"><?= $name_size ?></label>
+              <input onclick="changeImage('<?= productAttGetImage($id_pro, $id_color)['image'] ?>')" type="radio" class="custom-control-input" id="color-<?= $key + 1 ?>" name="idProductColor" value="<?= $id_color ?>" <?= $key == 0 ? 'checked' : '' ?>required />
+              <label class="custom-control-label" for="color-<?= $key + 1 ?>"><?= $name_color ?></label>
             </div>
           <?php endforeach; ?>
         </div>
+      </div>
+      <div id="validation-size-color">
+      </div>
 
-        <!-- Color -->
-        <div class="d-flex mb-4">
-          <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-          <div id="itemColors">
-            <?php foreach ($colors as $key => $color) : ?>
-              <?php extract($color) ?>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input onclick="changeImage('<?= productAttGetImage($id_pro, $id_color)['image'] ?>')" type="radio" class="custom-control-input" id="color-<?= $key + 1 ?>" name="idProductColor" value="<?= $id_color ?>" />
-                <label class="custom-control-label" for="color-<?= $key + 1 ?>"><?= $name_color ?></label>
-              </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
-
-        <!-- Add to cart -->
-        <div class="d-flex align-items-center mb-4 pt-2">
-          <!-- Quantity -->
-          <div class="input-group quantity mr-3" style="width: 130px">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-primary btn-minus">
-                <i class="fa fa-minus"></i>
-              </button>
-            </div>
-            <input type="text" id="quantityPro" class="form-control bg-secondary text-center" value="1" />
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-primary btn-plus">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Buy -->
-          <div class="mr-3">
-            <button type="submit" name="buyNow" class="btn btn-primary px-3">
-              <i class="fa fa-shopping-bag mr-1"></i> Buy now
+      <!-- Add to cart -->
+      <div class="d-flex align-items-center mb-4 pt-2">
+        <!-- Quantity -->
+        <div class="input-group quantity mr-3" style="width: 130px">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-primary btn-minus">
+              <i class="fa fa-minus"></i>
             </button>
           </div>
-
-          <!-- Add -->
-          <div>
-            <a id="addToCart" class="btn btn-primary px-3" onclick="addToCart()">
-              <i class="fa fa-shopping-cart mr-1"></i>Add to cart
-            </a>
+          <input type="text" id="quantityPro" class="form-control bg-secondary text-center" value="1" />
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-primary btn-plus">
+              <i class="fa fa-plus"></i>
+            </button>
           </div>
         </div>
-      </form>
+
+        <!-- Buy -->
+        <div class="mr-3">
+          <a name="buyNow" class="btn btn-primary px-3" onclick="buyNow()">
+            <i class="fa fa-shopping-bag mr-1"></i> Buy now
+          </a>
+        </div>
+
+        <!-- Add -->
+        <div>
+          <a id="addToCart" class="btn btn-primary px-3" onclick="addToCart()">
+            <i class="fa fa-shopping-cart mr-1"></i>Add to cart
+          </a>
+        </div>
+      </div>
+
 
       <!-- Share -->
       <div class="d-flex pt-2">
@@ -333,6 +334,7 @@
     let idPro = $("#idProduct").val();
     let idSize = $('input[name="idProductSize"]:checked').val();
     let idColor = $('input[name="idProductColor"]:checked').val();
+    $("#validation-size-color").empty();
     // Check color exits
     $.ajax({
       type: "post",
@@ -368,8 +370,7 @@
     let idPro = $("#idProduct").val();
     let idSize = $('input[name="idProductSize"]:checked').val();
     let idColor = $('input[name="idProductColor"]:checked').val();
-
-    console.log(idPro, idColor, idSize);
+    $("#validation-size-color").empty();
     if (idSize, idColor) {
       $.ajax({
         type: "post",
@@ -397,7 +398,6 @@
   }
 
   function changePrice(price) {
-    // console.log($('input[name="idProductColor"]:checked').val());
     $("#priceSize").text(`$${price}`);
   }
 
@@ -406,14 +406,19 @@
     $('#product-carousel').find('.carousel-item.active img').attr('src', `../uploads/${image}`);
   }
 
-
   function addToCart() {
     let idPro = $("#idProduct").val();
     let idSize = $('input[name="idProductSize"]:checked').val();
     let idColor = $('input[name="idProductColor"]:checked').val();
     let quantityPro = $("#quantityPro").val();
-    console.log(idPro, idSize, idColor, quantityPro);
 
+    // Check size, color
+    let isExits = validationSizeColor(idSize, idColor);
+    if (isExits === 1) {
+      return;
+    }
+
+    // Get in local storage
     let cartList;
     if (localStorage.getItem("cartProductList") == null) {
       cartList = [];
@@ -426,12 +431,16 @@
 
     if (existingItem) {
       let newQuantity = parseInt(existingItem.quantityPro) + parseInt(quantityPro);
+
+      // Check if quantity pro > 5
       if (newQuantity > 5) {
         alert("Quantity cannot exceed 5!");
         return;
       }
+      // Update quantity
       existingItem.quantityPro = newQuantity;
     } else {
+      // Add to array
       cartList.push({
         idPro: idPro,
         idSize: idSize,
@@ -439,7 +448,50 @@
         quantityPro: quantityPro
       });
     }
+
+    // Add to local storage
     localStorage.setItem("cartProductList", JSON.stringify(cartList));
     showTotalProductCart();
+  }
+
+  function buyNow() {
+    let idPro = $("#idProduct").val();
+    let idSize = $('input[name="idProductSize"]:checked').val();
+    let idColor = $('input[name="idProductColor"]:checked').val();
+    let quantityPro = $("#quantityPro").val();
+    // Check size, color
+    let isExits = validationSizeColor(idSize, idColor);
+    if (isExits === 1) {
+      return;
+    }
+    // Get in session storage
+    let product;
+    if (sessionStorage.getItem("product") == null) {
+      product = [];
+    } else {
+      product = [];
+      sessionStorage.removeItem("product");
+    }
+
+    // Add to array
+    product.push({
+      idPro: idPro,
+      idSize: idSize,
+      idColor: idColor,
+      quantityPro: quantityPro
+    });
+    // Add to session storage
+    sessionStorage.setItem("product", JSON.stringify(product));
+    window.location.href = "http://localhost/DA1v1/user/?act=checkout";
+  }
+
+  function validationSizeColor(idSize, idColor) {
+    if (!idSize || !idColor) {
+      $("#validation-size-color").empty();
+      let html = `<p class="text-danger">Please choose size or color</p>`;
+      $("#validation-size-color").append(html);
+      return 1;
+    }
+    return 0;
   }
 </script>

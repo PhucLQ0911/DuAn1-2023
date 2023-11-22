@@ -280,6 +280,7 @@ ob_start();
               $colorAtt = $_POST['validation-product-att-color-id'];
               $sizeAtt = $_POST['validation-product-att-size-id'];
               $imgAtt = $_FILES['validation-product-att-image']['name'];
+              // Thieu upload
               for ($i = 0; $i < sizeof($priceAtt); $i++) {
                 productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
               }
@@ -306,6 +307,7 @@ ob_start();
               $price = $_POST['validation-product-att-price'];
               $quantity = $_POST['validation-product-att-qty'];
               $image = $_FILES['validation-product-att-image']['name'];
+              // Thieu luu anh
               productAttUpdate($idAtt, $price, $quantity, $image);
               header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessUpdate=1");
             }

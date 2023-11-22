@@ -47,7 +47,7 @@
           </div>
         </div>
       <?php else : ?>
-        <a href="../login/signIn.php" class="btn border ml-2">
+        <a href="../login/signIn.php" class="btn border">
           <i class="far fa-user text-primary">
           </i>
         </a>

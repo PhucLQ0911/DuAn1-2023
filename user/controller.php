@@ -54,9 +54,9 @@ if (isset($_GET['act'])) {
     case 'cart':
       include("./cart.php");
       break;
+
       // Checkout
     case 'checkout':
-    case 'buy':
       include_once("./checkout.php");
       break;
 
@@ -66,12 +66,13 @@ if (isset($_GET['act'])) {
       break;
 
       // Add to cart
-      // case 'buy':
-      //   if (isset($_POST['buyNow'])) {
-      //     $id = $_POST['idProduct'];
-      //     echo $id;
-      //   }
-      //   break;
+    case 'buy':
+      if (isset($_POST['buyNow'])) {
+        $id = $_POST['idProduct'];
+        echo $id;
+      }
+      include_once("./buyNow.php");
+      break;
 
     default:
       include_once("./home/index.php");
