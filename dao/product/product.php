@@ -64,9 +64,9 @@ function productCountByCategory($id)
 }
 
 
-function productFilterByIdCate($id)
+function productFilterByIdCate($id,$itemPerPage,$offset)
 {
-    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id";
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id ORDER BY id DESC LIMIT ".$itemPerPage." OFFSET ".$offset."";
     return pdo_query($sql);
 }
 
@@ -81,4 +81,17 @@ function productSortByPrice($status)
 {
     $sql = "SELECT * FROM `product` ORDER BY `price` $status";
     return pdo_query($sql);
+}
+function productCheck($name)
+{
+    $sql = "SELECT `name`,`status`,`id`  FROM `product` WHERE `name`= '" . $name . "'";
+    return pdo_query_one($sql);
+}
+
+function productReUpdate($category, $price, $image, $description, $id)
+{
+    $sql = "UPDATE `product` 
+    SET id_cate ='" . $category . "', price ='" . $price . "', image ='" . $image . "', description ='" . $description . "',status='0' 
+    WHERE id= $id";
+    pdo_execute($sql);
 }

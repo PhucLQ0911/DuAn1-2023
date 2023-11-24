@@ -76,6 +76,24 @@ function pdo_query_one($sql)
         unset($conn);
     }
 }
+
+
+function pdo_query_row($sql)
+{
+    $sql_args = array_slice(func_get_args(), 1);
+    try {
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($sql_args);
+        $row = $stmt->rowCount();
+        return $row;
+    } catch (PDOException $e) {
+        throw $e;
+    } finally {
+        unset($conn);
+    }
+}
+
 /**
  * Thực thi câu lệnh sql truy vấn một giá trị
  * @param string $sql câu lệnh sql

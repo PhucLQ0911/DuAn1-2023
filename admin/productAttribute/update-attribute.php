@@ -60,6 +60,7 @@
                   <!-- Image -->
                   <div class="form-group col-lg-2">
                     <label class="form-label">Image</label>
+                    <input type="hidden" name="oldImage" id="image" class="validation-file" value="<?= $proAtt['image']?>" >
                     <input type="file" name="validation-product-att-image" id="image" class="validation-file">
                   </div>
 

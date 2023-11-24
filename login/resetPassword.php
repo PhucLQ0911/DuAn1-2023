@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+include "../dao/login/login.php";
+  if(isset($_POST['resetPassword'])){
+    $email = $_POST['email'];
+    $checkEmail = checkUser($email);
+    if(is_array($checkEmail)){
+          $passwordNew = substr((rand(0,9999)),0,8);
+          loginGetPassword($email,$passwordNew);
+          loginUpdatePassword(substr(md5($passwordNew),0,8),$email);
+
+    }else{
+          $thongbao = "Email không tồn tại";
+    }
+}
+?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -28,7 +43,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="m-sm-4">
-                    <form>
+                    <form method="post">
                       <div class="form-group">
                         <label>Email</label>
                         <input
@@ -39,10 +54,10 @@
                         />
                       </div>
                       <div class="text-center mt-3">
-                        <a href="signIn.html" class="btn btn-lg btn-primary"
+                        <!-- <a href="signIn.html" class="btn btn-lg btn-primary"
                           >Reset password</a
-                        >
-                        <!-- <button type="submit" class="btn btn-lg btn-primary">Reset password</button> -->
+                        > -->
+                        <button type="submit" name="resetPassword" class="btn btn-lg btn-primary">Reset password</button>
                       </div>
                     </form>
                   </div>

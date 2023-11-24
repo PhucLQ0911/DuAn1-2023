@@ -93,3 +93,16 @@ function productAttGetPriceAndImage($idPro, $idSize, $idColor)
           WHERE id_pro=$idPro AND id_size=$idSize AND id_color=$idColor";
   return pdo_query_one($sql);
 }
+function productAttCheck($colorAtt, $sizeAtt, $idPro)
+{
+  $sql = "SELECT `id`,`id_pro`,`id_size`,`id_color`,`status` FROM `product_attributes` WHERE id_color = '" . $colorAtt . "' AND id_size ='" . $sizeAtt . "' AND id_pro=$idPro";
+  return pdo_query_one($sql);
+}
+
+function productAttReUpdate($price, $quantity, $image, $id)
+{
+  $sql = "UPDATE `product_attributes` 
+  SET `price` ='" . $price . "',`quantity`='" . $quantity . "',image='" . $image . "' ,`status`='0'
+  WHERE `id`=$id";
+  pdo_execute($sql);
+}

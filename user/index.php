@@ -1,10 +1,12 @@
 <?php
+session_start();
 include_once("../dao/category/category.php");
 include_once("../dao/product/product.php");
 include_once("../dao/productAttribute/productAttributeColor.php");
 include_once("../dao/productAttribute/productAttributeSize.php");
 include_once("../dao/productAttribute/productAttributes.php");
 include_once("../dao/comment/comment.php");
+include_once("../dao/login/login.php");
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +55,7 @@ include_once("../dao/comment/comment.php");
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
+  
 
 </body>
 

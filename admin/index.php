@@ -1,4 +1,5 @@
 ﻿<?php
+session_start();
 include_once "../dao/category/category.php";
 include_once "../dao/product/product.php";
 include_once "../dao/productAttribute/productAttributes.php";
@@ -8,7 +9,11 @@ include_once "../dao/user/user.php";
 include_once "../dao/comment/comment.php";
 include_once "../dao/order/order.php";
 include_once "../dao/orderDetail/orderDetail.php";
+include_once "../dao/login/login.php";
 ob_start();
+if (!isset($_SESSION['user'])) {
+  header("location: ../login/signIn.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -80,9 +85,22 @@ ob_start();
               $target_file = $target_dir . basename($image['name']);
               move_uploaded_file($image["tmp_name"], $target_file);
 
-              // Insert
-              categoryInsert($name, $image['name']);
-              $success = 1;
+              // check Name Category
+              $categoryCheck = categoryCheck($name);
+              if (is_array($categoryCheck)) {
+                extract($categoryCheck);
+                if ($status == 0) {
+                  echo "name đã tồn tại";
+                } else {
+                  // update 
+                  categoryReUpdate($image['name'], $id);
+                  $success = 1;
+                }
+              } else {
+                // Insert
+                categoryInsert($name, $image['name']);
+                $success = 1;
+              }
             }
             include("category/add-category.php");
             if ($success == 1) {
@@ -110,6 +128,7 @@ ob_start();
               $target_dir = "../uploads/";
               $target_file = $target_dir . basename($image);
               move_uploaded_file($_FILES["validation-category-file"]["tmp_name"], $target_file);
+
               categoryUpdate($name, $image, $idCate);
               header("location: ?act=listCategory&isSuccessUpdate=1");
             }
@@ -166,8 +185,20 @@ ob_start();
               $target_file = $target_dir . basename($image['name']);
               move_uploaded_file($image["tmp_name"], $target_file);
 
-              // Insert
-              productInsert($name, $image['name'], $description, $price, $category);
+              // check name Product
+              $productCheck = productCheck($name);
+              if (is_array($productCheck)) {
+                extract($productCheck);
+                if ($status == 0) {
+                  echo "name đã tồn tại </br>";
+                } else {
+                  // update
+                  productReUpdate($category, $price, $image['name'], $description, $id);
+                }
+              } else {
+                // Insert
+                productInsert($name, $image['name'], $description, $price, $category);
+              }
 
               // Lay ra id cua san pham vua them vao
               $idCurrent = productSelectLast();
@@ -179,6 +210,8 @@ ob_start();
               $colorAtt = $_POST['validation-product-att-color-id'];
               $sizeAtt = $_POST['validation-product-att-size-id'];
               $imgAtt = $_FILES['validation-product-att-image'];
+              $color = implode(', ', $colorAtt);
+              $size = implode(', ', $sizeAtt);
 
               for ($i = 0; $i < sizeof($priceAtt); $i++) {
                 // Save image
@@ -186,14 +219,14 @@ ob_start();
                 $target_file = $target_dir . basename($imgAtt['name'][$i]);
                 move_uploaded_file($imgAtt["tmp_name"][$i], $target_file);
 
-                // Check trung 
-                //
-                // Neu khong turng
-                // Insert
-                productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
-
-                // Eles trung thi update
-                // Update 
+                // check size color product
+                $productAttCheck = productAttCheck($color, $size, $idPro);
+                if (is_array($productAttCheck)) {
+                  echo "size và color đã tồn tại";
+                } else {
+                  // Insert
+                  productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
+                }
               }
               $isSuccess = 1;
             }
@@ -215,18 +248,22 @@ ob_start();
             if (isset($_POST['updateProduct'])) {
               $id = $_POST['idProduct'];
               $name = $_POST['validation-product-name'];
-              $image = $_FILES["validation-product-file"];
+              $image = $_POST['oldImage'];
+              $newImage = $_FILES["validation-product-file"]['name'];
               $price = $_POST['validation-product-price'];
               $description = $_POST['validation-product-description'];
               $category = $_POST['validation-product-select'];
 
+              if ($newImage != "") {
+                $image = $newImage;
+              }
               // Save image
               $target_dir = "../uploads/";
-              $target_file = $target_dir . basename($image['name']);
-              move_uploaded_file($image["tmp_name"], $target_file);
+              $target_file = $target_dir . basename($image);
+              move_uploaded_file($_FILES["validation-product-file"]["tmp_name"], $target_file);
 
               // Update
-              productUpdate($id, $name, $price, $image['name'], $description, $category);
+              productUpdate($id, $name, $price, $image, $description, $category);
               header("location: ?act=listProduct&isSuccessUpdate=1");
             }
             $categories = categoryGetAll();
@@ -280,11 +317,32 @@ ob_start();
               $colorAtt = $_POST['validation-product-att-color-id'];
               $sizeAtt = $_POST['validation-product-att-size-id'];
               $imgAtt = $_FILES['validation-product-att-image']['name'];
-              // Thieu upload
-              for ($i = 0; $i < sizeof($priceAtt); $i++) {
-                productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
+              $color = implode(', ', $colorAtt);
+              $size = implode(', ', $sizeAtt);
+              $price = implode($priceAtt);
+              $quantity = implode($quantityAtt);
+              $image = implode($imgAtt);
+
+              // save Image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image);
+              move_uploaded_file(implode($_FILES['validation-product-att-image']['tmp_name']), $target_file);
+              // check size color
+              $productAttCheck = productAttCheck($color, $size, $idPro);
+              if (is_array($productAttCheck)) {
+                extract($productAttCheck);
+                if ($status == 0) {
+                  echo "size và color đã tồn tại";
+                } else {
+                  // update
+                  productAttReUpdate($price, $quantity, $image, $id);
+                }
+              } else {
+                for ($i = 0; $i < sizeof($priceAtt); $i++) {
+                  productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
+                }
+                $isSuccess = 1;
               }
-              $isSuccess = 1;
             }
             $categories = categoryGetAll();
             $productSizes = productAttGetAllSize();
@@ -306,8 +364,16 @@ ob_start();
               $idPro = $_POST['idProduct'];
               $price = $_POST['validation-product-att-price'];
               $quantity = $_POST['validation-product-att-qty'];
-              $image = $_FILES['validation-product-att-image']['name'];
-              // Thieu luu anh
+              $image = $_POST['oldImage'];
+              $newImage = $_FILES['validation-product-att-image']['name'];
+              if ($newImage != "") {
+                $image = $newImage;
+              }
+              // save Image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image);
+              move_uploaded_file($_FILES['validation-product-att-image']['tmp_name'], $target_file);
+
               productAttUpdate($idAtt, $price, $quantity, $image);
               header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessUpdate=1");
             }
@@ -437,9 +503,32 @@ ob_start();
 
             // Profile
           case 'profile':
+            if (isset($_POST['profile'])) {
+              $id = $_POST['id'];
+              $fullname = $_POST['fullname'];
+              $phone = $_POST['phone'];
+              $address = $_POST['address'];
+              $image = $_POST['oldImage'];
+              $newImage = $_FILES['image']['name'];
+              if ($newImage != "") {
+                $image = $newImage;
+              }
+              // save image
+              $target_dir = "../uploads/";
+              $target_file = $target_dir . basename($image);
+              move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+              loginUpdateUser($fullname, $phone, $address, $image, $id);
+              $_SESSION['user'] =  loginUserOne($id);
+              header("location:?act=profile");
+            }
             include "profile/profile.php";
             break;
 
+            // signOut
+          case 'signOut':
+            session_unset();
+            header("location: ../user/index.php");
+            break;
 
             // Help
           case 'help':
@@ -460,7 +549,6 @@ ob_start();
       ?>
     </div>
   </div>
-
 
 </body>
 

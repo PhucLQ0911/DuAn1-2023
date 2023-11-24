@@ -29,7 +29,7 @@
               <div class="form-group">
                 <label class="form-label">Image</label>
                 <div>
-                  <input type="hidden" value="<?= $product['image'] ?>">
+                  <input type="hidden" name="oldImage" value="<?= $product['image'] ?>">
                   <input type="file" class="validation-file" name="validation-product-file">
                 </div>
               </div>

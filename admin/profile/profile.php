@@ -1,4 +1,9 @@
-﻿<main class="content">
+﻿<?php
+if(isset($_SESSION['user'])){
+      extract($_SESSION['user']);
+}
+?>
+<main class="content">
   <div class="container-fluid p-0">
     <h1 class="h3 mb-3">Settings</h1>
 
@@ -25,116 +30,49 @@
           <div class="tab-pane fade show active" id="account" role="tabpanel">
             <div class="card">
               <div class="card-header">
-                <div class="card-actions float-right">
-                  <div class="dropdown show">
-                    <a href="#" data-toggle="dropdown" data-display="static">
-                      <i class="align-middle" data-feather="more-horizontal"></i>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <h5 class="card-title mb-0">Public info</h5>
+                <h5 class="card-title mb-0">Info</h5>
               </div>
               <div class="card-body">
-                <form>
+                <form method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<?=$id?>">
                   <div class="row">
                     <div class="col-md-8">
                       <div class="form-group">
-                        <label for="inputUsername">Username</label>
-                        <input type="text" class="form-control" id="inputUsername" placeholder="Username" />
+                        <label for="inputUsername">Email</label>
+                        <input type="text" class="form-control" value="<?=$email?>" name="email" placeholder="Email" disabled/>
                       </div>
                       <div class="form-group">
-                        <label for="inputUsername">Biography</label>
-                        <textarea rows="2" class="form-control" id="inputBio" placeholder="Tell something about yourself"></textarea>
+                        <label for="inputUsername">Fullname</label>
+                        <input type="text" class="form-control" value="<?=$fullname?>" name="fullname" placeholder="Fullname" />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputUsername">Phone</label>
+                        <input type="text" class="form-control" value="<?=$phone?>" name="phone" placeholder="Phone" />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputUsername">Address</label>
+                        <input type="text" class="form-control" value="<?=$address?>" name="address" placeholder="Address" />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputUsername">Role</label>
+                        <input type="text" class="form-control" value="<?=($role==0)?"Khách hàng": "Admin"?>" placeholder="Role" />
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="text-center">
-                        <img alt="Chris Wood" src="../admin/img\avatars\avatar.jpg" class="rounded-circle img-responsive mt-2" width="128" height="128" />
+                      <input type="hidden" name="oldImage" value="<?=$image?>">
+                        <img alt="Chris Wood" src="../uploads/<?=$image?>" class="rounded-circle img-responsive mt-2" width="128" height="128" />
                         <div class="mt-2">
-                          <div>
-                            <label for="files" class="btn">
-                              <i class="align-middle mr-2 fas fa-fw fa-upload"></i>
-                              Change Image
-                            </label>
-                            <input id="files" style="visibility:hidden;" type="file">
-                          </div>
+                         <input style="display: none;" type="file" id="fileInput" name="image">
+                         <label for="fileInput" class="btn btn-primary"><i class="fas fa-upload"></i>Upload</label>
                         </div>
+                        <small>For best results, use an image at least 128px by
+                          128px in .jpg format</small>
                       </div>
                     </div>
                   </div>
 
-                  <button type="submit" class="btn btn-primary">
-                    Save changes
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header">
-                <div class="card-actions float-right">
-                  <div class="dropdown show">
-                    <a href="#" data-toggle="dropdown" data-display="static">
-                      <i class="align-middle" data-feather="more-horizontal"></i>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <h5 class="card-title mb-0">Private info</h5>
-              </div>
-              <div class="card-body">
-                <form>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputFirstName">First name</label>
-                      <input type="text" class="form-control" id="inputFirstName" placeholder="First name" />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="inputLastName">Last name</label>
-                      <input type="text" class="form-control" id="inputLastName" placeholder="Last name" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress2">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputCity">City</label>
-                      <input type="text" class="form-control" id="inputCity" />
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputState">State</label>
-                      <select id="inputState" class="form-control">
-                        <option selected="">Choose...</option>
-                        <option>...</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="inputZip">Zip</label>
-                      <input type="text" class="form-control" id="inputZip" />
-                    </div>
-                  </div>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" name="profile" class="btn btn-primary">
                     Save changes
                   </button>
                 </form>
@@ -146,24 +84,42 @@
               <div class="card-body">
                 <h5 class="card-title">Password</h5>
 
-                <form>
+                <form method="post">
                   <div class="form-group">
                     <label for="inputPasswordCurrent">Current password</label>
-                    <input type="password" class="form-control" id="inputPasswordCurrent" />
-                    <small><a href="#">Forgot your password?</a></small>
+                    <input type="password" name="password" class="form-control" id="inputPasswordCurrent" />
+                    <small><a href="/login/resetPassword.php">Forgot your password?</a></small>
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNew">New password</label>
-                    <input type="password" class="form-control" id="inputPasswordNew" />
+                    <input name="newPassword" type="password" class="form-control" id="inputPasswordNew" />
                   </div>
                   <div class="form-group">
                     <label for="inputPasswordNew2">Verify password</label>
-                    <input type="password" class="form-control" id="inputPasswordNew2" />
+                    <input type="password" name="newPass" class="form-control" id="inputPasswordNew2" />
                   </div>
-                  <button type="submit" class="btn btn-primary">
+                  <button name="submit" type="submit" class="btn btn-primary">
                     Save changes
                   </button>
                 </form>
+                <?php 
+                if(isset($_POST['submit'])){
+                  $password = substr(md5($_POST['password']),0,8);
+                  $newPassword = $_POST['newPassword'];
+                  $newPass = $_POST['newPass'];
+                  $checkPass = loginCheckPass($password);
+                  if(is_array($checkPass)){
+                    if($newPassword===$newPass){
+                      loginUpdatePassword(substr(md5($newPassword),0,8),$email);
+                      echo "thanh cong";
+                    }else{
+                      echo "password phai trung repassword";
+                    }
+                  }else{
+                    echo "mat khau khong dung";
+                  }
+                }
+                ?>
               </div>
             </div>
           </div>

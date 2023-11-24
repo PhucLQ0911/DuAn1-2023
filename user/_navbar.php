@@ -20,7 +20,7 @@
     </div>
 
     <!-- Cart -->
-    <div class="col-lg-4 col-6 text-right">
+    <div class="col-lg-4 col-6 d-flex flex-row justify-content-end">
       <!-- Total product -->
       <a href="?act=cart" class="btn border">
         <i class="fas fa-shopping-cart text-primary"></i>
@@ -35,7 +35,7 @@
             <?= $fullname ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="?act=profile">
               Profile
             </a>
             <?php if ($role == 1) : ?>
@@ -43,7 +43,7 @@
                 Admin
               </a>
             <?php endif; ?>
-            <a class="dropdown-item" href="#">Sign out</a>
+            <a class="dropdown-item" href="?act=signOut">Sign out</a>
           </div>
         </div>
       <?php else : ?>
@@ -53,7 +53,7 @@
         </a>
       <?php endif; ?>
       <!-- Check order -->
-      <a href="?act=orderDetail" class="btn border">
+      <a href="?act=orderDetail" class="btn border ml-1">
         <i class="fas fa-calendar-week text-primary"></i>
       </a>
 

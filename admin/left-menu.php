@@ -1,3 +1,8 @@
+<?php
+if(isset($_SESSION['user'])){
+      extract($_SESSION['user']);
+}
+?>
 <nav id="sidebar" class="sidebar">
   <div class="sidebar-content">
     <a class="sidebar-brand" href="?act=home">
@@ -88,9 +93,14 @@
     <!-- Account -->
     <div class="sidebar-bottom d-none d-lg-block">
       <div class="media">
-        <img class="rounded-circle mr-3" src="./img\avatars\avatar.jpg" alt="Chris Wood" width="40" height="40" />
+      <?php if($image!='') {?>
+            <img class="rounded-circle mr-3" src="../uploads/<?=$image?>" width="40" height="40" alt="Chris Wood" />
+            <?php } else {?>
+              <img class="rounded-circle mr-3" src="./img\avatars\avatar.jpg" alt="Chris Wood" width="40" height="40" />
+            <?php } ?>
+        
         <div class="media-body">
-          <h5 class="mb-1">Chris Wood</h5>
+          <h5 class="mb-1"><?=$fullname?></h5>
           <div><i class="fas fa-circle text-success"></i> Online</div>
         </div>
       </div>

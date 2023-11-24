@@ -37,3 +37,15 @@ function categoryDelete($id, $status)
           WHERE `id`=$id";
   pdo_execute($sql);
 }
+function categoryCheck($name)
+{
+  $sql = "SELECT `name`,`status`,`id` FROM `category` WHERE name = '" . $name . "'";
+  return pdo_query_one($sql);
+}
+function categoryReUpdate($image, $id)
+{
+  $sql = "UPDATE `category` 
+  SET `image` = '$image',`status`= '0'
+   WHERE `id` =$id";
+  pdo_execute($sql);
+}

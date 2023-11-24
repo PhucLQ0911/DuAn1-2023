@@ -1,10 +1,12 @@
+<?php
+if (isset($_SESSION['user'])) {
+  extract($_SESSION['user']);
+}
+?>
 <nav class="navbar navbar-expand navbar-light bg-white">
   <a class="sidebar-toggle d-flex mr-2">
     <i class="hamburger align-self-center"></i>
   </a>
-
-
-
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
@@ -179,8 +181,12 @@
         </a>
 
         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-          <img src="./img\avatars\avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
-          <span class="text-dark">Chris Wood</span>
+          <?php if ($image != '') { ?>
+            <img src="../uploads/<?= $image ?>" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+          <?php } else { ?>
+            <img src="./img\avatars\avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+          <?php } ?>
+          <span class="text-dark"><?= $fullname ?></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="?act=profile"><i class="align-middle mr-1" data-feather="user"></i>

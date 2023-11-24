@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+session_start();
+include "../dao/login/login.php";
+if (isset($_POST['signIn'])){
+  $email = $_POST['email'];
+  $password = substr(md5($_POST['password']),0,8);
+  $checkUser = loginUser($email, $password);
+  if (is_array($checkUser)){
+        $_SESSION['user'] = $checkUser;
+        header("location: ../user/");
+  } else {
+    // "tên tài khoản hoặc mật khẩu không đúng"
+    $isSuccessLogin = 1 ;
+  }
+}
+?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -37,7 +53,7 @@
                         height="132"
                       />
                     </div>
-                    <form>
+                    <form method="post">
                       <div class="form-group">
                         <label>Email</label>
                         <input
@@ -56,8 +72,8 @@
                           placeholder="Enter your password"
                         />
                         <div class="d-flex mt-2">
-                          <a href="resetPassword.html">Forgot password?</a>
-                          <a href="signUp.html" class="ml-auto"
+                          <a href="resetPassword.php">Forgot password?</a>
+                          <a href="signUp.php" name="" class="ml-auto"
                             >You don't have account? Sign up?</a
                           >
                         </div>
@@ -79,12 +95,13 @@
                         </div>
                       </div>
                       <div class="text-center mt-3">
-                        <a href="../user/" class="btn btn-lg btn-primary"
+                        <!-- <a href="../user/" class="btn btn-lg btn-primary"
                           >Sign in</a
-                        >
+                        > -->
 
-                        <!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
+                        <button type="submit" name="signIn" class="btn btn-lg btn-primary">Sign in</button>
                       </div>
+                      <?php if (isset($isSuccessLogin)) echo $isSuccessLogin;?>
                     </form>
                   </div>
                 </div>
