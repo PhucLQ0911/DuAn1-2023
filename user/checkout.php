@@ -4,7 +4,7 @@
 
     <!-- Info -->
     <div class="col-lg-8">
-      <form id="validation-form" method="post">
+      <form id="validation-form" method="post" action="?act=checkout">
         <div class="mb-4">
           <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
           <div class="row">
@@ -26,7 +26,7 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" name="placeOrder">Submit</button>
       </form>
     </div>
 

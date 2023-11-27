@@ -486,6 +486,7 @@ if (!isset($_SESSION['user'])) {
             }
             include("order/detail-order.php");
             break;
+
           case 'confirmOrder':
             if (isset($_GET['idOrder'])) {
               $id = $_GET['idOrder'];

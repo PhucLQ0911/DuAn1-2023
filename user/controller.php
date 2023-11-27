@@ -68,19 +68,16 @@ if (isset($_GET['act'])) {
 
       // Checkout
     case 'checkout':
+      if (isset($_POST['placeOrder'])) {
+        echo "<script>localStorage.removeItem('cartProductList')</script>";
+      }
       include_once("./checkout.php");
-      break;
-
-      // Order detail
-    case 'orderDetail':
-
       break;
 
       // Add to cart
     case 'buy':
       if (isset($_POST['buyNow'])) {
         $id = $_POST['idProduct'];
-        echo $id;
       }
       include_once("./buyNow.php");
       break;
@@ -111,6 +108,11 @@ if (isset($_GET['act'])) {
       session_unset();
       header("location: ../user/index.php");
       break;
+
+    case 'orderDetail':
+      include('./checkOrder.php');
+      break;
+
     default:
       include_once("./home/index.php");
   }

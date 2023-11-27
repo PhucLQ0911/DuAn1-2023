@@ -482,7 +482,7 @@
     });
     // Add to session storage
     sessionStorage.setItem("product", JSON.stringify(product));
-    window.location.href = "http://localhost/DA1v1/user/?act=checkout";
+    window.location.href = "http://localhost/DuAn1-2023/user/?act=checkout";
   }
 
   function validationSizeColor(idSize, idColor) {

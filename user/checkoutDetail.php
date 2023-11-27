@@ -20,6 +20,13 @@ if (sizeof($items) > 0) {
               <small>Size : " . $nameSize . " - Color : " . $nameColor . " - Quantity : " . $quantity . "</small>
             </div>
             <p id='totalAmount-" . $key . "'>$" . $totalAmount . "</p>
+            <div>
+              <input type='text' value='" . $item->idPro . "' name='idPro'>
+              <input type='text' value='" . $item->idSize . "' name='idSize'>
+              <input type='text' value='" . $item->idColor . "' name='idColor'>
+              <input type='text' value='" . $item->quantityPro . "' name='quantityPro'>
+              <input type='text' value='" . $totalAmount . "' name='total'>
+            </div>
           </div>";
   }
 }

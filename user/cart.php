@@ -54,6 +54,15 @@
 
 <script>
   function showItemProductCart() {
+    // Clear session storage
+    let product;
+    if (sessionStorage.getItem("product") == null) {
+      product = [];
+    } else {
+      product = [];
+      sessionStorage.removeItem("product");
+    }
+
     let cartProductList;
     if (localStorage.getItem("cartProductList") == null) {
       cartProductList = [];
