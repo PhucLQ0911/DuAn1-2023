@@ -52,9 +52,9 @@
                     <td>
                       <?php if ($order_status == 0) : ?>
                         <span class="badge badge-warning">In progress</span>
-                      <?php elseif ($order_status == 1) : ?>
+                      <?php elseif ($order_status == -1) : ?>
                         <span class="badge badge-danger">Cancelled</span>
-                      <?php elseif ($order_status == 2) : ?>
+                      <?php elseif ($order_status == 1) : ?>
                         <span class="badge badge-success">Done</span>
                       <?php endif; ?>
                     </td>
@@ -64,11 +64,11 @@
                           Detail
                         </a>
                         <?php if ($order_status == 0) : ?>
-                          <button type="button" class="btn btn-success confirmOrder ml-2" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="<?=$id?>">
+                          <button type="button" class="btn btn-success confirmOrder ml-2" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="<?= $id ?>">
                             Confirm
                           </button>
 
-                          <button type="button" class="btn btn-danger refuseOrder ml-2" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="<?=$id?>">
+                          <button type="button" class="btn btn-danger refuseOrder ml-2" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="<?= $id ?>">
                             Refuse
                           </button>
                         <?php endif; ?>

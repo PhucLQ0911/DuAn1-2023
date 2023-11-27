@@ -96,7 +96,7 @@
       $(`#quantityPro-${index}`).val(Number(quantity) - 1)
       changePrice(index, price);
       totalAmount();
-      updateLocalDate(index);
+      updateLocalQuantity(index);
     }
   }
 
@@ -106,7 +106,7 @@
       quantity = $(`#quantityPro-${index}`).val(Number(quantity) + 1);
       changePrice(index, price);
       totalAmount();
-      updateLocalDate(index);
+      updateLocalQuantity(index);
     }
   }
 
@@ -140,7 +140,7 @@
     $("#totalSummary").text("$" + totals);
   }
 
-  function updateLocalDate(index) {
+  function updateLocalQuantity(index) {
     let quantity = $(`#quantityPro-${index}`).val();
     var storedData = localStorage.getItem('cartProductList');
     var dataArray = JSON.parse(storedData);

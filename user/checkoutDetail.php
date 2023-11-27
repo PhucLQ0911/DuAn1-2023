@@ -26,8 +26,7 @@ if (sizeof($items) > 0) {
             <input type='hidden' value='" . $item->idPro . "' name='idPro'>
             <input type='hidden' value='" . $item->idSize . "' name='idSize'>
             <input type='hidden' value='" . $item->idColor . "' name='idColor'>
-            <input type='hidden' value='" . $item->quantityPro . "' name='quantityPro[]'>
-            <input type='hidden' value='" . $totalAmount . "' name='total'>
+            <input type='hidden' value='" . $item->quantityPro . "' name='quantityPro[]'>   
             <input type='hidden' value='" . $idProAtt . "' name='idProAtt[]'>
           </div>
           ";

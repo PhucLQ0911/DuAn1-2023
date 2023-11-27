@@ -26,19 +26,19 @@ if (isset($_GET['act'])) {
       // Shop 
     case 'shop':
       $categories = categoryGetAllStatus();
-      $itemPerPage = !empty($_GET['perPage'])? $_GET['perPage'] : 4;
-      $currentPage = !empty($_GET['Page'])? $_GET['Page'] : 1;
-      $offset = ($currentPage-1)*$itemPerPage;
+      $itemPerPage = !empty($_GET['perPage']) ? $_GET['perPage'] : 4;
+      $currentPage = !empty($_GET['Page']) ? $_GET['Page'] : 1;
+      $offset = ($currentPage - 1) * $itemPerPage;
       $totalRecords = productRowAll();
-      $totalPage = ceil($totalRecords/$itemPerPage);
-      $products = productSelectAll($itemPerPage,$offset);
+      $totalPage = ceil($totalRecords / $itemPerPage);
+      $products = productSelectAll($itemPerPage, $offset);
       // Filter by category
       if (isset($_GET['idCategory'])) {
         $id = $_GET['idCategory'];
-        $offset = ($currentPage-1)*$itemPerPage;
+        $offset = ($currentPage - 1) * $itemPerPage;
         $totalRecords = productRow($id);
-        $totalPage = ceil($totalRecords/$itemPerPage);
-        $products = productFilterByIdCate($id,$itemPerPage,$offset);
+        $totalPage = ceil($totalRecords / $itemPerPage);
+        $products = productFilterByIdCate($id, $itemPerPage, $offset);
       }
       // Search by name
       if (isset($_POST['searchByName'])) {
@@ -65,7 +65,7 @@ if (isset($_GET['act'])) {
 
       // Checkout
     case 'checkout':
-      if(isset($_POST['order'])){
+      if (isset($_POST['order'])) {
         $fullname = $_POST['fullname'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
@@ -73,29 +73,30 @@ if (isset($_GET['act'])) {
         $payment = $_POST['payment'];
         $totalAmount = $_POST['total'];
 
-        orderInsert($fullname,$phone,$address,$email,$totalAmount,$payment);
+        orderInsert($fullname, $phone, $address, $email, $totalAmount, $payment);
         // lay ra bien id order
         $id = orderSelectLastId();
-        $id_order =$id[0]['id'];
-        
+        $id_order = $id[0]['id'];
+
         $idProAtt = $_POST['idProAtt'];
         $quantity = $_POST['quantityPro'];
-        for($i=0; $i < sizeof($quantity);$i++){
-         orderDetailInsert($id_order,$idProAtt[$i],$quantity[$i]);
+        for ($i = 0; $i < sizeof($quantity); $i++) {
+          orderDetailInsert($id_order, $idProAtt[$i], $quantity[$i]);
         }
 
+        echo "<script>localStorage.removeItem('cartProductList')</script>";
       }
       include_once("./checkout.php");
       break;
 
       // Order detail
-      case 'orderDetail':
-        if(isset($_POST['searchOrder'])){
-          $id = $_POST['idOrder']; 
-          $showOrder = orderDetailSelectAll($id);
-        }
-        include('./checkOrder.php');
-        break;
+    case 'orderDetail':
+      if (isset($_POST['searchOrder'])) {
+        $id = $_POST['idOrder'];
+        $showOrder = orderDetailSelectAll($id);
+      }
+      include('./checkOrder.php');
+      break;
 
       // Add to cart
     case 'buy':
@@ -128,11 +129,11 @@ if (isset($_GET['act'])) {
       include "profile/profile.php";
       break;
       // 
-      case 'resetpassword':
+    case 'resetpassword':
       include("profile/rePassword.php");
       break;
-     // signOut
-     case 'signOut':
+      // signOut
+    case 'signOut':
       session_unset();
       header("location: ../user/index.php");
       break;

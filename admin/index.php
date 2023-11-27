@@ -490,16 +490,16 @@ if (!isset($_SESSION['user'])) {
           case 'confirmOrder':
             if (isset($_GET['idOrder'])) {
               $id = $_GET['idOrder'];
-              orderSetStatusOrder(2,$id);
+              orderSetStatusOrder(1, $id);
               header("location: ?act=order&isSuccessConfirm=1");
             }
             break;
-           
-           
+
+
           case 'refuseOrder':
             if (isset($_GET['idOrder'])) {
               $id = $_GET['idOrder'];
-              orderSetStatusOrder(1,$id);
+              orderSetStatusOrder(-1, $id);
               header("location: ?act=order&isSuccessRefuse=1");
             }
             break;
