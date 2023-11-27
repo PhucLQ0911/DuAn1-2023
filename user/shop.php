@@ -1,7 +1,7 @@
 <style>
-  .product-img img {
-    max-width: 100%;
-    height: 370px;
+  .product-img img{
+  max-width: 100%;
+  height: 370px;
   }
 </style>
 <!-- Shop Start -->
@@ -64,7 +64,7 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="../uploads/<?= $image ?>" alt="" />
+                <img class="img-fluid w-100" src="../uploads/<?= $image ?>" alt=""/>
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3"><?= $name ?></h6>
@@ -78,37 +78,83 @@
             </div>
           </div>
         <?php endforeach; ?>
-
+        
+        <?php if(isset($_GET['idCategory'])) :?>
         <!-- Padding -->
         <div class="col-12 pb-1">
           <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center mb-3">
+              <?php if($currentPage < $totalPage+1 ) :?>
               <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" href="?act=shop&idCategory=<?=$_GET['idCategory']?>&perPage=<?=$itemPerPage?>&Page=<?=$currentPage-1?>" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
-                  <!-- <span>Previous</span> -->
+                  <!-- <span class="sr-only">Previous</span> -->
                 </a>
               </li>
-              <!--  -->
-              <?php for ($num = 1; $num <= $totalPage; $num++) : ?>
-                <?php if ($num == $currentPage) { ?>
-                  <li class="page-item active">
-                    <a class="page-link" href="?act=shop&idCategory=<?= $_GET['idCategory'] ?>&perPage=<?= $itemPerPage ?>&Page=<?= $num ?>"><?= $num ?></a>
-                  </li>
-                <?php } else { ?>
-                  <li class="page-item"><a class="page-link" href="?act=shop&idCategory=<?= $_GET['idCategory'] ?>&perPage=<?= $itemPerPage ?>&Page=<?= $num ?>"><?= $num ?></a></li>
-                <?php } ?>
-              <?php endfor; ?>
+              <?php endif ?>
+              <?php for($num=1;$num <= $totalPage;$num++) :?>
+               <?php if($num == $currentPage) {?>
+              <li class="page-item active">
+                <a class="page-link" href="?act=shop&idCategory=<?=$_GET['idCategory']?>&perPage=<?=$itemPerPage?>&Page=<?=$num?>"><?=$num?></a>
+              </li>
+              <?php } else{?>
+                <?php if($num > $currentPage-3 && $num < $currentPage+3):?>
+              <li class="page-item"><a class="page-link" href="?act=shop&idCategory=<?=$_GET['idCategory']?>&perPage=<?=$itemPerPage?>&Page=<?=$num?>"><?=$num?></a></li>
+              <?php endif ?>
+              <?php } ?>
+              <?php endfor ?>
 
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+              <?php if($totalPage > $currentPage ) :?>
+              <li class="page-item"> 
+                <a class="page-link" href="?act=shop&idCategory=<?=$_GET['idCategory']?>&perPage=<?=$itemPerPage?>&Page=<?=$currentPage+1?>" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                   <span class="sr-only">Next</span>
                 </a>
               </li>
+                <?php endif ?>
             </ul>
           </nav>
         </div>
+
+        <?php else :?>
+
+          <div class="col-12 pb-1">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mb-3">
+              <?php if($currentPage < $totalPage+1 ) :?>
+              <li class="page-item">
+                <a class="page-link" href="?act=shop&perPage=<?=$itemPerPage?>&Page=<?=$currentPage-1?>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <!-- <span class="sr-only">Previous</span> -->
+                </a>
+              </li>
+              <?php endif ?>
+
+              <?php for($num=1;$num <=$totalPage; $num++) :?>
+               <?php if($num == $currentPage) {?>
+              <li class="page-item active">
+                <a class="page-link" href="?act=shop&perPage=<?=$itemPerPage?>&Page=<?=$num?>"><?=$num?></a>
+              </li>
+              <?php } else{?>
+                <?php if($num > $currentPage-3 && $num < $currentPage+3):?>
+              <li class="page-item"><a class="page-link" href="?act=shop&perPage=<?=$itemPerPage?>&Page=<?=$num?>"><?=$num?></a></li>
+              <?php endif ?>
+              <?php } ?>
+              <?php endfor ?>
+
+              <?php if($totalPage > $currentPage ) :?>
+              <li class="page-item"> 
+                <a class="page-link" href="?act=shop&perPage=<?=$itemPerPage?>&Page=<?=$currentPage+1?>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+                <?php endif ?>
+            </ul>
+          </nav>
+        </div>
+        <?php endif?>
+        
       </div>
     </div>
     <!-- Shop Product End -->

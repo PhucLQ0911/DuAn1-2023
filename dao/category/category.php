@@ -7,6 +7,12 @@ function categoryGetAll()
   $sql = "SELECT * FROM `category` ORDER BY id DESC";
   return pdo_query($sql);
 }
+function categoryGetAllStatus()
+{
+  $sql = "SELECT * FROM `category` WHERE `status` = '0' ORDER BY id DESC";
+  return pdo_query($sql);
+}
+
 
 function categoryGetOne($id)
 {

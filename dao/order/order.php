@@ -20,8 +20,18 @@ function orderGetAll()
   return pdo_query($sql);
 }
 
-function orderSetStatusOrder($id, $status)
+function orderSetStatusOrder($status,$id)
 {
-  $sql = "UPDATE `order` SET `order_status`='$status' WHERE `id`=$id";
+  $sql = "UPDATE `order` SET `order_status`= '$status' WHERE `id`=$id";
   pdo_execute($sql);
+}
+
+function orderInsert($fullname,$phone,$address,$email,$total,$payment){
+  $sql = "INSERT INTO `order` (fullname,phone,address,email,total_payment,payment_id) VALUES ('$fullname','$phone','$address','$email','$total','$payment')";
+  pdo_execute($sql);
+}
+function orderSelectLastId()
+{
+    $sql = "SELECT `id` FROM `order` ORDER BY id DESC LIMIT 1";
+    return pdo_query($sql);
 }

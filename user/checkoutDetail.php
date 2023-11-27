@@ -11,6 +11,7 @@ if (sizeof($items) > 0) {
     $nameColor = productAttColorGetNameById($item->idColor)['color'];
     $namePro = $product['name'];
     $price = productAttGetPrice($item->idColor, $item->idSize, $item->idPro)['price'];
+    $idProAtt =  productAttGetPrice($item->idColor, $item->idSize, $item->idPro)['id'];
     $quantity = $item->quantityPro;
     $image = "../uploads/" . $product['image'];
     $totalAmount = $price * $quantity;
@@ -20,13 +21,15 @@ if (sizeof($items) > 0) {
               <small>Size : " . $nameSize . " - Color : " . $nameColor . " - Quantity : " . $quantity . "</small>
             </div>
             <p id='totalAmount-" . $key . "'>$" . $totalAmount . "</p>
-            <div>
-              <input type='text' value='" . $item->idPro . "' name='idPro'>
-              <input type='text' value='" . $item->idSize . "' name='idSize'>
-              <input type='text' value='" . $item->idColor . "' name='idColor'>
-              <input type='text' value='" . $item->quantityPro . "' name='quantityPro'>
-              <input type='text' value='" . $totalAmount . "' name='total'>
-            </div>
-          </div>";
+          </div>
+          <div>
+            <input type='hidden' value='" . $item->idPro . "' name='idPro'>
+            <input type='hidden' value='" . $item->idSize . "' name='idSize'>
+            <input type='hidden' value='" . $item->idColor . "' name='idColor'>
+            <input type='hidden' value='" . $item->quantityPro . "' name='quantityPro[]'>
+            <input type='hidden' value='" . $totalAmount . "' name='total'>
+            <input type='hidden' value='" . $idProAtt . "' name='idProAtt[]'>
+          </div>
+          ";
   }
 }

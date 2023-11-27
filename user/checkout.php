@@ -1,11 +1,36 @@
+<form id="validation-form" method="post">
 <!-- Checkout Start -->
 <div class="container-fluid pt-5">
   <div class="row px-xl-5">
 
     <!-- Info -->
     <div class="col-lg-8">
-      <form id="validation-form" method="post" action="?act=checkout">
+    <?php if(isset($_SESSION['user'])) :?>
+      <?php extract($_SESSION['user'])?>
         <div class="mb-4">
+          <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Full Name</label>
+              <input class="form-control" name="fullname" type="text" " placeholder="John" value="<?=$fullname?>"/>
+            </div>
+            <div class="col-md-6 form-group">
+              <label>E-mail</label>
+              <input class="form-control" type="text" placeholder="example@email.com" name="email" value="<?=$email?>" />
+            </div>
+            <div class="col-md-6 form-group">
+              <label>Phone Number</label>
+              <input class="form-control" type="text" placeholder="+123 456 789" name="phone" value="<?=$phone?>" />
+            </div>
+            <div class="col-md-6 form-group">
+              <label>Address</label>
+              <input class="form-control" type="text" placeholder="123 Street" name="address" value="<?=$address?>"/>
+            </div>
+          </div>
+        </div>
+        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+        <?php else :?>
+          <div class="mb-4">
           <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
           <div class="row">
             <div class="col-md-6 form-group">
@@ -17,8 +42,8 @@
               <input class="form-control" type="text" placeholder="example@email.com" name="email" />
             </div>
             <div class="col-md-6 form-group">
-              <label>Mobile No</label>
-              <input class="form-control" type="text" placeholder="+123 456 789" name="mobile" />
+              <label>Phone Number</label>
+              <input class="form-control" type="text" placeholder="+123 456 789" name="phone" />
             </div>
             <div class="col-md-6 form-group">
               <label>Address</label>
@@ -26,16 +51,15 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" name="placeOrder">Submit</button>
-      </form>
-    </div>
-
-    <!-- Orders -->
-    <div class="col-lg-4">
-      <div class="card border-secondary mb-5">
-        <div class="card-header bg-secondary border-0">
-          <h4 class="font-weight-semi-bold m-0">Order Total</h4>
-        </div>
+        <?php endif ?>
+      </div>
+      
+      <!-- Orders -->
+      <div class="col-lg-4">
+        <div class="card border-secondary mb-5">
+          <div class="card-header bg-secondary border-0">
+            <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+          </div>
         <div class="card-body">
           <h5 class="font-weight-medium">Products</h5>
           <div id="products">
@@ -64,25 +88,25 @@
         <div class="card-body">
           <div class="form-group">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="paypal" />
+              <input type="radio" class="custom-control-input" name="payment" value="1" id="paypal" />
               <label class="custom-control-label" for="paypal">Paypal</label>
             </div>
           </div>
           <div class="form-group">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="directcheck" />
+              <input type="radio" class="custom-control-input" name="payment" value="2" id="directcheck" />
               <label class="custom-control-label" for="directcheck">Direct Check</label>
             </div>
           </div>
           <div class="">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" name="payment" id="banktransfer" />
+              <input type="radio" class="custom-control-input" name="payment" value="3" id="banktransfer" />
               <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
             </div>
           </div>
         </div>
         <div class="card-footer border-secondary bg-transparent">
-          <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+          <button name="order" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
             Place Order
           </button>
         </div>
@@ -91,6 +115,7 @@
   </div>
 </div>
 <!-- Checkout End -->
+</form>
 
 <script>
   function showItemProductCart() {
@@ -166,11 +191,14 @@
         required: true,
         email: true
       },
-      mobile: {
+      phone: {
         required: true,
         maxlength: 11
       },
       address: {
+        required: true
+      },
+      payment: {
         required: true
       }
     },

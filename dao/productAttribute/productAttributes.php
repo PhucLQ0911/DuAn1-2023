@@ -52,11 +52,11 @@ function productAttGetAllImageByIdPro($id)
 
 function productAttGetPrice($idColor, $idSize, $idPro)
 {
-  $sql = "SELECT `price` FROM `product_attributes` 
+  $sql = "SELECT `price`,`id` FROM `product_attributes` 
         WHERE id_color =$idColor AND `id_size`=$idSize AND `id_pro` = $idPro";
   return pdo_query_one($sql);
-}
 
+}
 function productAttGetPriceOne($idPro, $idSize)
 {
   $sql = "SELECT `price` FROM `product_attributes` 
