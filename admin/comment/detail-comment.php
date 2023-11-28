@@ -26,7 +26,7 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>User name</th>
+                  <th>full name</th>
                   <th>Content</th>
                   <th>Date comment</th>
                   <th>Action</th>
@@ -39,7 +39,7 @@
                   <?php extract($comment) ?>
                   <tr>
                     <td><?= $key + 1 ?></td>
-                    <td><?= $user_name ?></td>
+                    <td><?= $fullname ?></td>
                     <td><?= $content ?></td>
                     <td><?= $added_on ?></td>
                     <td>

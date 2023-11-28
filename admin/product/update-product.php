@@ -13,6 +13,7 @@
               <div class="form-group">
                 <label class="form-label">Name product</label>
                 <input type="text" class="form-control" name="validation-product-name" placeholder="Name product" value="<?= $product['name'] ?>">
+                <input type="hidden" class="form-control" name="oldName" placeholder="Name product" value="<?= $product['name'] ?>">
               </div>
 
               <div class="form-group">

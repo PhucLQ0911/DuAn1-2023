@@ -1,7 +1,8 @@
 <style>
   .product-img img{
   max-width: 100%;
-  height: 370px;
+  height: 300px;
+  object-fit: contain;
   }
 </style>
 <!-- Shop Start -->

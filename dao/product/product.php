@@ -69,7 +69,11 @@ function productFilterByIdCate($id,$itemPerPage,$offset)
     $sql = "SELECT * FROM `product` WHERE `id_cate`=$id AND `status` = '0' ORDER BY id DESC LIMIT ".$itemPerPage." OFFSET ".$offset."";
     return pdo_query($sql);
 }
-
+function productSelectByIdCate($id_cate,$id_pro)
+{
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id_cate AND `status` = '0' AND `id` <> $id_pro ORDER BY id DESC ";
+    return pdo_query($sql);
+}
 function productSearchByName($name)
 {
     $sql = "SELECT * FROM `product` WHERE `name` LIKE '$name%'";
@@ -85,6 +89,12 @@ function productSortByPrice($status)
 function productCheck($name)
 {
     $sql = "SELECT `name`,`status`,`id`  FROM `product` WHERE `name`= '" . $name . "'";
+    return pdo_query_one($sql);
+}
+
+function productCheckUpdate($newName,$name)
+{
+    $sql = "SELECT `name`  FROM `product` WHERE `name`= '" . $newName . "' AND `name` <> '".$name."' ";
     return pdo_query_one($sql);
 }
 
@@ -105,9 +115,20 @@ function productRowAll(){
 }
 
 function productBestSeller(){
-    $sql ="SELECT `att`.id_pro, `p`.`name`, `p`.image, `p`.price , `att`.sold  FROM product_attributes AS `att`
-    LEFT JOIN `product` AS `p` ON `att`.id_pro = `p`.id 
-    ORDER BY sold DESC
+    $sql ="SELECT 
+    p.id,
+    p.name, 
+    p.image, 
+    p.price,
+    SUM(pa.quantity) AS total_sold
+FROM 
+    product p
+LEFT JOIN 
+    product_attributes pa ON p.id = pa.id_pro
+GROUP BY 
+    p.id, p.name, p.image
+ORDER BY 
+    total_sold DESC;
     LIMIT 8";
     return pdo_query($sql);
 }

@@ -56,7 +56,7 @@ if(isset($_SESSION['user'])){
                       </div>
                       <div class="form-group">
                         <label for="inputUsername">Role</label>
-                        <input type="text" class="form-control" value="<?=($role==0)?"Khách hàng": "Admin"?>" placeholder="Role" />
+                        <input type="text" class="form-control" value="<?=($role==0)?"Khách hàng": "Admin"?>" placeholder="Role" disabled />
                       </div>
                     </div>
                     <div class="col-md-4">

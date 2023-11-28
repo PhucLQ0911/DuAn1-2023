@@ -10,15 +10,15 @@ function commentCountById($id)
 
 function commentGetAll()
 {
-  $sql = "SELECT DISTINCT p.name,p.image,c.id_pro FROM comment c
-    LEFT JOIN product p ON c.id_pro = p.id";
+  $sql = "SELECT DISTINCT p.name,p.image,c.id_pro,c.id FROM comment c
+    LEFT JOIN product p ON c.id_pro = p.id ORDER BY id DESC";
   return pdo_query($sql);
 }
 
 
 function commentGetDetail($id)
 {
-  $sql = "SELECT u.user_name,c.content,c.added_on,c.id FROM comment c
+  $sql = "SELECT u.fullname,c.content,c.added_on,c.id FROM comment c
     LEFT JOIN user u  ON c.id_user = u.id
     where id_pro=?";
   return pdo_query($sql, $id);
@@ -47,4 +47,8 @@ function commentGetAllForProduct($id)
   WHERE `id_pro`=$id 
   ORDER BY `comment`.id DESC";
   return pdo_query($sql);
+}
+function commentInsert($content,$id,$idUser){
+  $sql = "INSERT INTO `comment`(`content`, `id_pro`, `id_user`) VALUES ('$content','$id','$idUser')";
+  pdo_execute($sql);
 }

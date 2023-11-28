@@ -6,11 +6,16 @@ if (isset($_POST['signIn'])){
   $password = substr(md5($_POST['password']),0,8);
   $checkUser = loginUser($email, $password);
   if (is_array($checkUser)){
-        $_SESSION['user'] = $checkUser;
-        header("location: ../user/");
-  } else {
-    // "tên tài khoản hoặc mật khẩu không đúng"
-    $isSuccessLogin = 1 ;
+    extract($checkUser);
+    if(isset($status) && $status == 0){
+          $_SESSION['user'] = $checkUser;
+          header("location: ../user/");
+    } else {
+      // "tên tài khoản hoặc mật khẩu không đúng"
+      $isSuccessLogin = 1 ;
+    }
+  }else{
+    echo "Tài khoản của bạn đã bị khóa";
   }
 }
 ?>
@@ -60,6 +65,7 @@ if (isset($_POST['signIn'])){
                           class="form-control form-control-lg"
                           type="email"
                           name="email"
+                          required
                           placeholder="Enter your email"
                         />
                       </div>
@@ -69,6 +75,7 @@ if (isset($_POST['signIn'])){
                           class="form-control form-control-lg"
                           type="password"
                           name="password"
+                          required
                           placeholder="Enter your password"
                         />
                         <div class="d-flex mt-2">

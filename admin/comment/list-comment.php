@@ -35,7 +35,7 @@
                   <tr>
                     <td><?= $key + 1 ?></td>
                     <td><?= $name ?></td>
-                    <td><img src="../uploads/<?= $image ?>" alt="...image cate"></td>
+                    <td><img src="../uploads/<?= $image ?>" width="100px" alt="...image cate"></td>
                     <td><?= $totalComment ?></td>
                     <td>
                       <div class="text-center">

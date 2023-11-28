@@ -13,6 +13,7 @@
               <div class="form-group">
                 <label class="form-label">Name category</label>
                 <input type="text" class="form-control" name="validation-category-name" placeholder="Name category" value="<?= $category['name'] ?>">
+                <input type="hidden" class="form-control" name="oldName" placeholder="Name category" value="<?= $category['name'] ?>">
               </div>
               <div class="form-group">
                 <label class="form-label">Image</label>

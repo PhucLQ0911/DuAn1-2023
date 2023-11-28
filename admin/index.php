@@ -116,7 +116,8 @@ if (!isset($_SESSION['user'])) {
               $category = categoryGetOne($idCate);
             }
             if (isset($_POST['updateCategory'])) {
-              $name = $_POST['validation-category-name'];
+              $newname = $_POST['validation-category-name'];
+              $name = $_POST['oldName'];
               $image = $_POST['oldImage'];
               $newImage = $_FILES['validation-category-file']['name'];
               $idCate = $_POST['idCategory'];
@@ -128,9 +129,14 @@ if (!isset($_SESSION['user'])) {
               $target_dir = "../uploads/";
               $target_file = $target_dir . basename($image);
               move_uploaded_file($_FILES["validation-category-file"]["tmp_name"], $target_file);
-
-              categoryUpdate($name, $image, $idCate);
-              header("location: ?act=listCategory&isSuccessUpdate=1");
+              // check Trùng name
+              $categoryCheck = categoryCheckUpdate($newname,$name);
+              if(is_array($categoryCheck)){
+                echo "Trùng tên ròi";
+              }else{
+                categoryUpdate($newname, $image, $idCate);
+                header("location: ?act=listCategory&isSuccessUpdate=1");
+              }
             }
             include("category/update-category.php");
             break;
@@ -247,7 +253,8 @@ if (!isset($_SESSION['user'])) {
             }
             if (isset($_POST['updateProduct'])) {
               $id = $_POST['idProduct'];
-              $name = $_POST['validation-product-name'];
+              $name = $_POST['oldName'];
+              $newName = $_POST['validation-product-name'];
               $image = $_POST['oldImage'];
               $newImage = $_FILES["validation-product-file"]['name'];
               $price = $_POST['validation-product-price'];
@@ -262,9 +269,16 @@ if (!isset($_SESSION['user'])) {
               $target_file = $target_dir . basename($image);
               move_uploaded_file($_FILES["validation-product-file"]["tmp_name"], $target_file);
 
-              // Update
-              productUpdate($id, $name, $price, $image, $description, $category);
+              //  check name product
+              $productCheck = productCheckUpdate($newName,$name);
+              if(is_array($productCheck)){
+                echo "Name đã tồn tại";
+              }else{
+                // Update
+              productUpdate($id, $newName, $price, $image, $description, $category);
               header("location: ?act=listProduct&isSuccessUpdate=1");
+              }
+              
             }
             $categories = categoryGetAll();
             include("product/update-product.php");
@@ -426,6 +440,7 @@ if (!isset($_SESSION['user'])) {
                 $status = 0;
               }
               userDelete($id, $status);
+              logout();
               $isSuccess = 1;
               header("location: ?act=listUser&isSuccessDelete=$isSuccess");
             }

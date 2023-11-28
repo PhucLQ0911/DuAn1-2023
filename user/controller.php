@@ -15,10 +15,19 @@ if (isset($_GET['act'])) {
       if (isset($_GET['idProduct'])) {
         $id = $_GET['idProduct'];
         $product = productSelectOne($id);
+        extract($product);
+        $products = productSelectByIdCate($id_cate,$id);
         $comments = commentGetAllForProduct($id);
         $imageProducts = productAttGetAllImageByIdPro($id);
         $colors = productAttGetAllColorByIdPro($id);
         $sizes = productAttGetAllSizeByIdPro($id);
+        // comment
+        if(isset($_POST['submit']) && ($_POST['submit'])){
+          $content = $_POST['content'];
+          $idUser = $_SESSION['user']['id'];
+          commentInsert($content,$id,$idUser);
+          // header("location:?act=detail&idProduct=$id");
+        }
       }
       include_once("./detail.php");
       break;
@@ -83,7 +92,7 @@ if (isset($_GET['act'])) {
         for ($i = 0; $i < sizeof($quantity); $i++) {
           orderDetailInsert($id_order, $idProAtt[$i], $quantity[$i]);
         }
-
+        
         echo "<script>localStorage.removeItem('cartProductList')</script>";
       }
       include_once("./checkout.php");
@@ -135,7 +144,7 @@ if (isset($_GET['act'])) {
       // signOut
     case 'signOut':
       session_unset();
-      header("location: ../user/index.php");
+      header("location:?act=home");
       break;
     default:
       include_once("./home/index.php");

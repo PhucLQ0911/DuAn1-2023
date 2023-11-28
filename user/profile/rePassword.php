@@ -65,7 +65,11 @@
                         echo "password phai trung repassword";
                       }
                     } else {
-                      echo "mat khau khong dung";
+                      if(empty($newPassword) || empty($newPass) || empty($password)){
+                        echo "không được bỏ trống";
+                      }else{
+                        echo "mat khau khong dung";
+                      }
                     }
                   }
                   ?>

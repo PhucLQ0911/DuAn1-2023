@@ -4,22 +4,27 @@ if (isset($_POST['signUp'])) {
   $email = $_POST['email'];
   $fullname = $_POST['fullname'];
   $password = $_POST['password'];
-  $rePassword = $_POST['password'];
+  $rePassword = $_POST['rePassword'];
   $isSuccessLogin = 0;
-  if ($password == $rePassword) {
-    $result = checkUser($email);
-    if (is_array($result)) {
-      // "Tài khoản hoặc email bạn vừa nhập đã tồn tại."
-      $isSuccessLogin = 1;
+  if(empty($email) || empty($fullname) || empty($password)  || empty($rePassword) ){
+             $isSuccessLogin = 3;
+  }else{
+    if ($password == $rePassword) {
+      $result = checkUser($email);
+      if (is_array($result)) {
+        // "Tài khoản hoặc email bạn vừa nhập đã tồn tại."
+        $isSuccessLogin = 1;
+      } else {
+        userInsert($email,$fullname,substr(md5($password),0,8));
+        // "Đăng ký tài khoản thành công";
+        header("location:signIn.php");
+      }
     } else {
-      userInsert($email,$fullname,substr(md5($password),0,8));
-      // "Đăng ký tài khoản thành công";
-      header("location:signIn.php");
+      // "Mật khẩu không trùng"
+      $isSuccessLogin = 2;
     }
-  } else {
-    // "Mật khẩu không trùng"
-    $isSuccessLogin = 2;
   }
+  
 }
 ?>
 <!DOCTYPE html>

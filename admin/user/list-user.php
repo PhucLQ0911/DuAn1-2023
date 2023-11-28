@@ -40,17 +40,17 @@
                     <td><?= $email ?></td>
                     <td><?= $fullname ?></td>
                     <td><?= $phone ?></td>
-                    <td><img src="../uploads/<?= $image ?>" alt="...image cate"></td>
+                    <td><img src="../uploads/<?= $image ?>" width="100px" alt="...image cate"></td>
                     <td><?= $address ?></td>
                     <td><?= $role == 0 ? 'User' : 'Admin' ?></td>
-                    <td><?= $status == 0 ? 'Show' : 'Hidden' ?></td>
+                    <td><?= $status == 0 ? 'Action' : 'Block' ?></td>
                     <td>
                       <div class="text-center">
                         <a href="?act=updateUser&idUser=<?= $id ?>" class="btn btn-warning ">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteUser" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>">
-                          Delete
+                        <button type="button" class="btn btn-danger deleteUser" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>" data-ds-status="<?= $status ?>" >
+                          <?= ($status == 0)?"Block" : "Activated"?>
                         </button>
                       </div>
                     </td>
@@ -87,9 +87,7 @@
         </button>
       </div>
       <div class="modal-body m-3">
-        <p class="mb-0">
-          Do you want to block user ?
-        </p>
+      <p class="mb-0" id="confirmation-message"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -107,7 +105,12 @@
   $('.deleteUser').on('click', function() {
     var id = $(this).data('ds-id');
     console.log(id);
+    var status = $(this).data('ds-status');
+    var action = (status == 0) ? "Block" : "Activated";
     var link = `?act=deleteUser&idUser=${id}`
+    var confirmationMessage = `Do you want to ${action} user with id ${id}?`;
+      // Set confirmation message and link
+    $('#confirmation-message').text(confirmationMessage);
     document.getElementById("btn-delete").setAttribute("href", link)
   });
 </script>

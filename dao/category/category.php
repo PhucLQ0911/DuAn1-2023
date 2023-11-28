@@ -55,3 +55,8 @@ function categoryReUpdate($image, $id)
    WHERE `id` =$id";
   pdo_execute($sql);
 }
+function categoryCheckUpdate($newname,$name)
+{
+  $sql = "SELECT `name` FROM `category` WHERE name = '" . $newname . "' AND `name` <> '".$name."' ";
+  return pdo_query_one($sql);
+}
