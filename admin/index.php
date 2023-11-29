@@ -10,6 +10,7 @@ include_once "../dao/comment/comment.php";
 include_once "../dao/order/order.php";
 include_once "../dao/orderDetail/orderDetail.php";
 include_once "../dao/login/login.php";
+include_once "../dao/dashboard/dashboard.php";
 ob_start();
 if (!isset($_SESSION['user'])) {
   header("location: ../login/signIn.php");
@@ -55,6 +56,13 @@ if (!isset($_SESSION['user'])) {
         switch ($act) {
           case 'home':
           case 'dashboard':
+            $totalSales = dashboardGetTotalSales();
+            $totalProducts = dashboardGetTotalProduct();
+            $totalEarning = dashboardGetTotalEarning();
+            $totalPendingOrder = dashboardGetTotalPendingOrder();
+            $totalOrder = dashboardGetTotalOrder();
+            // $categorySolds = dashboardGetByCate();
+            // var_dump($categorySolds);
             include("dashboard/dashboard.php");
             break;
 
