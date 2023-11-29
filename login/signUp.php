@@ -5,24 +5,16 @@ if (isset($_POST['signUp'])) {
   $fullname = $_POST['fullname'];
   $password = $_POST['password'];
   $rePassword = $_POST['rePassword'];
-  $isSuccessLogin = 0;
-  if (empty($email) || empty($fullname) || empty($password)  || empty($rePassword)) {
-    $isSuccessLogin = 3;
+  $isSuccessSignUp = 0;
+  $result = checkUser($email);
+
+  if (is_array($result)) {
+    // "Tài khoản hoặc email bạn vừa nhập đã tồn tại."
+    $isSuccessSignUp = 1;
   } else {
-    if ($password == $rePassword) {
-      $result = checkUser($email);
-      if (is_array($result)) {
-        // "Tài khoản hoặc email bạn vừa nhập đã tồn tại."
-        $isSuccessLogin = 1;
-      } else {
-        userInsert($email, $fullname, substr(md5($password), 0, 8));
-        // "Đăng ký tài khoản thành công";
-        header("location:signIn.php");
-      }
-    } else {
-      // "Mật khẩu không trùng"
-      $isSuccessLogin = 2;
-    }
+    // "Đăng ký tài khoản thành công";
+    userInsert($email, $fullname, substr(md5($password), 0, 8));
+    header("location:signIn.php?act=signUp&isSuccessSignUp=$isSuccessSignUp");
   }
 }
 ?>
@@ -67,7 +59,7 @@ if (isset($_POST['signUp'])) {
                     </div>
                     <div class="form-group">
                       <label>Password</label>
-                      <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" />
+                      <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter password" />
                     </div>
                     <div class="form-group">
                       <label>Re Password</label>
@@ -84,9 +76,6 @@ if (isset($_POST['signUp'])) {
                         > -->
                       <button type="submit" name="signUp" class="btn btn-lg btn-primary">Sign up</button>
                     </div>
-                    <?php
-                    if (isset($isSuccessLogin)) echo $isSuccessLogin;
-                    ?>
                   </form>
                 </div>
               </div>
@@ -101,10 +90,7 @@ if (isset($_POST['signUp'])) {
 </html>
 
 
-
-
 <script src="../admin/js/app.js"></script>
-
 <!-- Validate -->
 <script>
   // Trigger validation on tagsinput change
@@ -126,7 +112,8 @@ if (isset($_POST['signUp'])) {
           required: true
         },
         "rePassword": {
-          required: true
+          required: true,
+          equalTo: "#password"
         }
       },
       messages: {
@@ -142,6 +129,7 @@ if (isset($_POST['signUp'])) {
         },
         "rePassword": {
           required: "Do not leave the re-password blank.",
+          equalTo: "Please enter the same password as above"
         }
       },
       // Errors
@@ -169,10 +157,10 @@ if (isset($_POST['signUp'])) {
 
 <!-- Show notification -->
 <script>
-  function showToast() {
-    var title = "Category";
-    var message = "Add category success";
-    var type = "success";
+  function showToast(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
 
     toastr[type](message, title, {
       positionClass: 'toast-top-right',
@@ -188,3 +176,18 @@ if (isset($_POST['signUp'])) {
     toastr.clear();
   }
 </script>
+
+<!-- Show notification -->
+<?php
+// Sign up
+if (isset($isSuccessSignUp)) {
+  switch ($isSuccessSignUp) {
+    case 1:
+      echo "<script>
+              showToast('Account','Email already exists','error')
+            </script>";
+      break;
+  }
+}
+
+?>
