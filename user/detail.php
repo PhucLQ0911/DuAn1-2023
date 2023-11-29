@@ -176,12 +176,12 @@
             </div>
 
             <!-- Comment -->
-            <?php if(isset($_SESSION['user'])) :?>
-            <div class="col-md-6">
-              <h4 class="mb-4">Leave a review</h4>
-              <small>Your email address will not be published. Required fields are
-                marked *</small>
-              <!-- <div class="d-flex my-3">
+            <?php if (isset($_SESSION['user'])) : ?>
+              <div class="col-md-6">
+                <h4 class="mb-4">Leave a review</h4>
+                <small>Your email address will not be published. Required fields are
+                  marked *</small>
+                <!-- <div class="d-flex my-3">
                 <p class="mb-0 mr-2">Your Rating * :</p>
                 <div class="text-primary">
                   <i class="far fa-star"></i>
@@ -191,22 +191,22 @@
                   <i class="far fa-star"></i>
                 </div>
               </div> -->
-              <form method="post">
-                <div class="form-group">
-                  <label for="message">Your Review *</label>
-                  <textarea id="message" cols="30" rows="5" name="content" class="form-control"></textarea>
-                </div>
-                <div class="form-group mb-0">
-                  <input type="submit" name="submit" value="Leave Your Review" class="btn btn-primary px-3" />
-                </div>
-              </form>
-            </div>
-            <?php else :?>
-              <div class="col-md-6">
-              <h4 class="mb-4">Leave a review</h4>
-              <small style="color: red;" >Please log in to be able to comment </small>
+                <form method="post">
+                  <div class="form-group">
+                    <label for="message">Your Review *</label>
+                    <textarea id="message" cols="30" rows="5" name="content" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group mb-0">
+                    <input type="submit" name="submit" value="Leave Your Review" class="btn btn-primary px-3" />
+                  </div>
+                </form>
               </div>
-            <?php endif?>
+            <?php else : ?>
+              <div class="col-md-6">
+                <h4 class="mb-4">Leave a review</h4>
+                <small style="color: red;">Please log in to be able to comment </small>
+              </div>
+            <?php endif ?>
           </div>
         </div>
       </div>
@@ -226,24 +226,24 @@
     <!-- Realted Products -->
     <div class="col">
       <div class="owl-carousel related-carousel">
-        <?php foreach($products as $all) :?>
-        <?php extract($all) ?>
-        <div class="card product-item border-0">
-          <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-            <img class="img-fluid w-100" src="../uploads/<?=$image?>" alt="" />
-          </div>
-          <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-            <h6 class="text-truncate mb-3"><?=$name?></h6>
-            <div class="d-flex justify-content-center">
-              <h6><?=$price?></h6>
+        <?php foreach ($products as $all) : ?>
+          <?php extract($all) ?>
+          <div class="card product-item border-0">
+            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+              <img class="img-fluid w-100" src="../uploads/<?= $image ?>" alt="" />
+            </div>
+            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+              <h6 class="text-truncate mb-3"><?= $name ?></h6>
+              <div class="d-flex justify-content-center">
+                <h6><?= $price ?></h6>
+              </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center bg-light border">
+              <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+              <!-- <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To
+              Cart</a> -->
             </div>
           </div>
-          <div class="card-footer d-flex justify-content-center bg-light border">
-            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-            <!-- <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To
-              Cart</a> -->
-          </div>
-        </div>
         <?php endforeach; ?>
       </div>
     </div>
@@ -415,7 +415,7 @@
     });
     // Add to session storage
     sessionStorage.setItem("product", JSON.stringify(product));
-    window.location.href = "http://localhost/DuAn1-2023/user/?act=checkout";
+    window.location.href = "http://localhost/DuAn1-2023/user/?act=checkout&buynow";
   }
 
   function validationSizeColor(idSize, idColor) {

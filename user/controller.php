@@ -16,16 +16,16 @@ if (isset($_GET['act'])) {
         $id = $_GET['idProduct'];
         $product = productSelectOne($id);
         extract($product);
-        $products = productSelectByIdCate($id_cate,$id);
+        $products = productSelectByIdCate($id_cate, $id);
         $comments = commentGetAllForProduct($id);
         $imageProducts = productAttGetAllImageByIdPro($id);
         $colors = productAttGetAllColorByIdPro($id);
         $sizes = productAttGetAllSizeByIdPro($id);
         // comment
-        if(isset($_POST['submit']) && ($_POST['submit'])){
+        if (isset($_POST['submit']) && ($_POST['submit'])) {
           $content = $_POST['content'];
           $idUser = $_SESSION['user']['id'];
-          commentInsert($content,$id,$idUser);
+          commentInsert($content, $id, $idUser);
           // header("location:?act=detail&idProduct=$id");
         }
       }
@@ -81,7 +81,7 @@ if (isset($_GET['act'])) {
         $address = $_POST['address'];
         $payment = $_POST['payment'];
         $totalAmount = $_POST['total'];
-
+        $method = $_POST['buynow'];
         orderInsert($fullname, $phone, $address, $email, $totalAmount, $payment);
         // lay ra bien id order
         $id = orderSelectLastId();
@@ -92,8 +92,21 @@ if (isset($_GET['act'])) {
         for ($i = 0; $i < sizeof($quantity); $i++) {
           orderDetailInsert($id_order, $idProAtt[$i], $quantity[$i]);
         }
-        
-        echo "<script>localStorage.removeItem('cartProductList')</script>";
+
+        if (isset($method) && $method == 1) {
+          // Delete product in session
+          echo "<script>
+                  sessionStorage.removeItem('product');
+                  window.location.href = '?act=orderSuccess';
+                </script>";
+        } else {
+          // Delete product in local
+          echo "<script>
+                  localStorage.removeItem('cartProductList');
+                  window.location.href = '?act=orderSuccess';
+                </script>";
+        }
+        // header("location: ?act=orderSuccess");
       }
       include_once("./checkout.php");
       break;
@@ -107,6 +120,10 @@ if (isset($_GET['act'])) {
       include('./checkOrder.php');
       break;
 
+      // Order success
+    case 'orderSuccess':
+      include("./orderSuccess.php");
+      break;
       // Add to cart
     case 'buy':
       if (isset($_POST['buyNow'])) {

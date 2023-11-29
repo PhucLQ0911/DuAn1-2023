@@ -139,7 +139,10 @@ if (isset($_POST['resetPassword'])) {
   }
 </script>
 
+
+<!-- Show notification -->
 <?php
+// Invalid email
 if (isset($isSuccess) && $isSuccess == 1) {
   echo "<script>showToast()</script>";
 }

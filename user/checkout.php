@@ -1,5 +1,6 @@
 <form id="validation-form" method="post">
   <!-- Checkout Start -->
+  <input type="hidden" name="buynow" id="" value="<?= isset($_GET['buynow']) ?>">
   <div class="container-fluid pt-5">
     <div class="row px-xl-5">
 
@@ -12,7 +13,7 @@
             <div class="row">
               <div class="col-md-6 form-group">
                 <label>Full Name</label>
-                <input class="form-control" name="fullname" type="text" " placeholder=" John" value="<?= $fullname ?>" />
+                <input class="form-control" name="fullname" type="text" placeholder=" John" value="<?= $fullname ?>" />
               </div>
               <div class="col-md-6 form-group">
                 <label>E-mail</label>

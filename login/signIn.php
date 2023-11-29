@@ -2,6 +2,7 @@
 session_start();
 include "../dao/login/login.php";
 if (isset($_POST['signIn'])) {
+  $isSuccessLogin = 0;
   $email = $_POST['email'];
   $password = substr(md5($_POST['password']), 0, 8);
   $checkUser = loginUser($email, $password);
@@ -11,14 +12,14 @@ if (isset($_POST['signIn'])) {
       $_SESSION['user'] = $checkUser;
       header("location: ../user/");
     } else {
-      // "tên tài khoản hoặc mật khẩu không đúng"
+      // Tai khoan bi khoa
       $isSuccessLogin = 1;
     }
   } else {
-    echo "Tài khoản của bạn đã bị khóa";
+    // Sai ten tai khoan hoac mat khau
+    $isSuccessLogin = 2;
   }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +81,6 @@ if (isset($_POST['signIn'])) {
 
                       <button type="submit" name="signIn" class="btn btn-lg btn-primary">Sign in</button>
                     </div>
-                    <?php if (isset($isSuccessLogin)) echo $isSuccessLogin; ?>
                   </form>
                 </div>
               </div>
@@ -90,6 +90,7 @@ if (isset($_POST['signIn'])) {
       </div>
     </div>
   </main>
+
 </body>
 
 </html>
@@ -147,10 +148,10 @@ if (isset($_POST['signIn'])) {
 
 <!-- Show notification -->
 <script>
-  function showToast() {
-    var title = "Password";
-    var message = "Forgot password success";
-    var type = "success";
+  function showToast(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
 
     toastr[type](message, title, {
       positionClass: 'toast-top-right',
@@ -168,10 +169,40 @@ if (isset($_POST['signIn'])) {
 </script>
 
 
+<!-- Show notification -->
 <?php
+// Forgot password
 if (isset($_GET['act']) && $_GET['act'] = "forgotPassword") {
   if (isset($_GET['isSuccess']) && $_GET['isSuccess'] == 0) {
-    echo "<script>showToast()</script>";
+    echo "<script>
+             showToast('Password','Forgot password success','success')
+          </script>";
+  }
+}
+
+// Login
+if (isset($isSuccessLogin)) {
+  switch ($isSuccessLogin) {
+    case 1:
+      echo "<script>
+              showToast('Account','Your account has been locked','error')
+            </script>";
+      break;
+    case 2:
+      echo "<script>
+              showToast('Account','Email or password is incorrect','error')
+            </script>";
+      break;
+  }
+}
+
+
+// Sign up
+if (isset($_GET['act']) && $_GET['act'] = "signUp") {
+  if (isset($_GET['isSuccessSignUp']) && $_GET['isSuccessSignUp'] == 0) {
+    echo "<script>
+             showToast('Account','Sign up account success','success')
+          </script>";
   }
 }
 ?>
