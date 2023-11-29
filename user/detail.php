@@ -73,6 +73,7 @@
       </div>
       <div id="validation-size-color">
       </div>
+      <div id="quantityProAtt"></div>
 
       <!-- Add to cart -->
       <div class="d-flex align-items-center mb-4 pt-2">
@@ -160,13 +161,6 @@
                       <?= $fullname ?><small> - <i><?php $date = strtotime($added_on);
                                                     echo date('d-m-Y H:i:s', $date); ?></i></small>
                     </h6>
-                    <div class="text-primary mb-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star-half-alt"></i>
-                      <i class="far fa-star"></i>
-                    </div>
                     <p>
                       <?= $content ?>
                     </p>
@@ -253,6 +247,7 @@
 
 
 <script>
+  // Slide show img
   $(document).ready(function() {
     $("#carousel-prev").on('click', function() {
       $('#product-carousel').carousel('cycle');
@@ -317,8 +312,10 @@
           if (!('error' in obj)) {
             let price = obj['result']['price'];
             let image = obj['result']['image'];
+            let quantity = obj['result']['quantity'];
             changePrice(price);
             changeImage(image);
+            $("#quantityProAtt").text("Have : " + quantity + " products");
           } else {
             console.log("Arrays is undefined :  " + obj.errol);
           }

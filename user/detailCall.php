@@ -28,9 +28,13 @@ if (!isset($aResult['error'])) {
       if (!is_array($_POST['arguments']) || (count($_POST['arguments']) < 3)) {
         $aResult['error'] = 'Error in arguments!';
       } else {
+
+        // Truyen tham so 
+        // Float val lấy ra giá trị là float
         $proAtt = productAttGetPriceAndImage(floatval($_POST['arguments'][0]), floatval($_POST['arguments'][1]), floatval($_POST['arguments'][2]));
         $aResult['result']['price'] = $proAtt['price'];
         $aResult['result']['image'] = $proAtt['image'];
+        $aResult['result']['quantity'] = $proAtt['quantity'];
         // echo $proAtt['price'];
       }
       break;
