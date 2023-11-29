@@ -32,8 +32,16 @@ function orderInsert($fullname, $phone, $address, $email, $total, $payment)
   $sql = "INSERT INTO `order` (fullname,phone,address,email,total_payment,payment_id) VALUES ('$fullname','$phone','$address','$email','$total','$payment')";
   pdo_execute($sql);
 }
+
 function orderSelectLastId()
 {
   $sql = "SELECT `id` FROM `order` ORDER BY id DESC LIMIT 1";
   return pdo_query($sql);
+}
+
+
+function orderGetOne($id)
+{
+  $sql = "SELECT * FROM `order` WHERE `id`=$id";
+  return pdo_query_one($sql);
 }

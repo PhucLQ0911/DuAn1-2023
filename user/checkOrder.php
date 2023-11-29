@@ -15,74 +15,78 @@
       </div>
     </div>
   </form>
-  
+
   <!-- Order -->
   <div class="container-fluid pt-5 d-flex justify-content-center">
     <div>
-      <?php if(!empty($showOrder)) :?>
-      <?php foreach($showOrder as $show) :?>
-          <?php extract($show)?>
-         <?php if ($order_status == 0) : ?>
-          <?php $order_status = 'In progress'; ?>
-        <?php elseif ($order_status == 1) : ?>
-          <?php $order_status = 'Cancelled'; ?>
-        <?php elseif ($order_status == 2) : ?>
-          <?php $order_status = ' Done'; ?>
-         
-        <?php endif; ?>
-      <input type="text" value="<?=$fullname?>" disabled>
-      <input type="text" value="<?=$address?>" disabled>
-      <input type="text" value="<?=$total_payment?>" disabled>
-      <input type="text" value="<?=$order_status ?>" disabled>
-       <p class="mt-3">Order Detail</p>
-      <table class="table table-bordered text-center mb-0 mt-1">
-        <thead class="bg-secondary text-dark">
-          <tr>
-            <th>Products</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-        <tbody id="itemCarts" class="align-middle">
-          <tr>
-            <td><?=$name?></td>
-            <td><?=$price?></td>
-            <td><?=$quantity?></td>
-            <td><?=$total_payment?></td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
+      <?php if (!empty($order)) : ?>
+        <!-- Info -->
+        <?php
+        extract($order);
+        if ($order_status == 0) {
+          $orderStatus = 'In progress';
+        } elseif ($order_status == 1) {
+          $orderStatus = 'Cancelled';
+        } elseif ($order_status == 2) {
+          $orderStatus = ' Done';
+        }
+        ?>
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Fullname</label>
+            <input class="form-control" type="text" value="<?= $fullname ?>" name="email" disabled />
+          </div>
 
-      <?php endforeach ?>
-      <?php else :?>
-        <input type="text" value="Fullname" disabled>
-      <input type="text" value="Address" disabled>
-      <input type="text" value="Total payment" disabled>
-      <input type="text" value="Status" disabled>
-      <p class="mt-3">Order Detail</p>
-      <table class="table table-bordered text-center mb-0 mt-1">
-        <thead class="bg-secondary text-dark">
-          <tr>
-            <th>Products</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-        <tbody id="itemCarts" class="align-middle">
-          <tr>
-            <td><??></td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
+          <div class="col-md-6 form-group">
+            <label>Address</label>
+            <input class="form-control" type="text" value="<?= $address ?>" name="email" disabled />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Phone number</label>
+            <input class="form-control" type="text" value="<?= $phone ?>" name="email" disabled />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Order date</label>
+            <input class="form-control" name="email" disabled type="text" value="<?php $date = strtotime($added_on);
+                                                                                  echo date('d-m-Y H:i:s', $date); ?>" />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Total payment</label>
+            <input class="form-control" type="text" value="<?= $total_payment ?>" name="email" disabled />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Order status</label>
+            <input class="form-control" type="text" value="<?= $orderStatus ?>" name="email" disabled />
+          </div>
+        </div>
+
+        <!-- Detail -->
+        <p class="mt-3">Order Detail</p>
+        <table class="table table-bordered text-center mb-0 mt-1">
+          <thead class="bg-secondary text-dark">
+            <tr>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="itemCarts" class="align-middle">
+            <?php foreach ($showOrder as $show) : ?>
+              <?php extract($show) ?>
+              <tr>
+                <td><?= $name ?> - (Size : <?= $size ?> - Color : <?= $color ?>)</td>
+                <td><?= $price ?></td>
+                <td><?= $quantity ?></td>
+                <td><?= ($price * $quantity) ?></td>
+              </tr>
+            <?php endforeach ?>
+          </tbody>
+        </table>
       <?php endif ?>
     </div>
   </div>

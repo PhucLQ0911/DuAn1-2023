@@ -115,6 +115,7 @@ if (isset($_GET['act'])) {
     case 'orderDetail':
       if (isset($_POST['searchOrder'])) {
         $id = $_POST['idOrder'];
+        $order = orderGetOne($id);
         $showOrder = orderDetailSelectAll($id);
       }
       include('./checkOrder.php');
