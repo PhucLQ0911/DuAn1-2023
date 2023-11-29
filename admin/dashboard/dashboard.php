@@ -98,7 +98,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>Project Apollo</td>
+                <td>Project Apolloo</td>
                 <td class="d-none d-xl-table-cell">01/01/2018</td>
                 <td class="d-none d-xl-table-cell">31/06/2018</td>
                 <td><span class="badge badge-success">Done</span></td>
