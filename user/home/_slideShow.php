@@ -14,7 +14,7 @@
                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">
                      Fashionable Dress
                    </h3>
-                   <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                   <a href="?act=shop" class="btn btn-light py-2 px-3">Shop Now</a>
                  </div>
                </div>
              </div>

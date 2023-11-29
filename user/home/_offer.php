@@ -9,7 +9,7 @@
             20% off the all order
           </h5>
           <h1 class="mb-4 font-weight-semi-bold">Spring Collection</h1>
-          <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+          <a href="?act=shop" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
             20% off the all order
           </h5>
           <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
-          <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+          <a href="?act=shop" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
         </div>
       </div>
     </div>

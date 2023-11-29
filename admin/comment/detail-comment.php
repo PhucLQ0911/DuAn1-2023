@@ -41,7 +41,10 @@
                     <td><?= $key + 1 ?></td>
                     <td><?= $fullname ?></td>
                     <td><?= $content ?></td>
-                    <td><?= $added_on ?></td>
+                    <td>
+                      <?php $date = strtotime($added_on);
+                      echo date('d/m/Y H:i:s', $date); ?>
+                    </td>
                     <td>
                       <div class="text-center">
                         <button type="button" class="btn btn-danger deleteComment" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>">
