@@ -13,6 +13,11 @@ include_once "../dao/login/login.php";
 ob_start();
 if (!isset($_SESSION['user'])) {
   header("location: ../login/signIn.php");
+} else {
+  if ($_SESSION['user']['role'] == 0) {
+    //Tai khoan khong co quyen dang nhap admin
+    header("location: ../user/");
+  }
 }
 ?>
 
@@ -130,10 +135,10 @@ if (!isset($_SESSION['user'])) {
               $target_file = $target_dir . basename($image);
               move_uploaded_file($_FILES["validation-category-file"]["tmp_name"], $target_file);
               // check Trùng name
-              $categoryCheck = categoryCheckUpdate($newname,$name);
-              if(is_array($categoryCheck)){
+              $categoryCheck = categoryCheckUpdate($newname, $name);
+              if (is_array($categoryCheck)) {
                 echo "Trùng tên ròi";
-              }else{
+              } else {
                 categoryUpdate($newname, $image, $idCate);
                 header("location: ?act=listCategory&isSuccessUpdate=1");
               }
@@ -270,15 +275,14 @@ if (!isset($_SESSION['user'])) {
               move_uploaded_file($_FILES["validation-product-file"]["tmp_name"], $target_file);
 
               //  check name product
-              $productCheck = productCheckUpdate($newName,$name);
-              if(is_array($productCheck)){
+              $productCheck = productCheckUpdate($newName, $name);
+              if (is_array($productCheck)) {
                 echo "Name đã tồn tại";
-              }else{
+              } else {
                 // Update
-              productUpdate($id, $newName, $price, $image, $description, $category);
-              header("location: ?act=listProduct&isSuccessUpdate=1");
+                productUpdate($id, $newName, $price, $image, $description, $category);
+                header("location: ?act=listProduct&isSuccessUpdate=1");
               }
-              
             }
             $categories = categoryGetAll();
             include("product/update-product.php");

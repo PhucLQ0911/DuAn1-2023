@@ -9,12 +9,12 @@ include_once("../dao/comment/comment.php");
 include_once("../dao/login/login.php");
 include_once("../dao/order/order.php");
 include_once("../dao/orderDetail/orderDetail.php");
-?>
-<?php 
-   $categories = categoryGetAllStatus();
-   $products = productBestSeller();
-   $productsNew = productSelectAll(8,0);
- 
+
+$categories = categoryGetAllStatus();
+$products = productBestSeller();
+$productsNew = productSelectAll(8, 0);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +63,7 @@ include_once("../dao/orderDetail/orderDetail.php");
 
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
-  
+
 
 </body>
 

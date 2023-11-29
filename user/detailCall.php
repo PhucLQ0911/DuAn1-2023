@@ -34,6 +34,7 @@ if (!isset($aResult['error'])) {
         $proAtt = productAttGetPriceAndImage(floatval($_POST['arguments'][0]), floatval($_POST['arguments'][1]), floatval($_POST['arguments'][2]));
         $aResult['result']['price'] = $proAtt['price'];
         $aResult['result']['image'] = $proAtt['image'];
+        $aResult['result']['quantity'] = $proAtt['quantity'];
         // echo $proAtt['price'];
       }
       break;
