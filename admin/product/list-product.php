@@ -68,8 +68,8 @@
                         <a href="?act=updateProduct&idProduct=<?= $pro_id ?>" class="btn btn-warning ml-2">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $pro_id ?>">
-                          Delete
+                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger"  data-ds-id="<?= $pro_id ?>" data-ds-name="<?=$pro_name?>" data-ds-status="<?= $status ?>">
+                        <?= ($status == 0) ? "Delete" : "Restore" ?>
                         </button>
                       </div>
                     </td>
@@ -91,7 +91,7 @@
     // Datatables basic
     $("#datatables-basic").DataTable({
       responsive: true,
-      lengthMenu: [5, 10, 20],
+      lengthMenu: [10, 15, 20],
     });
   });
 </script>
@@ -107,9 +107,7 @@
         </button>
       </div>
       <div class="modal-body m-3">
-        <p class="mb-0">
-          Do you want to delete product ?
-        </p>
+      <p class="mb-0" id="confirmation-message"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -128,7 +126,14 @@
   $('.deleteProduct').on('click', function() {
     var id = $(this).data('ds-id');
     console.log(id);
+    var name = $(this).data('ds-name');
+    var status = $(this).data('ds-status');
+    var action =  (status == 0) ? "delete" : "restore";
     var link = `?act=deleteProduct&idProduct=${id}`
+    var confirmationMessage = `Do you want to ${action} product with name ${name}?`;
+
+     // Set confirmation message and link
+     $('#confirmation-message').text(confirmationMessage);
     document.getElementById("btn-delete").setAttribute("href", link)
   });
 </script>

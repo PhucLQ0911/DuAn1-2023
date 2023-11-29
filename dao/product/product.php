@@ -7,9 +7,9 @@ function productInsert($name, $image, $description, $price, $category)
     pdo_execute($sql);
 }
 
-function productSelectAll()
+function productSelectAll($itemPerPage,$offset)
 {
-    $sql = "SELECT * FROM product ORDER BY id DESC";
+    $sql = "SELECT * FROM product WHERE `status` = '0' ORDER BY id DESC LIMIT ".$itemPerPage." OFFSET ".$offset."";
     return pdo_query($sql);
 }
 
@@ -66,10 +66,14 @@ function productCountByCategory($id)
 
 function productFilterByIdCate($id,$itemPerPage,$offset)
 {
-    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id ORDER BY id DESC LIMIT ".$itemPerPage." OFFSET ".$offset."";
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id AND `status` = '0' ORDER BY id DESC LIMIT ".$itemPerPage." OFFSET ".$offset."";
     return pdo_query($sql);
 }
-
+function productSelectByIdCate($id_cate,$id_pro)
+{
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id_cate AND `status` = '0' AND `id` <> $id_pro ORDER BY id DESC ";
+    return pdo_query($sql);
+}
 function productSearchByName($name)
 {
     $sql = "SELECT * FROM `product` WHERE `name` LIKE '$name%'";
@@ -88,10 +92,43 @@ function productCheck($name)
     return pdo_query_one($sql);
 }
 
+function productCheckUpdate($newName,$name)
+{
+    $sql = "SELECT `name`  FROM `product` WHERE `name`= '" . $newName . "' AND `name` <> '".$name."' ";
+    return pdo_query_one($sql);
+}
+
 function productReUpdate($category, $price, $image, $description, $id)
 {
     $sql = "UPDATE `product` 
     SET id_cate ='" . $category . "', price ='" . $price . "', image ='" . $image . "', description ='" . $description . "',status='0' 
     WHERE id= $id";
     pdo_execute($sql);
+}
+function productRow($id){
+    $sql = "SELECT * FROM `product` WHERE `id_cate`=$id AND `status` = '0' ";
+    return pdo_query_row($sql);
+}
+function productRowAll(){
+    $sql = "SELECT * FROM `product` WHERE `status` = '0' ";
+    return pdo_query_row($sql);
+}
+
+function productBestSeller(){
+    $sql ="SELECT 
+    p.id,
+    p.name, 
+    p.image, 
+    p.price,
+    SUM(pa.quantity) AS total_sold
+FROM 
+    product p
+LEFT JOIN 
+    product_attributes pa ON p.id = pa.id_pro
+GROUP BY 
+    p.id, p.name, p.image
+ORDER BY 
+    total_sold DESC;
+    LIMIT 8";
+    return pdo_query($sql);
 }

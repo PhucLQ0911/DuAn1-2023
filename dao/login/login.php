@@ -63,5 +63,10 @@ function loginUpdatePassword($password,$email){
     $sql = "UPDATE `user` SET `password`= '".$password."' WHERE `email` = '".$email."'";
     pdo_execute($sql);
 }
+function loginGetById($idUser){
+    $sql = "SELECT `id` FROM user WHERE id = $idUser";
+    return pdo_query_one($sql);
+}
+
 
 ?>

@@ -7,12 +7,18 @@
           <div class="card-header">
             <h5 class="card-title mb-0">Product</h5>
           </div>
+          <div class="d-flex justify-content-center align-items-end">
+            <a href="?act=listProduct" class="btn btn-primary ml-auto mr-5">
+              <span id="payment-button-amount" class="text-white">List Product</span>
+            </a>
+          </div>
           <div class="card-body">
             <form id="validation-form" method="post" enctype="multipart/form-data">
               <input type="hidden" value="<?= $product['id'] ?>" name="idProduct">
               <div class="form-group">
                 <label class="form-label">Name product</label>
                 <input type="text" class="form-control" name="validation-product-name" placeholder="Name product" value="<?= $product['name'] ?>">
+                <input type="hidden" class="form-control" name="oldName" placeholder="Name product" value="<?= $product['name'] ?>">
               </div>
 
               <div class="form-group">

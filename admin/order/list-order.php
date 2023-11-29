@@ -52,9 +52,9 @@
                     <td>
                       <?php if ($order_status == 0) : ?>
                         <span class="badge badge-warning">In progress</span>
-                      <?php elseif ($order_status == 1) : ?>
+                      <?php elseif ($order_status == -1) : ?>
                         <span class="badge badge-danger">Cancelled</span>
-                      <?php elseif ($order_status == 2) : ?>
+                      <?php elseif ($order_status == 1) : ?>
                         <span class="badge badge-success">Done</span>
                       <?php endif; ?>
                     </td>

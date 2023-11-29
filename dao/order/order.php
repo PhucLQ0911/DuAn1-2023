@@ -7,7 +7,7 @@ function orderGetAll()
             `order`.id,
             `order`.fullname,
             `order`.phone,
-            `order`.address,
+            `order`.`address`,
             `order`.email,
             `order`.total_payment,
             `order`.added_on,
@@ -16,12 +16,24 @@ function orderGetAll()
           FROM
             `order`
                 LEFT JOIN
-            `payment` ON `payment`.id = `order`.payment_id";
+            `payment` ON `payment`.id = `order`.payment_id
+          ORDER BY `order`.id DESC";
   return pdo_query($sql);
 }
 
-function orderSetStatusOrder($id, $status)
+function orderSetStatusOrder($status, $id)
 {
-  $sql = "UPDATE `order` SET `order_status`='$status' WHERE `id`=$id";
+  $sql = "UPDATE `order` SET `order_status`= '$status' WHERE `id`=$id";
   pdo_execute($sql);
+}
+
+function orderInsert($fullname, $phone, $address, $email, $total, $payment)
+{
+  $sql = "INSERT INTO `order` (fullname,phone,address,email,total_payment,payment_id) VALUES ('$fullname','$phone','$address','$email','$total','$payment')";
+  pdo_execute($sql);
+}
+function orderSelectLastId()
+{
+  $sql = "SELECT `id` FROM `order` ORDER BY id DESC LIMIT 1";
+  return pdo_query($sql);
 }

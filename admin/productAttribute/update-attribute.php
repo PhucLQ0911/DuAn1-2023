@@ -7,6 +7,12 @@
           <div class="card-header">
             <h5 class="card-title mb-0">Product Attribute</h5>
           </div>
+
+          <div class="d-flex justify-content-center align-items-end">
+            <a href="?act=attributeProduct&idProduct=<?= $_GET['idProduct'] ?>" class="btn btn-primary ml-auto mr-3">
+              <span id="payment-button-amount" class="text-white">List Attribute</span>
+            </a>
+          </div>
           <div class="card-body">
             <form id="validation-form" method="post" enctype="multipart/form-data" action="?act=updateProductAttribute">
               <input type="hidden" name="idProductAttribute" value="<?= $_GET['idProductAttribute'] ?>">
@@ -60,7 +66,7 @@
                   <!-- Image -->
                   <div class="form-group col-lg-2">
                     <label class="form-label">Image</label>
-                    <input type="hidden" name="oldImage" id="image" class="validation-file" value="<?= $proAtt['image']?>" >
+                    <input type="hidden" name="oldImage" id="image" class="validation-file" value="<?= $proAtt['image'] ?>">
                     <input type="file" name="validation-product-att-image" id="image" class="validation-file">
                   </div>
 

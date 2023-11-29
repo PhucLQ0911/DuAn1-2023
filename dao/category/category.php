@@ -7,6 +7,12 @@ function categoryGetAll()
   $sql = "SELECT * FROM `category` ORDER BY id DESC";
   return pdo_query($sql);
 }
+function categoryGetAllStatus()
+{
+  $sql = "SELECT * FROM `category` WHERE `status` = '0' ORDER BY id DESC";
+  return pdo_query($sql);
+}
+
 
 function categoryGetOne($id)
 {
@@ -48,4 +54,9 @@ function categoryReUpdate($image, $id)
   SET `image` = '$image',`status`= '0'
    WHERE `id` =$id";
   pdo_execute($sql);
+}
+function categoryCheckUpdate($newname,$name)
+{
+  $sql = "SELECT `name` FROM `category` WHERE name = '" . $newname . "' AND `name` <> '".$name."' ";
+  return pdo_query_one($sql);
 }

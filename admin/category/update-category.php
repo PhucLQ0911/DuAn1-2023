@@ -7,12 +7,18 @@
           <div class="card-header">
             <h5 class="card-title mb-0">Category</h5>
           </div>
+          <div class="d-flex justify-content-center align-items-end">
+            <a href="?act=listCategory" class="btn btn-primary ml-auto mr-5">
+              <span id="payment-button-amount" class="text-white">List Category</span>
+            </a>
+          </div>
           <div class="card-body">
             <form id="validation-form" method="post" enctype="multipart/form-data">
               <input type="hidden" name="idCategory" value="<?= $_GET['idCategory'] ?>">
               <div class="form-group">
                 <label class="form-label">Name category</label>
                 <input type="text" class="form-control" name="validation-category-name" placeholder="Name category" value="<?= $category['name'] ?>">
+                <input type="hidden" class="form-control" name="oldName" placeholder="Name category" value="<?= $category['name'] ?>">
               </div>
               <div class="form-group">
                 <label class="form-label">Image</label>

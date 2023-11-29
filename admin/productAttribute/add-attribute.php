@@ -17,8 +17,11 @@
                   </div>
                   <!-- Add more -->
                   <div class="d-flex justify-content-center align-items-end">
-                    <label class="form-label"></label>
-                    <button type="button" class="btn btn-info" onclick="add_more_attr()">
+                    <!-- <label class="form-label"></label> -->
+                    <a href="?act=attributeProduct&idProduct=<?= $_GET['idProduct'] ?>" class="btn btn-primary">
+                      <span id="payment-button-amount" class="text-white">List Attribute</span>
+                    </a>
+                    <button type="button" class="btn btn-info ml-2" onclick="add_more_attr()">
                       <span id="payment-button-amount">Add More</span>
                     </button>
                   </div>

@@ -15,31 +15,37 @@ if (isset($_GET['act'])) {
       if (isset($_GET['idProduct'])) {
         $id = $_GET['idProduct'];
         $product = productSelectOne($id);
+        extract($product);
+        $products = productSelectByIdCate($id_cate,$id);
         $comments = commentGetAllForProduct($id);
         $imageProducts = productAttGetAllImageByIdPro($id);
         $colors = productAttGetAllColorByIdPro($id);
         $sizes = productAttGetAllSizeByIdPro($id);
+        // comment
+        if(isset($_POST['submit']) && ($_POST['submit'])){
+          $content = $_POST['content'];
+          $idUser = $_SESSION['user']['id'];
+          commentInsert($content,$id,$idUser);
+          // header("location:?act=detail&idProduct=$id");
+        }
       }
       include_once("./detail.php");
       break;
 
       // Shop 
     case 'shop':
-      // Get
-      $categories = categoryGetAll();
-      $products = productSelectAll();
-
-      // Pagination
-      $itemPerPage = !empty($_GET['perPage']) ? $_GET['perPage'] : 1;
+      $categories = categoryGetAllStatus();
+      $itemPerPage = !empty($_GET['perPage']) ? $_GET['perPage'] : 4;
       $currentPage = !empty($_GET['Page']) ? $_GET['Page'] : 1;
       $offset = ($currentPage - 1) * $itemPerPage;
-
+      $totalRecords = productRowAll();
+      $totalPage = ceil($totalRecords / $itemPerPage);
+      $products = productSelectAll($itemPerPage, $offset);
       // Filter by category
       if (isset($_GET['idCategory'])) {
         $id = $_GET['idCategory'];
-        // Pagination
-        $sql = "SELECT `id` FROM `product` WHERE `id_cate`=$id";
-        $totalRecords = pdo_query_row($sql);
+        $offset = ($currentPage - 1) * $itemPerPage;
+        $totalRecords = productRow($id);
         $totalPage = ceil($totalRecords / $itemPerPage);
         $products = productFilterByIdCate($id, $itemPerPage, $offset);
       }
@@ -68,16 +74,44 @@ if (isset($_GET['act'])) {
 
       // Checkout
     case 'checkout':
-      if (isset($_POST['placeOrder'])) {
+      if (isset($_POST['order'])) {
+        $fullname = $_POST['fullname'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $address = $_POST['address'];
+        $payment = $_POST['payment'];
+        $totalAmount = $_POST['total'];
+
+        orderInsert($fullname, $phone, $address, $email, $totalAmount, $payment);
+        // lay ra bien id order
+        $id = orderSelectLastId();
+        $id_order = $id[0]['id'];
+
+        $idProAtt = $_POST['idProAtt'];
+        $quantity = $_POST['quantityPro'];
+        for ($i = 0; $i < sizeof($quantity); $i++) {
+          orderDetailInsert($id_order, $idProAtt[$i], $quantity[$i]);
+        }
+        
         echo "<script>localStorage.removeItem('cartProductList')</script>";
       }
       include_once("./checkout.php");
+      break;
+
+      // Order detail
+    case 'orderDetail':
+      if (isset($_POST['searchOrder'])) {
+        $id = $_POST['idOrder'];
+        $showOrder = orderDetailSelectAll($id);
+      }
+      include('./checkOrder.php');
       break;
 
       // Add to cart
     case 'buy':
       if (isset($_POST['buyNow'])) {
         $id = $_POST['idProduct'];
+        echo $id;
       }
       include_once("./buyNow.php");
       break;
@@ -103,16 +137,15 @@ if (isset($_GET['act'])) {
       }
       include "profile/profile.php";
       break;
+      // 
+    case 'resetpassword':
+      include("profile/rePassword.php");
+      break;
       // signOut
     case 'signOut':
       session_unset();
-      header("location: ../user/index.php");
+      header("location:?act=home");
       break;
-
-    case 'orderDetail':
-      include('./checkOrder.php');
-      break;
-
     default:
       include_once("./home/index.php");
   }

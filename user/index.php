@@ -7,6 +7,14 @@ include_once("../dao/productAttribute/productAttributeSize.php");
 include_once("../dao/productAttribute/productAttributes.php");
 include_once("../dao/comment/comment.php");
 include_once("../dao/login/login.php");
+include_once("../dao/order/order.php");
+include_once("../dao/orderDetail/orderDetail.php");
+?>
+<?php 
+   $categories = categoryGetAllStatus();
+   $products = productBestSeller();
+   $productsNew = productSelectAll(8,0);
+ 
 ?>
 
 <!DOCTYPE html>
