@@ -22,7 +22,7 @@
     <!-- Cart -->
     <div class="col-lg-4 col-6 d-flex flex-row justify-content-end">
       <!-- Total product -->
-      <a href="?act=cart" class="btn border">
+      <a href="?act=cart" class="btn border mr-1">
         <i class="fas fa-shopping-cart text-primary"></i>
         <span class="badge" id="totalProduct"></span>
       </a>

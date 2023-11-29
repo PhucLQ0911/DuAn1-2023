@@ -7,7 +7,7 @@ function pdo_get_connection()
 {
     $dburl = "mysql:host=localhost;dbname=duan1;charset=utf8";
     $username = 'root';
-    $password = '';
+    $password = 'admin123';
 
     $conn = new PDO($dburl, $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -117,22 +117,23 @@ function pdo_query_value($sql)
     }
 }
 
-function logout(){
+function logout()
+{
     try {
         $conn = pdo_get_connection();
         // Cập nhật trạng thái trong cơ sở dữ liệu
         $user_id_to_update = $_SESSION['user']['id']; // Điều chỉnh theo cách bạn lấy ID người dùng
         $new_status = '0';
-    
+
         $sql = "UPDATE user SET status = '1' WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':status', $new_status, PDO::PARAM_STR);
         $stmt->bindParam(':id', $user_id_to_update, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         // Hủy bỏ phiên đăng nhập
         session_destroy();
-        
+
         exit();
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();

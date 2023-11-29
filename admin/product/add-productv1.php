@@ -7,6 +7,11 @@
           <div class="card-header">
             <h5 class="card-title mb-0">Product</h5>
           </div>
+          <div class="d-flex justify-content-center align-items-end">
+            <a href="?act=listProduct" class="btn btn-primary ml-auto mr-5">
+              <span id="payment-button-amount" class="text-white">List Product</span>
+            </a>
+          </div>
           <div class="card-body">
             <form id="validation-form" method="post" enctype="multipart/form-data" action="?act=addProduct">
               <div class="form-group">
