@@ -6,7 +6,6 @@
   ?>
   <main class="content">
     <div class="container-fluid p-0">
-      <h1 class="h3 mb-3">Settings</h1>
 
       <div class="row">
         <div class="col-md-3 col-xl-2">
@@ -53,12 +52,13 @@
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                  $password = substr(md5($_POST['password']), 0, 8);
+                  $currentPass = $_POST['password'];
+                  $password = substr(md5($currentPass), 0, 8);
                   $newPassword = $_POST['newPassword'];
                   $newPass = $_POST['newPass'];
                   $checkPass = loginCheckPass($password);
                   if (is_array($checkPass)) {
-                    if ($password == $newPassword) {
+                    if ($currentPass == $newPassword) {
                       echo "New password do not same current password";
                     } else {
                       loginUpdatePassword(substr(md5($newPassword), 0, 8), $email);
