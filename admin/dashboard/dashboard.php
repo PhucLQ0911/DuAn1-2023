@@ -10,8 +10,8 @@
                 <i class="feather-lg text-primary" data-feather="shopping-cart"></i>
               </div>
               <div class="media-body">
-                <h3 class="mb-2">2.562</h3>
-                <div class="mb-0">Sales Today</div>
+                <h3 class="mb-2"><?= $totalSales ?></h3>
+                <div class="mb-0">Solded</div>
               </div>
             </div>
           </div>
@@ -22,11 +22,42 @@
           <div class="card-body py-4">
             <div class="media">
               <div class="d-inline-block mt-2 mr-3">
-                <i class="feather-lg text-warning" data-feather="activity"></i>
+                <i class="feather-lg text-warning" data-feather="folder"></i>
               </div>
               <div class="media-body">
-                <h3 class="mb-2">17.212</h3>
-                <div class="mb-0">Visitors Today</div>
+                <h3 class="mb-2"><?= $totalProducts ?></h3>
+                <div class="mb-0">Products</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-xl d-flex">
+        <div class="card flex-fill">
+          <div class="card-body py-4">
+            <div class="media">
+              <div class="d-inline-block mt-2 mr-3">
+                <i class="feather-lg text-danger" data-feather="shopping-bag"></i>
+              </div>
+              <div class="media-body">
+                <h3 class="mb-2"><?= $totalPendingOrder ?></h3>
+                <div class="mb-0">Pending Orders</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl d-none d-xxl-flex">
+        <div class="card flex-fill">
+          <div class="card-body py-4">
+            <div class="media">
+              <div class="d-inline-block mt-2 mr-3">
+                <i class="feather-lg text-info" data-feather="shopping-bag"></i>
+              </div>
+              <div class="media-body">
+                <h3 class="mb-2"><?= $totalOrder ?></h3>
+                <div class="mb-0">Total Orders</div>
               </div>
             </div>
           </div>
@@ -40,38 +71,8 @@
                 <i class="feather-lg text-success" data-feather="dollar-sign"></i>
               </div>
               <div class="media-body">
-                <h3 class="mb-2">$ 24.300</h3>
+                <h3 class="mb-2"><?= round((float)$totalEarning, 3) ?></h3>
                 <div class="mb-0">Total Earnings</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-xl d-flex">
-        <div class="card flex-fill">
-          <div class="card-body py-4">
-            <div class="media">
-              <div class="d-inline-block mt-2 mr-3">
-                <i class="feather-lg text-danger" data-feather="shopping-bag"></i>
-              </div>
-              <div class="media-body">
-                <h3 class="mb-2">43</h3>
-                <div class="mb-0">Pending Orders</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-xl d-none d-xxl-flex">
-        <div class="card flex-fill">
-          <div class="card-body py-4">
-            <div class="media">
-              <div class="d-inline-block mt-2 mr-3">
-                <i class="feather-lg text-info" data-feather="dollar-sign"></i>
-              </div>
-              <div class="media-body">
-                <h3 class="mb-2">$ 18.700</h3>
-                <div class="mb-0">Total Revenue</div>
               </div>
             </div>
           </div>
@@ -242,7 +243,7 @@
     new Chart(document.getElementById('chartjs-dashboard-pie'), {
       type: 'pie',
       data: {
-        labels: ['Direct', 'Affiliate', 'E-mail', 'Other'],
+        labels: ['Hhihi', 'Affiliate', 'E-mail', 'Other'],
         datasets: [{
           data: [2602, 1253, 541, 1465],
           backgroundColor: [
