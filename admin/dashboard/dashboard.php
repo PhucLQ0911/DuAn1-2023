@@ -84,7 +84,7 @@
       <div class="col-12 col-lg-6 col-xl-8 d-flex">
         <div class="card flex-fill">
           <div class="card-header">
-            <h5 class="card-title mb-0">Latest Projects</h5>
+            <h5 class="card-title mb-0">New Orders</h5>
           </div>
           <table id="datatables-dashboard-projects" class="table table-striped my-0">
             <thead>
@@ -129,6 +129,7 @@
   </div>
 </main>
 
+<script src="./js/app.js"></script>
 <!-- Pie chart -->
 <!-- <script>
 
@@ -137,7 +138,7 @@
     new Chart(document.getElementById('chartjs-dashboard-pie'), {
       type: 'pie',
       data: {
-        labels: ['Hhihi', 'Affiliate', 'E-mail', 'Other'],
+        labels: ['Direct', 'Affiliate', 'E-mail', 'Other'],
         datasets: [{
           data: [2602, 1253, 541, 1465],
           backgroundColor: [
