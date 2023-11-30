@@ -89,85 +89,20 @@
           <table id="datatables-dashboard-projects" class="table table-striped my-0">
             <thead>
               <tr>
-                <th>Name</th>
-                <th class="d-none d-xl-table-cell">Start Date</th>
-                <th class="d-none d-xl-table-cell">End Date</th>
-                <th>Status</th>
-                <th class="d-none d-md-table-cell">Assignee</th>
+                <th>Category ID</th>
+                <th>Name Category</th>
+                <th class="d-none d-xl-table-cell">Sold_Product</th>
               </tr>
             </thead>
             <tbody>
+            <?php foreach($categorySolds as $category) :?>
+              <?php extract($category)?>
               <tr>
-                <td>Project Apolloo</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td><span class="badge badge-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Carl Jenkins</td>
+                <td><?=$category_id?></td>
+                <td class="d-none d-xl-table-cell"><?=$category_name?></td>
+                <td class="d-none d-xl-table-cell"><?=$sold_count?></td>
               </tr>
-              <tr>
-                <td>Project Fireball</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td>
-                  <span class="badge badge-danger">Cancelled</span>
-                </td>
-                <td class="d-none d-md-table-cell">Bertha Martin</td>
-              </tr>
-              <tr>
-                <td>Project Hades</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td><span class="badge badge-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Stacie Hall</td>
-              </tr>
-              <tr>
-                <td>Project Nitro</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td>
-                  <span class="badge badge-warning">In progress</span>
-                </td>
-                <td class="d-none d-md-table-cell">Carl Jenkins</td>
-              </tr>
-              <tr>
-                <td>Project Phoenix</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td><span class="badge badge-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Bertha Martin</td>
-              </tr>
-              <tr>
-                <td>Project X</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td><span class="badge badge-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Stacie Hall</td>
-              </tr>
-              <tr>
-                <td>Project Romeo</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td><span class="badge badge-success">Done</span></td>
-                <td class="d-none d-md-table-cell">Ashley Briggs</td>
-              </tr>
-              <tr>
-                <td>Project Wombat</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td>
-                  <span class="badge badge-warning">In progress</span>
-                </td>
-                <td class="d-none d-md-table-cell">Bertha Martin</td>
-              </tr>
-              <tr>
-                <td>Project Zircon</td>
-                <td class="d-none d-xl-table-cell">01/01/2018</td>
-                <td class="d-none d-xl-table-cell">31/06/2018</td>
-                <td>
-                  <span class="badge badge-danger">Cancelled</span>
-                </td>
-                <td class="d-none d-md-table-cell">Stacie Hall</td>
-              </tr>
+             <?php endforeach ?>
             </tbody>
           </table>
         </div>
@@ -176,68 +111,27 @@
         <div class="card flex-fill w-100">
           <div class="card-header">
 
-            <h5 class="card-title mb-0">Weekly sales</h5>
+            <h5 class="card-title mb-0"> Number of products sold in the category</h5>
           </div>
           <div class="card-body d-flex">
             <div class="align-self-center w-100">
               <div class="py-3">
                 <div class="chart chart-xs">
-                  <canvas id="chartjs-dashboard-pie"></canvas>
+                <canvas id="myPieChart" width="400" height="400"></canvas>
                 </div>
               </div>
-
-              <table class="table mb-0">
-                <thead>
-                  <tr>
-                    <th>Source</th>
-                    <th class="text-right">Revenue</th>
-                    <th class="text-right">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <i class="fas fa-square-full text-primary"></i>
-                      Direct
-                    </td>
-                    <td class="text-right">$ 2602</td>
-                    <td class="text-right text-success">+43%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <i class="fas fa-square-full text-warning"></i>
-                      Affiliate
-                    </td>
-                    <td class="text-right">$ 1253</td>
-                    <td class="text-right text-success">+13%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <i class="fas fa-square-full text-danger"></i>
-                      E-mail
-                    </td>
-                    <td class="text-right">$ 541</td>
-                    <td class="text-right text-success">+24%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <i class="fas fa-square-full text-dark"></i> Other
-                    </td>
-                    <td class="text-right">$ 1465</td>
-                    <td class="text-right text-success">+11%</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
+         
       </div>
     </div>
   </div>
 </main>
 
 <!-- Pie chart -->
-<script>
+<!-- <script>
+
   $(function() {
     // Pie chart
     new Chart(document.getElementById('chartjs-dashboard-pie'), {
@@ -263,6 +157,48 @@
         },
       },
     });
+  });
+</script> -->
+<script>
+  // Dữ liệu danh sách mảng các danh mục và số lượng sản phẩm đã bán
+  var categories = <?php echo json_encode(array_column($categorySoldsProduct, 'category_name')); ?>;
+  var solds = <?php echo json_encode(array_column($categorySoldsProduct, 'sold_products')); ?>;
+  var products = <?php echo json_encode(array_column($categorySoldsProduct, 'product_name')); ?>;
+
+  // Lấy đối tượng canvas và ngữ cảnh 2D
+  var ctx = document.getElementById('myPieChart').getContext('2d');
+
+  // Tạo biểu đồ tròn
+  var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: solds,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF8C00', '#9966FF'],
+      }],
+      labels: categories,
+    },
+    options: {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              var index = context.dataIndex;
+              var label = categories[index];
+              var value = solds[index];
+              var total = context.dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              var percentage = Math.floor((value / total) * 100 + 0.5);
+              return label + ': ' + value + ' sold products (' + percentage + '%)';
+            },
+          },
+        },
+      },
+      legend: {
+        position: 'bottom', // Di chuyển danh mục xuống phía dưới biểu đồ
+      },
+    },
   });
 </script>
 

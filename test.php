@@ -1,46 +1,83 @@
-// Bước 1: Cập nhật trạng thái tài khoản trong cơ sở dữ liệu (ví dụ cho MySQLi)
-$userIdToLock = 123; // Điều chỉnh với ID của người dùng cần khóa
-$newStatus = 'locked';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pie Chart Example</title>
+  <!-- Include Chart.js library -->
+  
+</head>
+<body>
 
-$servername = "your_servername";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_dbname";
+<!-- HTML canvas element where Chart.js will render the chart -->
+<canvas id="myPieChart" width="400" height="400"></canvas>
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+<script>
+// Sample data for the pie chart
+const data = {
+  labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+  datasets: [{
+    data: [30, 20, 25, 25],
+    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+    borderColor: 'white',
+    borderWidth: 2,
+  }],
+};
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Configuration options
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  legend: {
+    display: true,
+    position: 'bottom',
+    labels: {
+      generateLabels: function(chart) {
+        var data = chart.data;
+        if (data.labels.length && data.datasets.length) {
+          return data.labels.map(function(label, i) {
+            var meta = chart.getDatasetMeta(0);
+            var ds = data.datasets[0];
+            var arc = meta.data[i];
+            var value = ds.data[i];
+            var percent = ((value / ds._meta[0].total) * 100).toFixed(1);
+            return {
+              text: label + ' (' + percent + '%)',
+              fillStyle: ds.backgroundColor[i],
+              hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+              index: i,
+            };
+          });
+        }
+        return [];
+      },
+    },
+  },
+  tooltips: {
+    callbacks: {
+      label: function(tooltipItem, data) {
+        var dataset = data.datasets[tooltipItem.datasetIndex];
+        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+          return previousValue + currentValue;
+        });
+        var currentValue = dataset.data[tooltipItem.index];
+        var percent = ((currentValue / total) * 100).toFixed(1);
+        return dataset.labels[tooltipItem.index] + ': ' + percent + '%';
+      },
+    },
+  },
+};
 
-$sql = "UPDATE users SET status = ? WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $newStatus, $userIdToLock);
-$stmt->execute();
+// Get the canvas element
+const ctx = document.getElementById('myPieChart').getContext('2d');
 
-$stmt->close();
-$conn->close();
+// Create the pie chart
+new Chart(ctx, {
+  type: 'pie',
+  data: data,
+  options: options,
+});
+</script>
 
-// Bước 2: Kiểm tra trạng thái tài khoản trước khi xử lý yêu cầu
-session_start();
-
-// Kiểm tra trạng thái tài khoản từ cơ sở dữ liệu hoặc bất kỳ nguồn dữ liệu nào khác
-$userStatus = getStatusFromDatabase($_SESSION['user_id']); // Điều chỉnh hàm này dựa trên cách bạn lấy trạng thái
-
-if ($userStatus === 'locked') {
-    // Nếu trạng thái là 'locked', hủy bỏ phiên đăng nhập và chuyển hướng đến trang đăng nhập
-    session_destroy();
-    header("Location: login.php");
-    exit();
-}
-
-// Tiếp tục xử lý yêu cầu nếu tài khoản không bị khóa
-// ...
-
-function getStatusFromDatabase($userId) {
-    // Hàm này cần được điều chỉnh để trả về trạng thái từ cơ sở dữ liệu hoặc bất kỳ nguồn dữ liệu nào khác
-    // Ví dụ, nếu bạn có một bảng tên 'users' và có cột 'status', thì sử dụng một câu truy vấn SELECT
-    // để lấy trạng thái dựa trên $userId.
-    // Đây chỉ là một ví dụ đơn giản và nên được thay thế bằng phương thức xử lý thực tế.
-    return 'active';
-}
+</body>
+</html>

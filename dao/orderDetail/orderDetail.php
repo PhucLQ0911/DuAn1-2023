@@ -36,6 +36,29 @@ function orderDetailInsert($id_order, $idProAtt, $quantity)
   pdo_execute($sql);
 }
 
+function orderDetailGetAllId($id)
+{
+  $sql = "SELECT 
+            `order_detail`.id,
+            `order_detail`.id_order,
+            `product`.`name`,
+            `order`.fullname,
+            `order`.email,
+            `order`.total_payment
+          FROM
+            `order_detail`
+                LEFT JOIN `product_attributes` 
+                ON `product_attributes`.id = `order_detail`.id_pro_att
+                LEFT JOIN `product` 
+                ON `product_attributes`.id_pro = `product`.id
+                LEFT JOIN `order` 
+                ON `order`.id = `order_detail`.id_order
+          WHERE
+            `order_detail`.`id_order` = $id
+          ORDER BY `order_detail`.id DESC";
+  return pdo_query($sql);
+}
+
 function orderDetailSelectAll($id)
 {
   $sql = "SELECT 

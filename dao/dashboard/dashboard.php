@@ -1,6 +1,23 @@
 <?php
 require_once '../dao/pdo.php';
 
+function dashboardGetBySoldProduct(){
+  $sql=" SELECT
+  c.name AS category_name,
+  p.name AS product_name,
+  COUNT(od.id) AS sold_products
+FROM
+  category c
+LEFT JOIN
+  product p ON c.id = p.id_cate
+LEFT JOIN
+  product_attributes pa ON p.id = pa.id_pro
+LEFT JOIN
+  order_detail od ON pa.id = od.id_pro_att
+GROUP BY
+  c.id, c.name, p.id, p.name";
+  return pdo_query($sql);
+}
 
 function dashboardGetByCate()
 {

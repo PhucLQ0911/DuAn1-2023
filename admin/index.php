@@ -61,8 +61,8 @@ if (!isset($_SESSION['user'])) {
             $totalEarning = dashboardGetTotalEarning();
             $totalPendingOrder = dashboardGetTotalPendingOrder();
             $totalOrder = dashboardGetTotalOrder();
-            // $categorySolds = dashboardGetByCate();
-            // var_dump($categorySolds);
+            $categorySolds = dashboardGetByCate();
+            $categorySoldsProduct = dashboardGetBySoldProduct();
             include("dashboard/dashboard.php");
             break;
 
@@ -514,22 +514,47 @@ if (!isset($_SESSION['user'])) {
             include("order/detail-order.php");
             break;
 
-          case 'confirmOrder':
-            if (isset($_GET['idOrder'])) {
-              $id = $_GET['idOrder'];
-              orderSetStatusOrder(1, $id);
-              header("location: ?act=order&isSuccessConfirm=1");
-            }
-            break;
+            case 'confirmOrder':
+              if (isset($_GET['idOrder'])) {
+                  $id = $_GET['idOrder'];
+                  orderSetStatusOrder(1, $id);
+                  $order = orderDetailGetAllId($id);
+                  if (!empty($order)) {
+                      $email = $order[0]['email'];
+                      $fullname = $order[0]['fullname'];
+                      $id_order = $order[0]['id_order'];
+                      $total_payment = $order[0]['total_payment'];
+                      $added_on = $order[0]['added_on'];
+                      orderSendEmailconfirm($email, $id_order, $fullname, $added_on,$total_payment);
+          
+                      header("location: ?act=order&isSuccessConfirm=1");
+                  } else {
+                      echo "Order not found.";
+                  }
+              }
+              break;
 
-
-          case 'refuseOrder':
-            if (isset($_GET['idOrder'])) {
-              $id = $_GET['idOrder'];
-              orderSetStatusOrder(-1, $id);
-              header("location: ?act=order&isSuccessRefuse=1");
-            }
-            break;
+              case 'refuseOrder':
+                if (isset($_GET['idOrder'])) {
+                  $id = $_GET['idOrder'];
+                  orderSetStatusOrder(2, $id);
+                  $order = orderDetailGetAllId($id);
+                  if (!empty($order)) {
+                      $email = $order[0]['email'];
+                      $fullname = $order[0]['fullname'];
+                      $name = $order[0]['name'];
+                      $quantity = $order[0]['quantity'];
+                      $price = $order[0]['price'];
+                      $id_order = $order[0]['id_order'];
+                      $total_payment = $order[0]['total_payment'];
+                      $added_on = $order[0]['added_on'];
+                      orderSendEmailRefuse($email, $id_order, $fullname, $added_on, $name, $quantity, $total_payment);
+                      header("location: ?act=order&isSuccessConfirm=1");
+                  } else {
+                      echo "Order not found.";
+                  }
+              }
+                break;
 
             // Profile
           case 'profile':
