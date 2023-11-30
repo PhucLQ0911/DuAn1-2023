@@ -95,14 +95,14 @@
               </tr>
             </thead>
             <tbody>
-            <?php foreach($categorySolds as $category) :?>
-              <?php extract($category)?>
-              <tr>
-                <td><?=$category_id?></td>
-                <td class="d-none d-xl-table-cell"><?=$category_name?></td>
-                <td class="d-none d-xl-table-cell"><?=$sold_count?></td>
-              </tr>
-             <?php endforeach ?>
+              <?php foreach ($categorySolds as $category) : ?>
+                <?php extract($category) ?>
+                <tr>
+                  <td><?= $category_id ?></td>
+                  <td class="d-none d-xl-table-cell"><?= $category_name ?></td>
+                  <td class="d-none d-xl-table-cell"><?= $sold_count ?></td>
+                </tr>
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>
@@ -117,13 +117,13 @@
             <div class="align-self-center w-100">
               <div class="py-3">
                 <div class="chart chart-xs">
-                <canvas id="myPieChart" width="400" height="400"></canvas>
+                  <canvas id="myPieChart" width="400" height="400"></canvas>
                 </div>
               </div>
             </div>
           </div>
         </div>
-         
+
       </div>
     </div>
   </div>
@@ -183,11 +183,11 @@
       plugins: {
         tooltip: {
           callbacks: {
-            label: function (context) {
+            label: function(context) {
               var index = context.dataIndex;
               var label = categories[index];
               var value = solds[index];
-              var total = context.dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+              var total = context.dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
                 return previousValue + currentValue;
               });
               var percentage = Math.floor((value / total) * 100 + 0.5);

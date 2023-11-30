@@ -50,8 +50,8 @@
                         <a href="?act=updateCategory&idCategory=<?= $id ?>" class="btn btn-warning ">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteCategory ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-status="<?=$status?>" data-ds-name="<?=$name?>" data-ds-id="<?= $id ?>">
-                        <?= ($status == 0) ? "Delete" : "Restore" ?>
+                        <button type="button" class="btn btn-danger deleteCategory ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-status="<?= $status ?>" data-ds-name="<?= $name ?>" data-ds-id="<?= $id ?>">
+                          <?= ($status == 0) ? "Delete" : "Restore" ?>
                         </button>
                       </div>
                     </td>
@@ -90,7 +90,7 @@
         </button>
       </div>
       <div class="modal-body m-3">
-      <p class="mb-0" id="confirmation-message"></p>
+        <p class="mb-0" id="confirmation-message"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -104,20 +104,13 @@
   </div>
 </div>
 
-<style>
-#confirmation-message strong {
-  font-weight: bolder;
-  color: red;
-}
-</style>
-
 <script>
   $('.deleteCategory').on('click', function() {
     var id = $(this).data('ds-id');
     console.log(id);
     var name = $(this).data('ds-name')
     var status = $(this).data('ds-status');
-    var action =  (status == 0) ? "delete" : "restore";
+    var action = (status == 0) ? "delete" : "restore";
     var link = `?act=deleteCategory&idCategory=${id}`;
     var confirmationMessage = `<strong>Do you want to ${action} category with name ${name}?</strong>`;
 
