@@ -33,7 +33,7 @@
                   <h5 class="card-title mb-0">Info</h5>
                 </div>
                 <div class="card-body">
-                  <form method="post" enctype="multipart/form-data">
+                  <form method="post" enctype="multipart/form-data" id="validation-form">
                     <input type="hidden" name="id" value="<?= $id ?>">
                     <div class="row">
                       <div class="col-md-8">
@@ -83,28 +83,24 @@
   </main>
 </div>
 
+
 <!-- Validation -->
 <script>
   $('#validation-form').validate({
     rules: {
       email: {
-        required: true,
         maxLength: 50
       },
       fullname: {
-        required: true,
         maxLength: 100
       },
       phone: {
-        required: true,
         maxLength: 11
       },
       address: {
-        required: true,
         maxLength: 50
       },
       image: {
-        required: true,
         maxLength: 255
       }
     },
@@ -114,19 +110,15 @@
         maxLength: "Your email is long"
       },
       fullname: {
-        required: "Please enter your email",
         maxLength: "Your fullname is long"
       },
       phone: {
-        required: "Please enter your phone",
         maxLength: "Your phone is long"
       },
       address: {
-        required: "Please enter your phone",
         maxLength: "Your address is long"
       },
       image: {
-        required: "Please enter your image",
         maxLength: "Your image is long"
       }
     },

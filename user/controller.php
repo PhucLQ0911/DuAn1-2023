@@ -125,6 +125,7 @@ if (isset($_GET['act'])) {
     case 'orderSuccess':
       include("./orderSuccess.php");
       break;
+
       // Add to cart
     case 'buy':
       if (isset($_POST['buyNow'])) {
@@ -135,30 +136,32 @@ if (isset($_GET['act'])) {
       break;
 
     case 'profile':
-      if (isset($_POST['profile'])) {
-        $id = $_POST['id'];
-        $fullname = $_POST['fullname'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $image = $_POST['oldImage'];
-        $newImage = $_FILES['image']['name'];
-        if ($newImage != "") {
-          $image = $newImage;
-        }
-        // save image
-        $target_dir = "../uploads/";
-        $target_file = $target_dir . basename($image);
-        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-        loginUpdateUser($fullname, $phone, $address, $image, $id);
-        $_SESSION['user'] =  loginUserOne($id);
-        header("location:?act=profile");
-      }
-      include "profile/profile.php";
+      // if (isset($_POST['profile'])) {
+      //   $id = $_POST['id'];
+      //   $fullname = $_POST['fullname'];
+      //   $phone = $_POST['phone'];
+      //   $address = $_POST['address'];
+      //   $image = $_POST['oldImage'];
+      //   $newImage = $_FILES['image']['name'];
+      //   if ($newImage != "") {
+      //     $image = $newImage;
+      //   }
+      //   // save image
+      //   $target_dir = "../uploads/";
+      //   $target_file = $target_dir . basename($image);
+      //   move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+      //   // loginUpdateUser($fullname, $phone, $address, $image, $id);
+      //   // $_SESSION['user'] =  loginUserOne($id);
+      //   // header("location:?act=profile");
+      // }
+      include("profile/profile.php");
       break;
+
       // 
     case 'resetpassword':
       include("profile/rePassword.php");
       break;
+
       // signOut
     case 'signOut':
       session_unset();
