@@ -188,34 +188,44 @@
   $('#validation-form').validate({
     rules: {
       fullname: {
-        required: true
+        required: true,
+        maxLength: 100,
       },
       email: {
         required: true,
-        email: true
+        email: true,
+        maxLength: 50,
       },
       phone: {
         required: true,
-        maxlength: 11
+        maxlength: 11,
       },
       address: {
-        required: true
+        required: true,
+        maxLength: 50
       },
       payment: {
         required: true
       }
     },
     messages: {
-      fullname: "Please enter your full name",
+      fullname: {
+        required: "Please enter your full name",
+        maxLength: "Your fullname is long"
+      },
       email: {
         required: "Please enter your email",
-        email: "Please enter valid email"
+        email: "Please enter valid email",
+        maxLength: "Your email is long"
       },
       mobile: {
         required: "Please enter your phone number",
         maxlength: "Phone number no more than 11 characters."
       },
-      address: "Please enter your address",
+      address: {
+        required: "Please enter your address",
+        maxLength: "Your address is long"
+      },
     },
     errorElement: 'div', // Add this line to use a div for error messages
     errorPlacement: function(error, element) {

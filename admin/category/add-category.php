@@ -53,19 +53,23 @@
       rules: {
         "validation-category-name": {
           required: true,
+          maxlength: 50
         },
         "validation-category-file": {
           required: true,
-          extension: "jpg|jpeg|png"
+          extension: "jpg|jpeg|png",
+          maxlength: 255
         }
       },
       messages: {
         "validation-category-name": {
-          required: "Do not leave the name category blank."
+          required: "Do not leave the name category blank.",
+          maxlength: "Your name category is long"
         },
         "validation-category-file": {
           required: "Do not leave the image category blank.",
-          extension: "Please upload file in these format only (jpg, jpeg, png)."
+          extension: "Please upload file in these format only (jpg, jpeg, png).",
+          maxlength: "Your name image is long"
         }
       },
       // Errors

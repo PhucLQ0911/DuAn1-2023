@@ -4,7 +4,7 @@
     <div class="col-lg-4 d-none d-lg-block">
       <a href="?act=home" class="text-decoration-none">
         <h1 class="m-0 display-5 font-weight-semi-bold">
-          <span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper
+          <span class="text-primary font-weight-bold border px-3 mr-1">TwentyFive</span> Fashion
         </h1>
       </a>
     </div>

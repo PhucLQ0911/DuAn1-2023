@@ -82,3 +82,67 @@
     </div>
   </main>
 </div>
+
+<!-- Validation -->
+<script>
+  $('#validation-form').validate({
+    rules: {
+      email: {
+        required: true,
+        maxLength: 50
+      },
+      fullname: {
+        required: true,
+        maxLength: 100
+      },
+      phone: {
+        required: true,
+        maxLength: 11
+      },
+      address: {
+        required: true,
+        maxLength: 50
+      },
+      image: {
+        required: true,
+        maxLength: 255
+      }
+    },
+    messages: {
+      email: {
+        required: "Please enter your email",
+        maxLength: "Your email is long"
+      },
+      fullname: {
+        required: "Please enter your email",
+        maxLength: "Your fullname is long"
+      },
+      phone: {
+        required: "Please enter your phone",
+        maxLength: "Your phone is long"
+      },
+      address: {
+        required: "Please enter your phone",
+        maxLength: "Your address is long"
+      },
+      image: {
+        required: "Please enter your image",
+        maxLength: "Your image is long"
+      }
+    },
+    errorElement: 'div', // Add this line to use a div for error messages
+    errorPlacement: function(error, element) {
+      error.css('color', 'red');
+      error.insertAfter(element); // Display error message after the input element
+    },
+    submitHandler: function(form) {
+      form.submit();
+    },
+    highlight: function(element) {
+      $(element).css('border-color', 'red'); // Highlight input with red border
+    },
+    unhighlight: function(element) {
+      $(element).css('border-color', ''); // Reset to default border color
+    }
+  });
+</script>

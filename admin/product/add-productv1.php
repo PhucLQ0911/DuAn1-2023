@@ -131,11 +131,13 @@
     $("#validation-form").validate({
       rules: {
         "validation-product-name": {
-          required: true
+          required: true,
+          maxLength: 50
         },
         "validation-product-file": {
           required: true,
-          extension: "jpg|jpeg|png"
+          extension: "jpg|jpeg|png",
+          maxLength: 255
         },
         "validation-product-price": {
           required: true
@@ -155,11 +157,13 @@
       },
       messages: {
         "validation-product-name": {
-          required: "Do not leave the name product blank."
+          required: "Do not leave the name product blank.",
+          maxLength: "Your name product is long"
         },
         "validation-product-file": {
           required: "Do not leave the image blank.",
-          extension: "Please upload file in these format only (jpg, jpeg, png)."
+          extension: "Please upload file in these format only (jpg, jpeg, png).",
+          maxLength: "Your name image is long"
         },
         "validation-product-price": {
           required: "Do not leave the price blank."
