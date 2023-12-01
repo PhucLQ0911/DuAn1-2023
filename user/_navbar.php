@@ -29,7 +29,7 @@
       <!-- Login -->
       <?php if (isset($_SESSION['user'])) : ?>
         <?php extract($_SESSION['user']) ?>
-        <div class="dropdown show ml-2">
+        <div class="dropdown show">
           <a class="btn border dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img height="30px" max-width="100%" class="rounded-circle mr-1" src="../uploads/<?= $image ?>" alt="">
             <?= $fullname ?>

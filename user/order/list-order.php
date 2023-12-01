@@ -40,7 +40,7 @@
                     <td><?= $total_payment ?></td>
                     <td>
                       <?php if ($order_status == 0) : ?>
-                        <span class="badge badge-warning rounded">In progress</span>
+                        <span class="badge badge-warning rounded text-white">In progress</span>
                       <?php elseif ($order_status == -1) : ?>
                         <span class="badge badge-danger rounded">Cancelled</span>
                       <?php elseif ($order_status == 1) : ?>
@@ -49,7 +49,8 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <a href="?act=detailOrder&idOrder=<?= $order_id ?>" class="btn btn-primary rounded">
+                        <a href="?act=detailOrder&idOrder=<?= $id ?>" class="btn btn-primary rounded text-white">
+                          (Cancel order)
                           Detail
                         </a>
                         <?php if ($order_status == 0) : ?>
