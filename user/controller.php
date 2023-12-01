@@ -136,24 +136,24 @@ if (isset($_GET['act'])) {
       break;
 
     case 'profile':
-      // if (isset($_POST['profile'])) {
-      //   $id = $_POST['id'];
-      //   $fullname = $_POST['fullname'];
-      //   $phone = $_POST['phone'];
-      //   $address = $_POST['address'];
-      //   $image = $_POST['oldImage'];
-      //   $newImage = $_FILES['image']['name'];
-      //   if ($newImage != "") {
-      //     $image = $newImage;
-      //   }
-      //   // save image
-      //   $target_dir = "../uploads/";
-      //   $target_file = $target_dir . basename($image);
-      //   move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-      //   // loginUpdateUser($fullname, $phone, $address, $image, $id);
-      //   // $_SESSION['user'] =  loginUserOne($id);
-      //   // header("location:?act=profile");
-      // }
+      if (isset($_POST['profile'])) {
+        $id = $_POST['id'];
+        $fullname = $_POST['fullname'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $image = $_POST['oldImage'];
+        $newImage = $_FILES['image']['name'];
+        if ($newImage != "") {
+          $image = $newImage;
+        }
+        // save image
+        $target_dir = "../uploads/";
+        $target_file = $target_dir . basename($image);
+        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+        loginUpdateUser($fullname, $phone, $address, $image, $id);
+        $_SESSION['user'] =  loginUserOne($id);
+        header("location:?act=profile");
+      }
       include("profile/profile.php");
       break;
 

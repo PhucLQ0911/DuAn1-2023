@@ -132,12 +132,12 @@
       rules: {
         "validation-product-name": {
           required: true,
-          maxLength: 50
+          maxlength: 50
         },
         "validation-product-file": {
           required: true,
           extension: "jpg|jpeg|png",
-          maxLength: 255
+          maxlength: 255
         },
         "validation-product-price": {
           required: true
@@ -158,12 +158,12 @@
       messages: {
         "validation-product-name": {
           required: "Do not leave the name product blank.",
-          maxLength: "Your name product is long"
+          maxlength: "Your name product is long"
         },
         "validation-product-file": {
           required: "Do not leave the image blank.",
           extension: "Please upload file in these format only (jpg, jpeg, png).",
-          maxLength: "Your name image is long"
+          maxlength: "Your name image is long"
         },
         "validation-product-price": {
           required: "Do not leave the price blank."

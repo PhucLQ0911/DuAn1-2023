@@ -189,12 +189,12 @@
     rules: {
       fullname: {
         required: true,
-        maxLength: 100,
+        maxlength: 100,
       },
       email: {
         required: true,
         email: true,
-        maxLength: 50,
+        maxlength: 50,
       },
       phone: {
         required: true,
@@ -202,7 +202,7 @@
       },
       address: {
         required: true,
-        maxLength: 50
+        maxlength: 50
       },
       payment: {
         required: true
@@ -211,12 +211,12 @@
     messages: {
       fullname: {
         required: "Please enter your full name",
-        maxLength: "Your fullname is long"
+        maxlength: "Your fullname is long"
       },
       email: {
         required: "Please enter your email",
         email: "Please enter valid email",
-        maxLength: "Your email is long"
+        maxlength: "Your email is long"
       },
       mobile: {
         required: "Please enter your phone number",
@@ -224,7 +224,7 @@
       },
       address: {
         required: "Please enter your address",
-        maxLength: "Your address is long"
+        maxlength: "Your address is long"
       },
     },
     errorElement: 'div', // Add this line to use a div for error messages

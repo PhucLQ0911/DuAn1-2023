@@ -19,6 +19,7 @@ if (!isset($_SESSION['user'])) {
     //Tai khoan khong co quyen dang nhap admin
     header("location: ../user/");
   }
+  extract($_SESSION['user']);
 }
 ?>
 
@@ -62,7 +63,6 @@ if (!isset($_SESSION['user'])) {
             $totalPendingOrder = dashboardGetTotalPendingOrder();
             $totalOrder = dashboardGetTotalOrder();
             $categorySolds = dashboardGetByCate();
-            $categorySoldsProduct = dashboardGetBySoldProduct();
             include("dashboard/dashboard.php");
             break;
 
@@ -83,6 +83,13 @@ if (!isset($_SESSION['user'])) {
               $isSuccessUpdate = $_GET['isSuccessDelete'];
               if ($isSuccessUpdate == 1) {
                 echo "<script>showToast('Delete')</script>";
+              }
+            }
+            // Restore success
+            if (isset($_GET['isSuccessRestore'])) {
+              $isSuccessRestore = $_GET['isSuccessRestore'];
+              if ($isSuccessRestore == 1) {
+                echo "<script>showToast('Restore')</script>";
               }
             }
             break;
@@ -161,14 +168,23 @@ if (!isset($_SESSION['user'])) {
               $cateStatus = categoryGetOne($idCate)['status'];
               if ($cateStatus == 0) {
                 $cateStatus = 1;
-              } else {
-                $cateStatus = 0;
               }
               categoryDelete($idCate, $cateStatus);
               header("location: ?act=listCategory&isSuccessDelete=1");
             }
             break;
 
+          case 'restoreCategory':
+            if (isset($_GET['idCategory'])) {
+              $idCate = $_GET['idCategory'];
+              $cateStatus = categoryGetOne($idCate)['status'];
+              if ($cateStatus == 1) {
+                $cateStatus = 0;
+              }
+              categoryDelete($idCate, $cateStatus);
+              header("location: ?act=listCategory&isSuccessRestore=1");
+            }
+            break;
             // Product
           case 'listProduct':
             $products = productGetAll();

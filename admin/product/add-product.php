@@ -67,7 +67,8 @@
     $("#validation-form").validate({
       rules: {
         "validation-product-name": {
-          required: true
+          required: true,
+
         },
         "validation-product-file": {
           required: true

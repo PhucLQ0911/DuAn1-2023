@@ -104,7 +104,7 @@
         "validation-product-att-image[]": {
           required: true,
           extension: "jpg|jpeg|png",
-          maxLength: 255
+          maxlength: 255
         }
       },
       messages: {
@@ -117,7 +117,7 @@
         "validation-product-att-image[]": {
           required: "Do not leave the image attribute blank.",
           extension: "Please upload file in these format only (jpg, jpeg, png).",
-          maxLength: "Your name image is long"
+          maxlength: "Your name image is long"
         }
       },
       // Errors

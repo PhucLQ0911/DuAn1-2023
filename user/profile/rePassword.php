@@ -88,12 +88,11 @@
       },
       newPassword: {
         required: true,
-        maxLength: 10
       },
       newPass: {
         required: true,
-        equalTo: "#inputPasswordNew",
-        maxLength: 10
+        equalTo: "#inputPasswordNew"
+
       }
     },
     messages: {

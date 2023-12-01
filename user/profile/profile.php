@@ -89,37 +89,37 @@
   $('#validation-form').validate({
     rules: {
       email: {
-        maxLength: 50
+        maxlength: 50
       },
       fullname: {
-        maxLength: 100
+        maxlength: 100
       },
       phone: {
-        maxLength: 11
+        maxlength: 11
       },
       address: {
-        maxLength: 50
+        maxlength: 50
       },
       image: {
-        maxLength: 255
+        maxlength: 255
       }
     },
     messages: {
       email: {
         required: "Please enter your email",
-        maxLength: "Your email is long"
+        maxlength: "Your email is long"
       },
       fullname: {
-        maxLength: "Your fullname is long"
+        maxlength: "Your fullname is long"
       },
       phone: {
-        maxLength: "Your phone is long"
+        maxlength: "Your phone is long"
       },
       address: {
-        maxLength: "Your address is long"
+        maxlength: "Your address is long"
       },
       image: {
-        maxLength: "Your image is long"
+        maxlength: "Your image is long"
       }
     },
     errorElement: 'div', // Add this line to use a div for error messages

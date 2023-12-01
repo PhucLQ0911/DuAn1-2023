@@ -104,40 +104,40 @@ if (isset($_POST['signUp'])) {
         "email": {
           required: true,
           email: true,
-          maxLength: 50
+          maxlength: 50
         },
         "fullname": {
           required: true,
-          maxLength: 100
+          maxlength: 100
         },
         "password": {
           required: true,
-          maxLength: 10
+          maxlength: 10
         },
         "rePassword": {
           required: true,
           equalTo: "#password",
-          maxLength: 10
+          maxlength: 10
         }
       },
       messages: {
         "email": {
           required: "Do not leave the email blank.",
           email: "Is not a email",
-          maxLength: "Your email is long"
+          maxlength: "Your email is long"
         },
         "fullname": {
           required: "Do not leave the fullname blank.",
-          maxLength: "Your fullname is long"
+          maxlength: "Your fullname is long"
         },
         "password": {
           required: "Do not leave the password blank.",
-          maxLength: "Your password is long"
+          maxlength: "Your password is long"
         },
         "rePassword": {
           required: "Do not leave the re-password blank.",
           equalTo: "Please enter the same password as above",
-          maxLength: "Your re-password is long"
+          maxlength: "Your re-password is long"
         }
       },
       // Errors

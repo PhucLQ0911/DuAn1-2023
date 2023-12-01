@@ -81,10 +81,23 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-lg-6 col-xl-8 d-flex">
+      <div class="col-12 d-flex">
+        <div class="card flex-fill w-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Total Revenue</h5>
+          </div>
+          <div class="card-body">
+            <div class="chart ">
+              <canvas id="chartjs-dashboard-line"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex">
         <div class="card flex-fill">
           <div class="card-header">
-            <h5 class="card-title mb-0">New Orders</h5>
+            <h5 class="card-title mb-0">Total category solds</h5>
           </div>
           <table id="datatables-dashboard-projects" class="table table-striped my-0">
             <thead>
@@ -100,106 +113,104 @@
                 <tr>
                   <td><?= $category_id ?></td>
                   <td class="d-none d-xl-table-cell"><?= $category_name ?></td>
-                  <td class="d-none d-xl-table-cell"><?= $sold_count ?></td>
+                  <td class="d-none d-xl-table-cell"><?php
+                                                      if (isset($sold_count)) echo $sold_count;
+                                                      else {
+                                                        echo 0;
+                                                      } ?>
+                  </td>
                 </tr>
               <?php endforeach ?>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-12 col-xl-4 d-none d-xl-flex">
-        <div class="card flex-fill w-100">
-          <div class="card-header">
-
-            <h5 class="card-title mb-0"> Number of products sold in the category</h5>
-          </div>
-          <div class="card-body d-flex">
-            <div class="align-self-center w-100">
-              <div class="py-3">
-                <div class="chart chart-xs">
-                  <canvas id="myPieChart" width="400" height="400"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
 </main>
 
-<script src="./js/app.js"></script>
-<!-- Pie chart -->
-<!-- <script>
 
+<!-- Line chart -->
+<script>
   $(function() {
-    // Pie chart
-    new Chart(document.getElementById('chartjs-dashboard-pie'), {
-      type: 'pie',
+    // Line chart
+    new Chart(document.getElementById('chartjs-dashboard-line'), {
+      type: 'line',
       data: {
-        labels: ['Direct', 'Affiliate', 'E-mail', 'Other'],
+        labels: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ],
         datasets: [{
-          data: [2602, 1253, 541, 1465],
-          backgroundColor: [
-            window.theme.primary,
-            window.theme.warning,
-            window.theme.danger,
-            '#E8EAED',
-          ],
-          borderColor: 'transparent',
-        }, ],
+            label: 'Sales ($)',
+            fill: true,
+            backgroundColor: 'transparent',
+            borderColor: window.theme.primary,
+            data: [
+              2015, 1465, 1487, 1796, 1387, 2123, 2866, 2548, 3902, 4938,
+              3917, 4927,
+            ],
+          },
+          {
+            label: 'Orders',
+            fill: true,
+            backgroundColor: 'transparent',
+            borderColor: window.theme.tertiary,
+            borderDash: [4, 4],
+            data: [
+              928, 734, 626, 893, 921, 1202, 1396, 1232, 1524, 2102, 1506,
+              1887,
+            ],
+          },
+        ],
       },
       options: {
-        responsive: !window.MSInputMethodContext,
         maintainAspectRatio: false,
         legend: {
           display: false,
         },
-      },
-    });
-  });
-</script> -->
-<script>
-  // Dữ liệu danh sách mảng các danh mục và số lượng sản phẩm đã bán
-  var categories = <?php echo json_encode(array_column($categorySoldsProduct, 'category_name')); ?>;
-  var solds = <?php echo json_encode(array_column($categorySoldsProduct, 'sold_products')); ?>;
-  var products = <?php echo json_encode(array_column($categorySoldsProduct, 'product_name')); ?>;
-
-  // Lấy đối tượng canvas và ngữ cảnh 2D
-  var ctx = document.getElementById('myPieChart').getContext('2d');
-
-  // Tạo biểu đồ tròn
-  var myPieChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      datasets: [{
-        data: solds,
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF8C00', '#9966FF'],
-      }],
-      labels: categories,
-    },
-    options: {
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              var index = context.dataIndex;
-              var label = categories[index];
-              var value = solds[index];
-              var total = context.dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                return previousValue + currentValue;
-              });
-              var percentage = Math.floor((value / total) * 100 + 0.5);
-              return label + ': ' + value + ' sold products (' + percentage + '%)';
-            },
+        tooltips: {
+          intersect: false,
+        },
+        hover: {
+          intersect: true,
+        },
+        plugins: {
+          filler: {
+            propagate: false,
           },
         },
+        scales: {
+          xAxes: [{
+            reverse: true,
+            gridLines: {
+              color: 'rgba(0,0,0,0.05)',
+            },
+          }, ],
+          yAxes: [{
+            ticks: {
+              stepSize: 500,
+            },
+            display: true,
+            borderDash: [5, 5],
+            gridLines: {
+              color: 'rgba(0,0,0,0)',
+              fontColor: '#fff',
+            },
+          }, ],
+        },
       },
-      legend: {
-        position: 'bottom', // Di chuyển danh mục xuống phía dưới biểu đồ
-      },
-    },
+    });
   });
 </script>
 

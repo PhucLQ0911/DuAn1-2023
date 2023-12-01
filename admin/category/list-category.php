@@ -50,6 +50,7 @@
                         <a href="?act=updateCategory&idCategory=<?= $id ?>" class="btn btn-warning ">
                           Update
                         </a>
+
                         <button type="button" class="btn btn-danger deleteCategory ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-status="<?= $status ?>" data-ds-name="<?= $name ?>" data-ds-id="<?= $id ?>">
                           <?= ($status == 0) ? "Delete" : "Restore" ?>
                         </button>
@@ -111,7 +112,7 @@
     var name = $(this).data('ds-name')
     var status = $(this).data('ds-status');
     var action = (status == 0) ? "delete" : "restore";
-    var link = `?act=deleteCategory&idCategory=${id}`;
+    var link = `?act=${action}Category&idCategory=${id}`;
     var confirmationMessage = `<strong>Do you want to ${action} category with name ${name}?</strong>`;
 
     // Set confirmation message and link

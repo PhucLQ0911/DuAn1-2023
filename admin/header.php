@@ -1,8 +1,3 @@
-<?php
-if (isset($_SESSION['user'])) {
-  extract($_SESSION['user']);
-}
-?>
 <nav class="navbar navbar-expand navbar-light bg-white">
   <a class="sidebar-toggle d-flex mr-2">
     <i class="hamburger align-self-center"></i>

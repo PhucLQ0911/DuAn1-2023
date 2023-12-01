@@ -100,7 +100,7 @@
         },
         "validation-product-att-image": {
           extension: "jpg|jpeg|png",
-          maxLength: 255
+          maxlength: 255
         },
         "validation-product-att-price": {
           required: true
@@ -112,7 +112,7 @@
         },
         "validation-product-att-image": {
           extension: "Please upload file in these format only (jpg, jpeg, png).",
-          maxLength: "Your name image product is long"
+          maxlength: "Your name image product is long"
         },
         "validation-product-att-price": {
           required: "Do not leave the price blank."
