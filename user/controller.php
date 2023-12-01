@@ -118,7 +118,13 @@ if (isset($_GET['act'])) {
         $order = orderGetOne($id);
         $showOrder = orderDetailSelectAll($id);
       }
-      include('./checkOrder.php');
+
+      // Check user
+      if (isset($_SESSION['user'])) {
+        include_once("./checkOrderLogin.php");
+      } else {
+        include('./checkOrder.php');
+      }
       break;
 
       // Order success
