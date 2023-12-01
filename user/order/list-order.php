@@ -12,12 +12,12 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Full name</th>
-                  <th>Address</th>
+                  <th>Order_ID</th>
                   <th>Phone</th>
+                  <th>Shipping address</th>
                   <th>Payment</th>
-                  <th>Date order</th>
                   <th>Total amount</th>
+                  <th>Date order</th>
                   <th>Order status</th>
                   <th>
                     <div class="text-center">
@@ -32,10 +32,10 @@
                   <?php extract($order) ?>
                   <tr>
                     <td><?= $key + 1 ?></td>
-                    <td><?= $fullname ?></td>
-                    <td><?= $address ?></td>
+                    <td><?= $order_id ?></td>
                     <td><?= $phone ?></td>
-                    <td><?= $method ?></td>
+                    <td><?= $address ?></td>
+                    <td><?= $payment_method ?></td>
                     <td><?= $added_on ?></td>
                     <td><?= $total_payment ?></td>
                     <td>
@@ -49,13 +49,14 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <a href="?act=detailOrder&idOrder=<?= $id ?>" class="btn btn-primary rounded">
+                        <a href="?act=detailOrder&idOrder=<?= $order_id ?>" class="btn btn-primary rounded">
                           Detail
                         </a>
                         <?php if ($order_status == 0) : ?>
-                          <button type="button" class="btn btn-danger confirmOrder ml-2 rounded" data-toggle="modal" data-target="#defaultModalConfirm" data-ds-id="<?= $id ?>">
+                          <button type="button" class="btn btn-danger refuseOrder ml-2" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="<?= $order_id ?>">
                             Cancel
                           </button>
+                          </a>
                         <?php endif; ?>
                       </div>
                     </td>

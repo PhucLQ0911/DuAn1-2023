@@ -117,13 +117,31 @@ if (isset($_GET['act'])) {
         $id = $_POST['idOrder'];
         $order = orderGetOne($id);
         $showOrder = orderDetailSelectAll($id);
+        $email = $_SESSION['user']['email'];
+        $order = checkOrderSelectAll($email);
       }
 
       // Check user
       if (isset($_SESSION['user'])) {
-        $orders =  orderGetAll();
+        $orders = checkOrderSelectAll($email);
         include_once("./order/list-order.php");
-      } else {
+
+       // Confirm success
+       if (isset($_GET['isSuccessConfirm'])) {
+        $isSuccessConfirm = $_GET['isSuccessConfirm'];
+        if ($isSuccessConfirm == 1) {
+          echo "<script>showToast('Confirm')</script>";
+        }
+      }
+
+      // Refuse success
+      if (isset($_GET['isSuccessRefuse'])) {
+        $isSuccessRefuse = $_GET['isSuccessRefuse'];
+        if ($isSuccessRefuse == 1) {
+          echo "<script>showToast('Refuse')</script>";
+        }
+      }
+     } else {
         include('./checkOrder.php');
       }
       break;
@@ -136,6 +154,14 @@ if (isset($_GET['act'])) {
       include("order/detail-order.php");
       break;
 
+    case 'refuseOrder':
+            if (isset($_GET['idOrder'])) {
+              echo "đã vào";
+              $id = $_GET['idOrder'];
+              orderSetStatusOrder(-1, $id);
+              header("location: ?act=orderDetail&isSuccessConfirm=1");
+            }
+            break;
       // Order success
     case 'orderSuccess':
       include("./orderSuccess.php");

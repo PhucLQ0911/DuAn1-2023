@@ -9,6 +9,7 @@ include_once("../dao/comment/comment.php");
 include_once("../dao/login/login.php");
 include_once("../dao/order/order.php");
 include_once("../dao/orderDetail/orderDetail.php");
+include_once("../dao/checkOrder/checkOder.php");
 
 $categories = categoryGetAllStatus();
 $products = productBestSeller();

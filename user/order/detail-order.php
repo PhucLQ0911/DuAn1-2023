@@ -43,14 +43,14 @@
                   <td><?= $quantity ?></td>
                   <td><?= $price * $quantity ?></td>
                 </tr>
-              <?php endforeach; ?>
+            <?php endforeach; ?>
 
             </tbody>
           </table>
 
           <!-- Confirm or refuse -->
           <?php if ($order_status == 0) : ?>
-            <div class="d-flex justify-content-center mt-5 ">
+            <div class="d-flex justify-content-center mt-5">
               <button type="button" class="btn btn-danger refuseOrder ml-2 rounded" data-toggle="modal" data-target="#defaultModalRefuse" data-ds-id="<?= $_GET['idOrder'] ?>">
                 Refuse
               </button>

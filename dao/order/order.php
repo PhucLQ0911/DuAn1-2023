@@ -26,7 +26,11 @@ function orderSetStatusOrder($status, $id)
   $sql = "UPDATE `order` SET `order_status`= '$status' WHERE `id`=$id";
   pdo_execute($sql);
 }
-
+function orderDetailSetStatusOrder($status, $id)
+{
+  $sql = "UPDATE `order_detail` SET `status`= '$status' WHERE `id`=$id";
+  pdo_execute($sql);
+}
 function orderInsert($fullname, $phone, $address, $email, $total, $payment)
 {
   $sql = "INSERT INTO `order` (fullname,phone,address,email,total_payment,payment_id) VALUES ('$fullname','$phone','$address','$email','$total','$payment')";
