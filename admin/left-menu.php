@@ -1,13 +1,13 @@
 <?php
-if(isset($_SESSION['user'])){
-      extract($_SESSION['user']);
+if (isset($_SESSION['user'])) {
+  extract($_SESSION['user']);
 }
 ?>
 <nav id="sidebar" class="sidebar">
   <div class="sidebar-content">
     <a class="sidebar-brand" href="?act=home">
       <i class="align-middle" data-feather="box"></i>
-      <span class="align-middle">Admin</span>
+      <span class="align-middle">TwentyFive</span>
     </a>
 
     <ul class="sidebar-nav">
@@ -93,14 +93,14 @@ if(isset($_SESSION['user'])){
     <!-- Account -->
     <div class="sidebar-bottom d-none d-lg-block">
       <div class="media">
-      <?php if($image!='') {?>
-            <img class="rounded-circle mr-3" src="../uploads/<?=$image?>" width="40" height="40" alt="Chris Wood" />
-            <?php } else {?>
-              <img class="rounded-circle mr-3" src="./img\avatars\avatar.jpg" alt="Chris Wood" width="40" height="40" />
-            <?php } ?>
-        
+        <?php if ($image != '') { ?>
+          <img class="rounded-circle mr-3" src="../uploads/<?= $image ?>" width="40" height="40" alt="Chris Wood" />
+        <?php } else { ?>
+          <img class="rounded-circle mr-3" src="./img\avatars\avatar.jpg" alt="Chris Wood" width="40" height="40" />
+        <?php } ?>
+
         <div class="media-body">
-          <h5 class="mb-1"><?=$fullname?></h5>
+          <h5 class="mb-1"><?= $fullname ?></h5>
           <div><i class="fas fa-circle text-success"></i> Online</div>
         </div>
       </div>

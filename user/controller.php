@@ -121,10 +121,19 @@ if (isset($_GET['act'])) {
 
       // Check user
       if (isset($_SESSION['user'])) {
-        include_once("./checkOrderLogin.php");
+        $orders =  orderGetAll();
+        include_once("./order/list-order.php");
       } else {
         include('./checkOrder.php');
       }
+      break;
+
+    case 'detailOrder':
+      if (isset($_GET['idOrder'])) {
+        $id = $_GET['idOrder'];
+        $orderDetails = orderDetailGetAllById($id);
+      }
+      include("order/detail-order.php");
       break;
 
       // Order success
