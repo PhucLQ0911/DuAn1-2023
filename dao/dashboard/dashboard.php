@@ -71,3 +71,21 @@ function dashboardGetTotalOrder()
           `order`";
   return pdo_query_value($sql);
 }
+
+
+function dashboardGetSoldAndRevenue($month, $year)
+{
+  $sql = "SELECT 
+            SUM(quantity) AS quantity,
+            SUM(total_payment) AS revenue
+          FROM
+            order_detail
+                JOIN
+            `order` ON order_detail.id_order = `order`.id
+          WHERE
+            `order`.order_status = '1'
+                AND MONTH(added_on) = $month
+                AND YEAR(added_on) = $year
+          GROUP BY  YEAR(added_on) , MONTH(added_on)";
+  return pdo_query($sql);
+}

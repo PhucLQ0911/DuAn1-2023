@@ -83,8 +83,18 @@
     <div class="row">
       <div class="col-12 d-flex">
         <div class="card flex-fill w-100">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Total Revenue</h5>
+          <div class="card-header ">
+            <div class="row">
+              <h5 class="card-title mb-0 col-11">Total Revenue</h5>
+              <div class="col">
+                <select class="custom-select mb-3 ml-auto" onchange="redirectToYear(this)">
+                  <option value="2023" <?= $_GET['year'] == 2023 ? "selected" : "" ?>>2023</option>
+                  <option value="2022" <?= $_GET['year'] == 2022 ? "selected" : "" ?>>2022</option>
+                  <option value="2021" <?= $_GET['year'] == 2021 ? "selected" : "" ?>>2021</option>
+                  <option value="2020" <?= $_GET['year'] == 2020 ? "selected" : "" ?>>2020</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="chart ">
@@ -130,6 +140,19 @@
 </main>
 
 
+<script>
+  function redirectToYear(selectElement) {
+    var selectedYear = selectElement.value;
+    var currentURL = window.location.href
+    var parts = currentURL.split('&year=');
+
+    // Lấy phần trước "&year=", nếu có
+    var baseURL = parts[0];
+
+    window.location.href = baseURL + "&year=" + selectedYear;
+  }
+</script>
+
 <!-- Line chart -->
 <script>
   $(function() {
@@ -156,10 +179,7 @@
             fill: true,
             backgroundColor: 'transparent',
             borderColor: window.theme.primary,
-            data: [
-              2015, 1465, 1487, 1796, 1387, 2123, 2866, 2548, 3902, 4938,
-              3917, 4927,
-            ],
+            data: chartData.map(item => item.revenue)
           },
           {
             label: 'Orders',
@@ -167,10 +187,7 @@
             backgroundColor: 'transparent',
             borderColor: window.theme.tertiary,
             borderDash: [4, 4],
-            data: [
-              928, 734, 626, 893, 921, 1202, 1396, 1232, 1524, 2102, 1506,
-              1887,
-            ],
+            data: chartData.map(item => item.quantity),
           },
         ],
       },

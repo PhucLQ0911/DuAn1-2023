@@ -63,6 +63,37 @@ if (!isset($_SESSION['user'])) {
             $totalPendingOrder = dashboardGetTotalPendingOrder();
             $totalOrder = dashboardGetTotalOrder();
             $categorySolds = dashboardGetByCate();
+
+            //Get data per month
+            $monthDatas = [];
+            $year = 2023;
+            if (isset($_GET['year'])) {
+              $year = $_GET['year'];
+            }
+
+            for ($month = 1; $month <= 12; $month++) {
+              $result = dashboardGetSoldAndRevenue($month, $year);
+
+              if ($result) {
+                $monthlyData = [
+                  'quantity' => $result[0]['quantity'],
+                  'revenue' => $result[0]['revenue'],
+                ];
+
+                $monthDatas[] = $monthlyData;
+              } else {
+                $monthlyData = [
+                  'quantity' => 0,
+                  'revenue' => 0,
+                ];
+                $monthDatas[] = $monthlyData;
+              }
+            }
+            // var_dump($monthDatas);
+            $chartLine = json_encode($monthDatas);
+            echo '<script>';
+            echo 'var chartData = ' . $chartLine . ';';
+            echo '</script>';
             include("dashboard/dashboard.php");
             break;
 
