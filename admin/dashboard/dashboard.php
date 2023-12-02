@@ -86,14 +86,25 @@
           <div class="card-header ">
             <div class="row">
               <h5 class="card-title mb-0 col-11">Total Revenue</h5>
-              <div class="col">
-                <select class="custom-select mb-3 ml-auto" onchange="redirectToYear(this)">
-                  <option value="2023" <?= $_GET['year'] == 2023 ? "selected" : "" ?>>2023</option>
-                  <option value="2022" <?= $_GET['year'] == 2022 ? "selected" : "" ?>>2022</option>
-                  <option value="2021" <?= $_GET['year'] == 2021 ? "selected" : "" ?>>2021</option>
-                  <option value="2020" <?= $_GET['year'] == 2020 ? "selected" : "" ?>>2020</option>
-                </select>
-              </div>
+              <?php if (isset($_GET['year'])) : ?>
+                <div class="col">
+                  <select class="custom-select mb-3 ml-auto" onchange="redirectToYear(this)">
+                    <option value="2023" <?= $_GET['year'] == 2023 ? "selected" : "" ?>>2023</option>
+                    <option value="2022" <?= $_GET['year'] == 2022 ? "selected" : "" ?>>2022</option>
+                    <option value="2021" <?= $_GET['year'] == 2021 ? "selected" : "" ?>>2021</option>
+                    <option value="2020" <?= $_GET['year'] == 2020 ? "selected" : "" ?>>2020</option>
+                  </select>
+                </div>
+              <?php else : ?>
+                <div class="col">
+                  <select class="custom-select mb-3 ml-auto" onchange="redirectToYear(this)">
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                  </select>
+                </div>
+              <?php endif ?>
             </div>
           </div>
           <div class="card-body">

@@ -20,7 +20,7 @@
       <div class="col-6 text-right">
         <p class="mb-0">
           &copy; 2023 -
-          <a href="#" class="text-muted">Quang Phuc</a>
+          <a href="#" class="text-muted">TwentyFive</a>
         </p>
       </div>
     </div>
