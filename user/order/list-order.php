@@ -12,9 +12,9 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Order_ID</th>
+                  <th>Order ID</th>
                   <th>Phone</th>
-                  <th>Shipping address</th>
+                  <th>Address</th>
                   <th>Payment</th>
                   <th>Total amount</th>
                   <th>Date order</th>
@@ -36,7 +36,10 @@
                     <td><?= $phone ?></td>
                     <td><?= $address ?></td>
                     <td><?= $payment_method ?></td>
-                    <td><?= $added_on ?></td>
+                    <td>
+                      <?php $date = strtotime($added_on);
+                      echo date('d-m-Y H:i:s', $date); ?>
+                    </td>
                     <td><?= $total_payment ?></td>
                     <td>
                       <?php if ($order_status == 0) : ?>
@@ -50,7 +53,6 @@
                     <td>
                       <div class="d-flex justify-content-center">
                         <a href="?act=detailOrder&idOrder=<?= $order_id ?>" class="btn btn-primary rounded text-white">
-                          (Cancel order)
                           Detail
                         </a>
                         <?php if ($order_status == 0) : ?>

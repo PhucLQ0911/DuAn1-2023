@@ -125,7 +125,7 @@
               <tr>
                 <th>Category ID</th>
                 <th>Name Category</th>
-                <th class="d-none d-xl-table-cell">Sold_Product</th>
+                <th class="d-none d-xl-table-cell">Sold Product</th>
               </tr>
             </thead>
             <tbody>

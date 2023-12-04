@@ -226,6 +226,9 @@
         required: "Please enter your address",
         maxlength: "Your address is long"
       },
+      payment: {
+        required: "Choose the payment methods."
+      }
     },
     errorElement: 'div', // Add this line to use a div for error messages
     errorPlacement: function(error, element) {
