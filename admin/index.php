@@ -234,6 +234,13 @@ if (!isset($_SESSION['user'])) {
                 echo "<script>showToast('Delete')</script>";
               }
             }
+              // Restore success
+              if (isset($_GET['isSuccessRestore'])) {
+                $isSuccessRestore = $_GET['isSuccessRestore'];
+                if ($isSuccessRestore == 1) {
+                  echo "<script>showToast('Restore')</script>";
+                }
+              }
             break;
 
           case 'addProduct':
@@ -357,6 +364,18 @@ if (!isset($_SESSION['user'])) {
               header("location: ?act=listProduct&isSuccessDelete=1");
             }
             break;
+            // restoreProduct
+            case 'restoreProduct':
+              if (isset($_GET['idProduct'])) {
+                $idPro = $_GET['idProduct'];
+                $proStatus = productSelectOne($idPro)['status'];
+                if ($proStatus == 1) {
+                  $proStatus = 0;
+                }
+                productDelete($idPro, $proStatus);
+                header("location: ?act=listProduct&isSuccessRestore=1");
+              }
+              break;
 
             // Product Attributes
           case 'attributeProduct':
@@ -474,11 +493,18 @@ if (!isset($_SESSION['user'])) {
           case 'listUser':
             $users = userGetAll();
             include("user/list-user.php");
-            // Delete success
+            // block success
             if (isset($_GET['isSuccessDelete'])) {
               $isSuccessUpdate = $_GET['isSuccessDelete'];
               if ($isSuccessUpdate == 1) {
-                echo "<script>showToast('Delete')</script>";
+                echo "<script>showToast('Block')</script>";
+              }
+            }
+            // Activated success
+            if (isset($_GET['isSuccessActivated'])) {
+              $isSuccessActivated = $_GET['isSuccessActivated'];
+              if ($isSuccessActivated == 1) {
+                echo "<script>showToast('Activated')</script>";
               }
             }
             break;
@@ -488,6 +514,7 @@ if (!isset($_SESSION['user'])) {
           case 'updateUser':
             include("../admin/pages-404.php");
             break;
+
           case 'deleteUser':
             $isSuccess = 0;
             if (isset($_GET['idUser'])) {
@@ -499,12 +526,23 @@ if (!isset($_SESSION['user'])) {
                 $status = 0;
               }
               userDelete($id, $status);
-              logout();
+              // logout();
               $isSuccess = 1;
               header("location: ?act=listUser&isSuccessDelete=$isSuccess");
             }
             break;
-
+            // Activated User
+            case 'ActivatedUser':
+              if (isset($_GET['idUser'])) {
+                $idUser = $_GET['idUser'];
+                $userStatus = userGetOne($id)['status'];
+                if ($userStatus == 1) {
+                  $userStatus = 0;
+                }
+                userDelete($idUser, $userStatus);
+                header("location: ?act=listUser&isSuccessActivated=1");
+              }
+              break;
             // Comment
           case 'comment':
             $comments = commentGetAll();
@@ -584,7 +622,7 @@ if (!isset($_SESSION['user'])) {
           case 'refuseOrder':
             if (isset($_GET['idOrder'])) {
               $id = $_GET['idOrder'];
-              orderSetStatusOrder(2, $id);
+              orderSetStatusOrder(-1, $id);
               $order = orderDetailGetAllId($id);
               if (!empty($order)) {
                 $email = $order[0]['email'];
@@ -596,7 +634,7 @@ if (!isset($_SESSION['user'])) {
                 $total_payment = $order[0]['total_payment'];
                 $added_on = $order[0]['added_on'];
                 orderSendEmailRefuse($email, $id_order, $fullname, $added_on, $name, $quantity, $total_payment);
-                header("location: ?act=order&isSuccessConfirm=1");
+                header("location: ?act=order&isSuccessRefuse=1");
               } else {
                 echo "Order not found.";
               }

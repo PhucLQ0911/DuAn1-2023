@@ -49,7 +49,7 @@
                         <a href="?act=updateUser&idUser=<?= $id ?>" class="btn btn-warning ">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteUser" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>" data-ds-status="<?= $status ?>" >
+                        <button type="button" class="btn btn-danger deleteUser" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>" data-ds-email="<?= $email ?>" data-ds-status="<?= $status ?>" >
                           <?= ($status == 0)?"Block" : "Activated"?>
                         </button>
                       </div>
@@ -105,10 +105,11 @@
   $('.deleteUser').on('click', function() {
     var id = $(this).data('ds-id');
     console.log(id);
+    var email = $(this).data('ds-email');
     var status = $(this).data('ds-status');
-    var action = (status == 0) ? "Block" : "Activated";
-    var link = `?act=deleteUser&idUser=${id}`
-    var confirmationMessage = `Do you want to ${action} user with id ${id}?`;
+    var action = (status == 0) ? "delete" : "Activated";
+    var link = `?act=${action}User&idUser=${id}`
+    var confirmationMessage = `Do you want to ${action} user with email ${email}?`;
       // Set confirmation message and link
     $('#confirmation-message').text(confirmationMessage);
     document.getElementById("btn-delete").setAttribute("href", link)
@@ -118,9 +119,9 @@
 
 <!-- Show notification -->
 <script>
-  function showToast(title) {
-    var message = "Category";
-    var title = `${title} category success`;
+  function showToast(success) {
+    var title = "User";
+    var message = `${success} user success`;
     var type = "success";
 
     toastr[type](message, title, {

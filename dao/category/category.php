@@ -30,7 +30,7 @@ function categoryInsert($name, $image)
 function categoryUpdate($name, $image, $id)
 {
   $sql = "UPDATE `category` 
-          SET `name`='$name', `image`='$image'
+          SET `name`='$name',`image`='$image'
           WHERE `id`=$id";
   pdo_execute($sql);
 }

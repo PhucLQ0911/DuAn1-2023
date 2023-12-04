@@ -10,8 +10,11 @@ function commentCountById($id)
 
 function commentGetAll()
 {
-  $sql = "SELECT DISTINCT p.name,p.image,c.id_pro,c.id FROM comment c
-    LEFT JOIN product p ON c.id_pro = p.id ORDER BY id DESC";
+  $sql = "SELECT p.name, p.image, c.id_pro, MAX(c.id) AS max_id
+  FROM comment c
+  LEFT JOIN product p ON c.id_pro = p.id
+  GROUP BY c.id_pro
+  ORDER BY max_id DESC;";
   return pdo_query($sql);
 }
 

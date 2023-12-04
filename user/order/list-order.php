@@ -49,7 +49,7 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <a href="?act=detailOrder&idOrder=<?= $id ?>" class="btn btn-primary rounded text-white">
+                        <a href="?act=detailOrder&idOrder=<?= $order_id ?>" class="btn btn-primary rounded text-white">
                           (Cancel order)
                           Detail
                         </a>

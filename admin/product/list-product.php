@@ -129,7 +129,7 @@
     var name = $(this).data('ds-name');
     var status = $(this).data('ds-status');
     var action =  (status == 0) ? "delete" : "restore";
-    var link = `?act=deleteProduct&idProduct=${id}`
+    var link = `?act=${action}Product&idProduct=${id}`
     var confirmationMessage = `Do you want to ${action} product with name ${name}?`;
 
      // Set confirmation message and link
