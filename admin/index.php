@@ -155,7 +155,9 @@ if (!isset($_SESSION['user'])) {
             }
             include("category/add-category.php");
             if ($success == 1) {
-              echo "<script>showToast()</script>";
+              echo "<script>
+                      showToast('Add category success','success')
+                    </script>";
               $success = 0;
             }
             break;

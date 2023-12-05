@@ -97,7 +97,7 @@
 
 <!-- Show notification -->
 <script>
-  function showToast() {
+  function showToast(message, type) {
     var title = "Category";
     var message = "Add category success";
     var type = "success";

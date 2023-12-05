@@ -56,40 +56,6 @@ if (isset($_SESSION['user'])) {
         </ul>
       </li>
 
-      <!-- Size -->
-      <li class="sidebar-item">
-        <a href="#size" data-toggle="collapse" class="sidebar-link collapsed">
-          <i class="align-middle" data-feather="layout"></i>
-          <span class="align-middle">Size</span>
-        </a>
-        <ul id="size" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="?act=addSize">Add size</a>
-          </li>
-
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="?act=listSize">List size</a>
-          </li>
-        </ul>
-      </li>
-
-      <!-- Color -->
-      <li class="sidebar-item">
-        <a href="#color" data-toggle="collapse" class="sidebar-link collapsed">
-          <i class="align-middle" data-feather="layout"></i>
-          <span class="align-middle">Color</span>
-        </a>
-        <ul id="color" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="?act=addColor">Add color</a>
-          </li>
-
-          <li class="sidebar-item">
-            <a class="sidebar-link" href="?act=listColor">List color</a>
-          </li>
-        </ul>
-      </li>
-
       <!-- User -->
       <li class="sidebar-item">
         <a href="#users" data-toggle="collapse" class="sidebar-link collapsed">
