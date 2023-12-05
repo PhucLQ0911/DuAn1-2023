@@ -68,12 +68,6 @@ if (isset($_POST['signIn'])) {
                       <a href="signUp.php" name="" class="ml-auto">You don't have account? Sign up?</a>
                     </div>
 
-                    <div>
-                      <div class="custom-control custom-checkbox align-items-center">
-                        <input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me" checked="" />
-                        <label class="custom-control-label text-small">Remember me next time</label>
-                      </div>
-                    </div>
                     <div class="text-center mt-3">
                       <!-- <a href="../user/" class="btn btn-lg btn-primary"
                           >Sign in</a

@@ -147,29 +147,7 @@
           </div>
         </div>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-flag dropdown-toggle" href="#" id="languageDropdown" data-toggle="dropdown">
-          <img src="./img\flags\us.png" alt="English" />
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
-          <a class="dropdown-item" href="#">
-            <img src="./img\flags\us.png" alt="English" width="20" class="align-middle mr-1" />
-            <span class="align-middle">English</span>
-          </a>
-          <a class="dropdown-item" href="#">
-            <img src="./img\flags\es.png" alt="Spanish" width="20" class="align-middle mr-1" />
-            <span class="align-middle">Spanish</span>
-          </a>
-          <a class="dropdown-item" href="#">
-            <img src="./img\flags\de.png" alt="German" width="20" class="align-middle mr-1" />
-            <span class="align-middle">German</span>
-          </a>
-          <a class="dropdown-item" href="#">
-            <img src="./img\flags\nl.png" alt="Dutch" width="20" class="align-middle mr-1" />
-            <span class="align-middle">Dutch</span>
-          </a>
-        </div>
-      </li>
+
       <li class="nav-item dropdown">
         <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
           <i class="align-middle" data-feather="settings"></i>

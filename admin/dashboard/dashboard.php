@@ -11,7 +11,7 @@
               </div>
               <div class="media-body">
                 <h3 class="mb-2"><?= $totalSales ?></h3>
-                <div class="mb-0">Total Solded</div>
+                <div class="mb-0">Total Product Solded</div>
               </div>
             </div>
           </div>

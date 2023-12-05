@@ -58,7 +58,6 @@
           maxlength: 50
         },
         "validation-category-file": {
-          required: true,
           extension: "jpg|jpeg|png",
           maxlength: 255
         }
@@ -69,7 +68,6 @@
           maxlength: "Your name category is long"
         },
         "validation-category-file": {
-          required: "Do not leave the image category blank.",
           extension: "Please upload file in these format only (jpg, jpeg, png).",
           maxlength: "Your name image is long"
         }

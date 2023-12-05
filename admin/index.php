@@ -216,6 +216,8 @@ if (!isset($_SESSION['user'])) {
               header("location: ?act=listCategory&isSuccessRestore=1");
             }
             break;
+
+
             // Product
           case 'listProduct':
             $products = productGetAll();
@@ -234,13 +236,13 @@ if (!isset($_SESSION['user'])) {
                 echo "<script>showToast('Delete')</script>";
               }
             }
-              // Restore success
-              if (isset($_GET['isSuccessRestore'])) {
-                $isSuccessRestore = $_GET['isSuccessRestore'];
-                if ($isSuccessRestore == 1) {
-                  echo "<script>showToast('Restore')</script>";
-                }
+            // Restore success
+            if (isset($_GET['isSuccessRestore'])) {
+              $isSuccessRestore = $_GET['isSuccessRestore'];
+              if ($isSuccessRestore == 1) {
+                echo "<script>showToast('Restore')</script>";
               }
+            }
             break;
 
           case 'addProduct':
@@ -365,17 +367,17 @@ if (!isset($_SESSION['user'])) {
             }
             break;
             // restoreProduct
-            case 'restoreProduct':
-              if (isset($_GET['idProduct'])) {
-                $idPro = $_GET['idProduct'];
-                $proStatus = productSelectOne($idPro)['status'];
-                if ($proStatus == 1) {
-                  $proStatus = 0;
-                }
-                productDelete($idPro, $proStatus);
-                header("location: ?act=listProduct&isSuccessRestore=1");
+          case 'restoreProduct':
+            if (isset($_GET['idProduct'])) {
+              $idPro = $_GET['idProduct'];
+              $proStatus = productSelectOne($idPro)['status'];
+              if ($proStatus == 1) {
+                $proStatus = 0;
               }
-              break;
+              productDelete($idPro, $proStatus);
+              header("location: ?act=listProduct&isSuccessRestore=1");
+            }
+            break;
 
             // Product Attributes
           case 'attributeProduct':
@@ -531,18 +533,20 @@ if (!isset($_SESSION['user'])) {
               header("location: ?act=listUser&isSuccessDelete=$isSuccess");
             }
             break;
+
             // Activated User
-            case 'ActivatedUser':
-              if (isset($_GET['idUser'])) {
-                $idUser = $_GET['idUser'];
-                $userStatus = userGetOne($id)['status'];
-                if ($userStatus == 1) {
-                  $userStatus = 0;
-                }
-                userDelete($idUser, $userStatus);
-                header("location: ?act=listUser&isSuccessActivated=1");
+          case 'ActivatedUser':
+            if (isset($_GET['idUser'])) {
+              $idUser = $_GET['idUser'];
+              $userStatus = userGetOne($id)['status'];
+              if ($userStatus == 1) {
+                $userStatus = 0;
               }
-              break;
+              userDelete($idUser, $userStatus);
+              header("location: ?act=listUser&isSuccessActivated=1");
+            }
+            break;
+
             // Comment
           case 'comment':
             $comments = commentGetAll();
@@ -561,6 +565,7 @@ if (!isset($_SESSION['user'])) {
               }
             }
             break;
+
           case 'deleteComment':
             $isSuccess = 0;
             if (isset($_GET['idComment'])) {
@@ -571,6 +576,7 @@ if (!isset($_SESSION['user'])) {
               header("location: ?act=detailComment&idPro=$idPro&isSuccessDelete=$isSuccess");
             }
             break;
+
             // Order
           case 'order':
             $orders =  orderGetAll();
