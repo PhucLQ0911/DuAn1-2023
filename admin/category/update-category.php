@@ -94,3 +94,21 @@
     });
   });
 </script>
+
+<!-- Show notification -->
+<script>
+  function showError(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
+
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
+    });
+  }
+</script>

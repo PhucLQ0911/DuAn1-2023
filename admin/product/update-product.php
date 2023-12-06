@@ -137,26 +137,37 @@
 <!-- Show notification -->
 <script>
   // Toastr
-  $(function() {
-    var currentMessageIndex = -1;
-    $('#toastr-show').click(function() {
-      var message = "Product";
-      var title = "Update product success";
-      var type = "success";
+  function showToast() {
+    var title = "Product";
+    var message = "Update product success";
+    var type = "success";
 
-      toastr[type](message, title, {
-        positionClass: 'toast-top-right',
-        closeButton: 'checked',
-        progressBar: 'checked',
-        newestOnTop: 'checked',
-        rtl: $('body').attr('dir') === 'rtl' ||
-          $('html').attr('dir') === 'rtl',
-        timeOut: 5000,
-      });
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
     });
+  }
 
-    $('#toastr-clear').on('click', function() {
-      toastr.clear();
+  function showError(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
+
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
     });
-  });
+  }
+
+  function clearToast() {
+    toastr.clear();
+  }
 </script>

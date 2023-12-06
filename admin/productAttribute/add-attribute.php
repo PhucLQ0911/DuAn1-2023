@@ -217,10 +217,10 @@
 
 <!-- Show notification -->
 <script>
-  function showToast() {
-    var title = "Product Attribute";
-    var message = "Add product attribute success";
-    var type = "success";
+  function showError(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
 
     toastr[type](message, title, {
       positionClass: 'toast-top-right',

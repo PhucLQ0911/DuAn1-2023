@@ -139,14 +139,7 @@ if (!isset($_SESSION['user'])) {
               // check Name Category
               $categoryCheck = categoryCheck($name);
               if (is_array($categoryCheck)) {
-                extract($categoryCheck);
-                if ($status == 0) {
-                  echo "name đã tồn tại";
-                } else {
-                  // update 
-                  categoryReUpdate($image['name'], $id);
-                  $success = 1;
-                }
+                $success = -1;
               } else {
                 // Insert
                 categoryInsert($name, $image['name']);
@@ -155,15 +148,21 @@ if (!isset($_SESSION['user'])) {
             }
             include("category/add-category.php");
             if ($success == 1) {
+              $success = 0;
               echo "<script>
                       showToast('Add category success','success')
                     </script>";
+            } elseif ($success == -1) {
               $success = 0;
+              echo "<script>
+                      showError('Category','Category name already exists','error')
+                    </script>";
             }
             break;
 
             // Update category
           case 'updateCategory':
+            $success = 0;
             if (isset($_GET['idCategory']) & $_GET['idCategory'] > 0) {
               $idCate = $_GET['idCategory'];
               $category = categoryGetOne($idCate);
@@ -185,13 +184,19 @@ if (!isset($_SESSION['user'])) {
               // check Trùng name
               $categoryCheck = categoryCheckUpdate($newname, $name);
               if (is_array($categoryCheck)) {
-                echo "Trùng tên ròi";
+                $success = -1;
               } else {
                 categoryUpdate($newname, $image, $idCate);
                 header("location: ?act=listCategory&isSuccessUpdate=1");
               }
             }
             include("category/update-category.php");
+            if ($success == -1) {
+              $success = 0;
+              echo "<script>
+                      showError('Category','Name category is valid','error')
+                    </script>";
+            }
             break;
 
             // Delete cate
@@ -265,59 +270,68 @@ if (!isset($_SESSION['user'])) {
               // check name Product
               $productCheck = productCheck($name);
               if (is_array($productCheck)) {
-                extract($productCheck);
-                if ($status == 0) {
-                  echo "name đã tồn tại </br>";
-                } else {
-                  // update
-                  productReUpdate($category, $price, $image['name'], $description, $id);
-                }
+                $isSuccess = -1;
               } else {
                 // Insert
                 productInsert($name, $image['name'], $description, $price, $category);
-              }
 
-              // Lay ra id cua san pham vua them vao
-              $idCurrent = productSelectLast();
-              $idPro = $idCurrent[0]['id'];
+                // Lay ra id cua san pham vua them vao
+                $idCurrent = productSelectLast();
+                $idPro = $idCurrent[0]['id'];
 
-              // Product att
-              $priceAtt = $_POST['validation-product-att-price'];
-              $quantityAtt = $_POST['validation-product-att-qty'];
-              $colorAtt = $_POST['validation-product-att-color-id'];
-              $sizeAtt = $_POST['validation-product-att-size-id'];
-              $imgAtt = $_FILES['validation-product-att-image'];
-              $color = implode(', ', $colorAtt);
-              $size = implode(', ', $sizeAtt);
+                // Product att
+                $priceAtt = $_POST['validation-product-att-price'];
+                $quantityAtt = $_POST['validation-product-att-qty'];
+                $colorAtt = $_POST['validation-product-att-color-id'];
+                $sizeAtt = $_POST['validation-product-att-size-id'];
+                $imgAtt = $_FILES['validation-product-att-image'];
+                $color = implode(', ', $colorAtt);
+                $size = implode(', ', $sizeAtt);
 
-              for ($i = 0; $i < sizeof($priceAtt); $i++) {
-                // Save image
-                $target_dir = "../uploads/";
-                $target_file = $target_dir . basename($imgAtt['name'][$i]);
-                move_uploaded_file($imgAtt["tmp_name"][$i], $target_file);
+                for ($i = 0; $i < sizeof($priceAtt); $i++) {
+                  // Save image
+                  $target_dir = "../uploads/";
+                  $target_file = $target_dir . basename($imgAtt['name'][$i]);
+                  move_uploaded_file($imgAtt["tmp_name"][$i], $target_file);
 
-                // check size color product
-                $productAttCheck = productAttCheck($color, $size, $idPro);
-                if (is_array($productAttCheck)) {
-                  echo "size và color đã tồn tại";
-                } else {
-                  // Insert
-                  productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
+                  // check size color product
+                  $productAttCheck = productAttCheck($color, $size, $idPro);
+                  if (is_array($productAttCheck)) {
+                    $isSuccess = -2;
+                    break;
+                  } else {
+                    // Insert
+                    productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt['name'][$i]);
+                    $isSuccess = 1;
+                  }
                 }
               }
-              $isSuccess = 1;
             }
+
             $categories = categoryGetAll();
             $productSizes = productAttGetAllSize();
             $productColors = productAttGetAllColor();
-            include("product/add-productv1.php");
+
+            include("product/add-product.php");
+
             if ($isSuccess == 1) {
-              echo "<script>showToast()</script>";
               $isSuccess = 0;
+              echo "<script>showToast()</script>";
+            } elseif ($isSuccess == -1) {
+              $isSuccess = 0;
+              echo "<script>
+                      showError('Product','Product name already exists','error')
+                    </script>";
+            } elseif ($isSuccess == -2) {
+              $isSuccess = 0;
+              echo "<script>
+                      showError('Product','Size or color already exists','error')
+                    </script>";
             }
             break;
 
           case 'updateProduct':
+            $isSuccess = 0;
             if (isset($_GET['idProduct'])) {
               $id = $_GET['idProduct'];
               $product = productSelectOne($id);
@@ -343,7 +357,7 @@ if (!isset($_SESSION['user'])) {
               //  check name product
               $productCheck = productCheckUpdate($newName, $name);
               if (is_array($productCheck)) {
-                echo "Name đã tồn tại";
+                $isSuccess = -1;
               } else {
                 // Update
                 productUpdate($id, $newName, $price, $image, $description, $category);
@@ -352,6 +366,16 @@ if (!isset($_SESSION['user'])) {
             }
             $categories = categoryGetAll();
             include("product/update-product.php");
+            if ($isSuccess == -1) {
+              $isSuccess = 0;
+              echo "<script>
+                      showError('Product','Product name already exists','error')
+                    </script>";
+            } elseif ($isSuccess == 0) {
+              echo  "<script>
+                        showToast()
+                    </script>";
+            }
             break;
 
             // Delete product
@@ -400,6 +424,14 @@ if (!isset($_SESSION['user'])) {
                 echo "<script>showToast('Delete')</script>";
               }
             }
+
+            // Restore success
+            if (isset($_GET['isSuccessRestore'])) {
+              $isSuccessRestore = $_GET['isSuccessRestore'];
+              if ($isSuccessRestore == 1) {
+                echo "<script>showToast('Restore')</script>";
+              }
+            }
             break;
 
             // Add product att
@@ -426,13 +458,8 @@ if (!isset($_SESSION['user'])) {
               // check size color
               $productAttCheck = productAttCheck($color, $size, $idPro);
               if (is_array($productAttCheck)) {
-                extract($productAttCheck);
-                if ($status == 0) {
-                  echo "size và color đã tồn tại";
-                } else {
-                  // update
-                  productAttReUpdate($price, $quantity, $image, $id);
-                }
+                $isSuccess = -1;
+                break;
               } else {
                 for ($i = 0; $i < sizeof($priceAtt); $i++) {
                   productAttInsert($idPro, $priceAtt[$i], $colorAtt[$i], $sizeAtt[$i], $quantityAtt[$i], $imgAtt[$i]);
@@ -445,8 +472,12 @@ if (!isset($_SESSION['user'])) {
             $productColors = productAttGetAllColor();
             include("productAttribute/add-attribute.php");
             if ($isSuccess == 1) {
-              echo "<script>showToast()</script>";
               $isSuccess = 0;
+              echo "<script>showToast()</script>";
+            } elseif ($isSuccess == -1) {
+              echo "<script>
+                      showError('Product Attribute','Size or color already exists','error')
+                    </script>";
             }
             break;
 
@@ -470,6 +501,9 @@ if (!isset($_SESSION['user'])) {
               $target_file = $target_dir . basename($image);
               move_uploaded_file($_FILES['validation-product-att-image']['tmp_name'], $target_file);
 
+              $productAttCheck = productAttCheck($color, $size, $idPro);
+              if (is_array($productAttCheck)) {
+              }
               productAttUpdate($idAtt, $price, $quantity, $image);
               header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessUpdate=1");
             }
@@ -484,12 +518,16 @@ if (!isset($_SESSION['user'])) {
               $idPro = $_GET['idProduct'];
               $idProAtt = $_GET['idProductAttribute'];
               $proAtt =  productAttGetOne($idProAtt);
-              $status = 0;
+
               if ($proAtt['status'] == 0) {
+                $message = "isSuccessDelete";
                 $status = 1;
+              } else {
+                $message = "isSuccessRestore";
+                $status = 0;
               }
               productAttDelete($idProAtt, $status);
-              header("location: ?act=attributeProduct&idProduct=$idPro&isSuccessDelete=1");
+              header("location: ?act=attributeProduct&idProduct=$idPro&$message=1");
             }
             break;
 
@@ -679,6 +717,7 @@ if (!isset($_SESSION['user'])) {
 </body>
 
 </html>
+
 
 <?php
 ob_end_flush();

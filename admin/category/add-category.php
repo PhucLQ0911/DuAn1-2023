@@ -33,10 +33,8 @@
             </form>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </main>
 
@@ -95,12 +93,28 @@
   });
 </script>
 
+
 <!-- Show notification -->
 <script>
   function showToast(message, type) {
     var title = "Category";
-    var message = "Add category success";
-    var type = "success";
+    var message = message;
+    var type = type;
+
+    toastr[type](message, title, {
+      positionClass: 'toast-top-right',
+      closeButton: 'checked',
+      progressBar: 'checked',
+      newestOnTop: 'checked',
+      rtl: $('body').attr('dir') === 'rtl' || $('html').attr('dir') === 'rtl',
+      timeOut: 5000,
+    });
+  }
+
+  function showError(title, message, type) {
+    var title = title;
+    var message = message;
+    var type = type;
 
     toastr[type](message, title, {
       positionClass: 'toast-top-right',

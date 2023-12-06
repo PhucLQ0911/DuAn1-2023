@@ -98,6 +98,7 @@ function productAttCheck($colorAtt, $sizeAtt, $idPro)
   return pdo_query_one($sql);
 }
 
+
 function productAttReUpdate($price, $quantity, $image, $id)
 {
   $sql = "UPDATE `product_attributes` 

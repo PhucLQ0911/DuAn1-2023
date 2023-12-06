@@ -64,8 +64,8 @@
                         <a href="?act=updateProductAttribute&idProductAttribute=<?= $id ?>&idProduct=<?= $_GET['idProduct'] ?>" class="btn btn-warning ">
                           Update
                         </a>
-                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>">
-                          Delete
+                        <button type="button" class="btn btn-danger deleteProduct ml-2" data-toggle="modal" data-target="#defaultModalDanger" data-ds-id="<?= $id ?>" data-ds-status="<?= $status ?>">
+                          <?= $status == 0 ? "Delete" : "Restore" ?>
                         </button>
                       </div>
                     </td>
@@ -102,9 +102,7 @@
         </button>
       </div>
       <div class="modal-body m-3">
-        <p class="mb-0">
-          Do you want to delete product attribute ?
-        </p>
+        <p class="mb-0" id="confirmation-message"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -122,7 +120,12 @@
   var idPro = $("#idProduct").val();
   $('.deleteProduct').on('click', function() {
     var id = $(this).data('ds-id');
+    var status = $(this).data('ds-status');
+    var action = (status == 0) ? "delete" : "restore";
+    var confirmationMessage = `Do you want to ${action} product attribute?`;
     var link = `?act=deleteProductAttribute&idProductAttribute=${id}&idProduct=${idPro}`
+
+    $('#confirmation-message').text(confirmationMessage);
     document.getElementById("btn-delete").setAttribute("href", link)
   });
 </script>
